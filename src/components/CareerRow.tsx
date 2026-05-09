@@ -1,79 +1,84 @@
 "use client";
 
 import Link from "next/link";
-
 import { motion } from "framer-motion";
 
 interface Career {
-
   id: number;
-
   slug: string;
-
   title: string;
-
   description: string;
-
   category: string;
-
   salary: string;
-
   demand: string;
-
   hero_image?: string;
-
   primary_color?: string;
-
   secondary_color?: string;
-
 }
 
 interface Props {
-
   category: string;
-
   careers: Career[];
-
 }
 
 export default function CareerRow({
-
   category,
-
   careers,
-
 }: Props) {
 
   return (
 
-    <section className="mt-20">
+    <section className="mt-12 md:mt-20">
 
-      {/* HEADING */}
+      {/* HEADER */}
 
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-5 md:mb-8">
 
-        <h2
-          className="
-          text-3xl
-          md:text-4xl
-          font-black
-          tracking-[-0.04em]
-          "
-        >
-          {category}
-        </h2>
+        <div>
+
+          <h2
+            className="
+            text-xl
+            md:text-4xl
+
+            font-black
+
+            tracking-[-0.04em]
+            "
+          >
+            {category}
+          </h2>
+
+          <p
+            className="
+            text-zinc-500
+
+            text-xs
+            md:text-sm
+
+            mt-1
+            "
+          >
+            Explore futuristic opportunities
+          </p>
+
+        </div>
 
         <button
           className="
           text-fuchsia-400
+
           hover:text-fuchsia-300
+
           transition
-          uppercase
-          tracking-[0.25em]
-          text-sm
+
+          text-xs
+          md:text-sm
+
+          font-medium
           "
         >
-          Explore
+          View All
         </button>
 
       </div>
@@ -82,7 +87,18 @@ export default function CareerRow({
 
       <div
         className="
-        flex gap-6 overflow-x-auto pb-6
+        flex
+
+        gap-3
+        md:gap-6
+
+        overflow-x-auto
+
+        pb-3
+        md:pb-6
+
+        snap-x snap-mandatory
+
         scrollbar-hide
         "
       >
@@ -92,318 +108,415 @@ export default function CareerRow({
           <Link
             key={index}
             href={`/career/${career.slug}`}
-            className="block"
+            className="block snap-center"
           >
 
-<motion.div
-  whileHover={{
-    y: -8,
-    scale: 1.015,
-  }}
-  transition={{
-    duration: 0.35,
-  }}
-  className="
-  relative
-  min-w-[520px]
-  h-[380px]
+            {/* MOBILE CARD */}
 
-  rounded-[38px]
-  overflow-hidden
+            <div
+              className="
+              md:hidden
 
-  border border-white/10
+              relative
 
-  bg-black
+              min-w-[180px]
+              h-[280px]
 
-  group
-  "
->
+              rounded-[24px]
 
-  {/* IMAGE */}
+              overflow-hidden
 
-  <img
-    src={career.hero_image || "/images/default.jpg"}
-    alt={career.title}
-    className="
-    absolute inset-0
+              border border-white/10
 
-    w-full h-full
+              bg-black
+              "
+            >
 
-    object-cover
+              {/* IMAGE */}
 
-    group-hover:scale-105
+              <img
+                src={
+                  career.hero_image ||
+                  "/images/default.jpg"
+                }
+                alt={career.title}
+                className="
+                absolute inset-0
 
-    transition-transform
-    duration-700
-    "
-  />
+                w-full h-full
 
-  {/* CINEMATIC OVERLAY */}
+                object-cover
+                "
+              />
 
-  <div
-    className="
-    absolute inset-0
+              {/* OVERLAY */}
 
-    bg-gradient-to-r
-    from-black/75
-    via-black/30
-    to-black/10
-    "
-  />
+              <div
+                className="
+                absolute inset-0
 
-  {/* CONTENT */}
+                bg-gradient-to-t
+                from-black/90
+                via-black/20
+                to-transparent
+                "
+              />
 
-  <div
-    className="
-    relative z-10
+              {/* HEART */}
 
-    h-full
+              <div
+                className="
+                absolute
 
-    flex flex-col justify-between
+                top-3
+                right-3
 
-    p-10
-    "
-  >
+                w-8 h-8
 
-    {/* TOP */}
+                rounded-full
 
-    <div>
+                bg-black/40
 
-      {/* CATEGORY */}
+                backdrop-blur-md
 
-      {/* <p
-        className="
-        uppercase
+                border border-white/10
 
-        tracking-[0.28em]
+                flex items-center justify-center
 
-        text-[11px]
+                text-white
+                text-sm
 
-        text-fuchsia-300
+                z-20
+                "
+              >
+                ♡
+              </div>
 
-        mb-5
-        "
-      >
-        {career.category}
-      </p> */}
+              {/* CONTENT */}
 
-      {/* TITLE */}
+              <div
+                className="
+                relative z-10
 
-      <h3
-        className="
-        text-4xl
+                h-full
 
-        font-black
+                flex flex-col justify-end
 
-        leading-[0.9]
+                p-4
+                "
+              >
 
-        tracking-[-0.06em]
+                <h3
+                  className="
+                  text-2xl
 
-        max-w-[360px]
+                  font-black
 
-        text-white
-        "
-      >
-        {career.title}
-      </h3>
+                  leading-[0.95]
 
-      {/* DESCRIPTION */}
+                  tracking-[-0.05em]
 
-      <p
-        className="
-        text-zinc-200
+                  text-white
+                  "
+                >
+                  {career.title}
+                </h3>
 
-        mt-5
+                <p
+                  className="
+                  text-fuchsia-400
 
-        text-[15px]
+                  text-sm
 
-        leading-relaxed
+                  mt-2
+                  "
+                >
+                  {career.demand}
+                </p>
 
-        max-w-[360px]
-        "
-      >
-        {career.description}
-      </p>
+              </div>
 
-      {/* TAGS */}
+            </div>
 
-      <div className="flex gap-3 flex-wrap mt-7">
+            {/* DESKTOP CARD */}
 
-        <div
-          className="
-          px-4 py-2
+            <motion.div
 
-          rounded-full
+              whileHover={{
+                y: -6,
+                scale: 1.015,
+              }}
 
-          bg-white/10
+              transition={{
+                duration: 0.35,
+              }}
 
-          border border-white/10
+              className="
+              hidden md:block
 
-          text-white/90
+              relative
 
-          text-sm
-          "
-        >
-          Future Ready
-        </div>
+              min-w-[520px]
 
-        <div
-          className="
-          px-4 py-2
+              h-[390px]
 
-          rounded-full
+              rounded-[38px]
 
-          bg-white/10
+              overflow-hidden
 
-          border border-white/10
+              border border-white/10
 
-          text-white/90
+              bg-black
 
-          text-sm
-          "
-        >
-          High Demand
-        </div>
+              group
+              "
+            >
 
-        <div
-          className="
-          px-4 py-2
+              {/* IMAGE */}
 
-          rounded-full
+              <img
+                src={
+                  career.hero_image ||
+                  "/images/default.jpg"
+                }
+                alt={career.title}
+                className="
+                absolute inset-0
 
-          bg-white/10
+                w-full h-full
 
-          border border-white/10
+                object-cover
 
-          text-white/90
+                group-hover:scale-105
 
-          text-sm
-          "
-        >
-          Remote Friendly
-        </div>
+                transition-transform
+                duration-700
+                "
+              />
 
-      </div>
+              {/* OVERLAY */}
 
-    </div>
+              <div
+                className="
+                absolute inset-0
 
-    {/* BOTTOM PANEL */}
+                bg-gradient-to-r
+                from-black/75
+                via-black/30
+                to-black/10
+                "
+              />
 
-{/* HOVER PANEL */}
+              {/* CONTENT */}
 
-<div
-  className="
-  absolute
+              <div
+                className="
+                relative z-10
 
-  left-5
-  right-5
-  bottom-5
+                h-full
 
-  rounded-[24px]
+                flex flex-col justify-between
 
-  border border-white/10
+                p-10
+                "
+              >
 
-  bg-black/35
+                {/* TOP */}
 
-  backdrop-blur-xl
+                <div>
 
-  px-5 py-4
+                  <h3
+                    className="
+                    text-5xl
 
-  opacity-0
-  translate-y-6
+                    font-black
 
-  group-hover:opacity-100
-  group-hover:translate-y-0
+                    leading-[0.9]
 
-  transition-all
-  duration-500
-  "
->
+                    tracking-[-0.06em]
 
-  <div className="flex items-center justify-between gap-5">
+                    max-w-[360px]
 
-    {/* STATS */}
+                    text-white
+                    "
+                  >
+                    {career.title}
+                  </h3>
 
-    <div className="flex items-center gap-7">
+                  <p
+                    className="
+                    text-zinc-200
 
-      {/* SALARY */}
+                    mt-5
 
-      <div>
-        <p className="text-zinc-400 text-[11px] mb-1 uppercase">
-          Salary
-        </p>
+                    text-[15px]
 
-        <h4 className="text-2xl font-black text-white whitespace-nowrap">
-          ₹10L - ₹45L
-        </h4>
-      </div>
+                    leading-relaxed
 
-      {/* DEMAND */}
+                    max-w-[360px]
+                    "
+                  >
+                    {career.description}
+                  </p>
 
-      <div>
-        <p className="text-zinc-400 text-[11px] mb-1 uppercase">
-          Demand
-        </p>
+                  {/* TAGS */}
 
-        <h4 className="text-lg font-bold text-green-400 whitespace-nowrap">
-          Very High
-        </h4>
-      </div>
+                  <div className="flex gap-3 flex-wrap mt-7">
 
-      {/* DIFFICULTY */}
+                    {[
+                      "Future Ready",
+                      "High Demand",
+                      "Remote Friendly",
+                    ].map((tag) => (
 
-      <div>
-        <p className="text-zinc-400 text-[11px] mb-1 uppercase">
-          Difficulty
-        </p>
+                      <div
+                        key={tag}
+                        className="
+                        px-4 py-2
 
-        <h4 className="text-lg font-bold text-white whitespace-nowrap">
-          Advanced
-        </h4>
-      </div>
+                        rounded-full
 
-    </div>
+                        bg-white/10
 
-    {/* BUTTON */}
+                        border border-white/10
 
-    {/* <button
-      className="
-      px-5 py-3
+                        backdrop-blur-md
 
-      rounded-full
+                        text-white/90
 
-      text-sm
-      font-semibold
+                        text-sm
+                        "
+                      >
+                        {tag}
+                      </div>
 
-      text-white
+                    ))}
 
-      whitespace-nowrap
+                  </div>
 
-      transition-all
-      duration-300
+                </div>
 
-      hover:scale-105
-      "
-      style={{
-        background: `
-        linear-gradient(
-          135deg,
-          ${career.primary_color || "#d946ef"},
-          ${career.secondary_color || "#9333ea"}
-        )
-        `,
-      }}
-    >
-      Enter Career →
-    </button> */}
+                {/* HOVER PANEL */}
 
-  </div>
+                <div
+                  className="
+                  absolute
 
-</div>
+                  left-5
+                  right-5
+                  bottom-5
 
-  </div>
+                  rounded-[24px]
 
-</motion.div>
+                  border border-white/10
+
+                  bg-white/[0.05]
+
+                  backdrop-blur-2xl
+
+                  px-5 py-4
+
+                  opacity-0
+                  translate-y-6
+
+                  group-hover:opacity-100
+                  group-hover:translate-y-0
+
+                  transition-all
+                  duration-500
+                  "
+                >
+
+                  <div className="flex items-center justify-between gap-5">
+
+                    {/* STATS */}
+
+                    <div className="flex items-center gap-7">
+
+                      <div>
+
+                        <p className="text-zinc-400 text-[11px] uppercase mb-1">
+                          Salary
+                        </p>
+
+                        <h4 className="text-2xl font-black text-white">
+                          ₹10L+
+                        </h4>
+
+                      </div>
+
+                      <div>
+
+                        <p className="text-zinc-400 text-[11px] uppercase mb-1">
+                          Demand
+                        </p>
+
+                        <h4 className="text-lg font-bold text-green-400">
+                          Very High
+                        </h4>
+
+                      </div>
+
+                      <div>
+
+                        <p className="text-zinc-400 text-[11px] uppercase mb-1">
+                          Difficulty
+                        </p>
+
+                        <h4 className="text-lg font-bold text-white">
+                          Advanced
+                        </h4>
+
+                      </div>
+
+                    </div>
+
+                    {/* BUTTON */}
+
+                    <button
+                      className="
+                      px-5 py-3
+
+                      rounded-full
+
+                      text-sm
+                      font-semibold
+
+                      text-white
+
+                      whitespace-nowrap
+
+                      transition-all
+                      duration-300
+
+                      hover:scale-105
+                      "
+                      style={{
+                        background: `
+                        linear-gradient(
+                          135deg,
+                          ${
+                            career.primary_color ||
+                            "#d946ef"
+                          },
+                          ${
+                            career.secondary_color ||
+                            "#9333ea"
+                          }
+                        )
+                        `,
+                      }}
+                    >
+                      Enter Career →
+                    </button>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </motion.div>
 
           </Link>
 
