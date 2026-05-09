@@ -95,265 +95,315 @@ export default function CareerRow({
             className="block"
           >
 
-            <motion.div
+<motion.div
+  whileHover={{
+    y: -8,
+    scale: 1.015,
+  }}
+  transition={{
+    duration: 0.35,
+  }}
+  className="
+  relative
+  min-w-[520px]
+  h-[380px]
 
-              whileHover={{
-                y: -10,
-                scale: 1.02,
-              }}
+  rounded-[38px]
+  overflow-hidden
 
-              transition={{
-                duration: 0.3,
-              }}
+  border border-white/10
 
-              className="
-              relative
+  bg-black
 
-              min-w-[360px]
-              h-[520px]
+  group
+  "
+>
 
-              rounded-[36px]
+  {/* IMAGE */}
 
-              overflow-hidden
+  <img
+    src={career.hero_image || "/images/default.jpg"}
+    alt={career.title}
+    className="
+    absolute inset-0
 
-              border border-white/10
+    w-full h-full
 
-              bg-black/40
+    object-cover
 
-              backdrop-blur-xl
+    group-hover:scale-105
 
-              group
-              "
-            >
+    transition-transform
+    duration-700
+    "
+  />
 
-              {/* BACKGROUND IMAGE */}
+  {/* CINEMATIC OVERLAY */}
 
-              <img
-                src={career.hero_image || "/images/default.jpg"}
-                alt={career.title}
-                className="
-                absolute inset-0
+  <div
+    className="
+    absolute inset-0
 
-                w-full h-full
+    bg-gradient-to-r
+    from-black/75
+    via-black/30
+    to-black/10
+    "
+  />
 
-                object-cover
+  {/* CONTENT */}
 
-                opacity-40
+  <div
+    className="
+    relative z-10
 
-                scale-105
+    h-full
 
-                group-hover:scale-110
+    flex flex-col justify-between
 
-                transition duration-700
-                "
-              />
+    p-10
+    "
+  >
 
-              {/* DARK OVERLAY */}
+    {/* TOP */}
 
-              <div
-                className="
-                absolute inset-0
+    <div>
 
-                bg-gradient-to-b
-                from-black/10
-                via-black/40
-                to-black
-                "
-              />
+      {/* CATEGORY */}
 
-              {/* GLOW OVERLAY */}
+      {/* <p
+        className="
+        uppercase
 
-              <div
-                className="
-                absolute inset-0
-                opacity-70
-                "
-                style={{
-                  background: `
-                  radial-gradient(
-                    circle at top right,
-                    ${career.primary_color || "#d946ef"}55,
-                    transparent 45%
-                  )
-                  `,
-                }}
-              />
+        tracking-[0.28em]
 
-              {/* ORB */}
+        text-[11px]
 
-              <div
-                className="
-                absolute
+        text-fuchsia-300
 
-                top-[-80px]
-                right-[-80px]
+        mb-5
+        "
+      >
+        {career.category}
+      </p> */}
 
-                w-[220px]
-                h-[220px]
+      {/* TITLE */}
 
-                rounded-full
+      <h3
+        className="
+        text-4xl
 
-                blur-[80px]
-                "
-                style={{
-                  background:
-                    career.primary_color || "#d946ef",
-                }}
-              />
+        font-black
 
-              {/* CONTENT */}
+        leading-[0.9]
 
-              <div
-                className="
-                relative z-10
+        tracking-[-0.06em]
 
-                h-full
+        max-w-[360px]
 
-                flex flex-col justify-between
+        text-white
+        "
+      >
+        {career.title}
+      </h3>
 
-                p-8
-                "
-              >
+      {/* DESCRIPTION */}
 
-                {/* TOP */}
+      <p
+        className="
+        text-zinc-200
 
-                <div>
+        mt-5
 
-                  <p
-                    className="
-                    uppercase
+        text-[15px]
 
-                    tracking-[0.3em]
+        leading-relaxed
 
-                    text-fuchsia-400
+        max-w-[360px]
+        "
+      >
+        {career.description}
+      </p>
 
-                    text-xs
+      {/* TAGS */}
 
-                    mb-5
-                    "
-                  >
-                    {career.category}
-                  </p>
+      <div className="flex gap-3 flex-wrap mt-7">
 
-                  <h3
-                    className="
-                    text-5xl
+        <div
+          className="
+          px-4 py-2
 
-                    font-black
+          rounded-full
 
-                    leading-[0.95]
+          bg-white/10
 
-                    tracking-[-0.05em]
+          border border-white/10
 
-                    max-w-[260px]
-                    "
-                  >
-                    {career.title}
-                  </h3>
+          text-white/90
 
-                  <p
-                    className="
-                    text-zinc-300
+          text-sm
+          "
+        >
+          Future Ready
+        </div>
 
-                    mt-6
+        <div
+          className="
+          px-4 py-2
 
-                    leading-relaxed
+          rounded-full
 
-                    text-lg
+          bg-white/10
 
-                    max-w-[300px]
-                    "
-                  >
-                    {career.description}
-                  </p>
+          border border-white/10
 
-                </div>
+          text-white/90
 
-                {/* BOTTOM */}
+          text-sm
+          "
+        >
+          High Demand
+        </div>
 
-                <div>
+        <div
+          className="
+          px-4 py-2
 
-                  {/* SALARY */}
+          rounded-full
 
-                  <div className="mb-7">
+          bg-white/10
 
-                    <p className="text-zinc-500 text-sm mb-2">
-                      Salary Range
-                    </p>
+          border border-white/10
 
-                    <h4 className="text-3xl font-black">
-                      {career.salary}
-                    </h4>
+          text-white/90
 
-                  </div>
+          text-sm
+          "
+        >
+          Remote Friendly
+        </div>
 
-                  {/* DEMAND + BUTTON */}
+      </div>
 
-                  <div
-                    className="
-                    flex items-center justify-between
-                    gap-4
-                    "
-                  >
+    </div>
 
-                    <div>
+    {/* BOTTOM PANEL */}
 
-                      <p className="text-zinc-500 text-sm">
-                        Industry Demand
-                      </p>
+{/* HOVER PANEL */}
 
-                      <p
-                        className="
-                        font-semibold
-                        mt-1
-                        text-green-400
-                        "
-                      >
-                        {career.demand}
-                      </p>
+<div
+  className="
+  absolute
 
-                    </div>
+  left-5
+  right-5
+  bottom-5
 
-                    {/* BUTTON */}
+  rounded-[24px]
 
-                    <div
-                      className="
-                      px-5 py-3
+  border border-white/10
 
-                      rounded-full
+  bg-black/35
 
-                      text-sm
-                      font-semibold
+  backdrop-blur-xl
 
-                      text-white
+  px-5 py-4
 
-                      transition-all
-                      duration-300
+  opacity-0
+  translate-y-6
 
-                      shadow-[0_0_40px_rgba(217,70,239,0.45)]
+  group-hover:opacity-100
+  group-hover:translate-y-0
 
-                      group-hover:scale-105
-                      "
-                      style={{
-                        background: `
-                        linear-gradient(
-                          135deg,
-                          ${career.primary_color || "#d946ef"},
-                          ${career.secondary_color || "#9333ea"}
-                        )
-                        `,
-                      }}
-                    >
-                      Explore Career
-                    </div>
+  transition-all
+  duration-500
+  "
+>
 
-                  </div>
+  <div className="flex items-center justify-between gap-5">
 
-                </div>
+    {/* STATS */}
 
-              </div>
+    <div className="flex items-center gap-7">
 
-            </motion.div>
+      {/* SALARY */}
+
+      <div>
+        <p className="text-zinc-400 text-[11px] mb-1 uppercase">
+          Salary
+        </p>
+
+        <h4 className="text-2xl font-black text-white whitespace-nowrap">
+          ₹10L - ₹45L
+        </h4>
+      </div>
+
+      {/* DEMAND */}
+
+      <div>
+        <p className="text-zinc-400 text-[11px] mb-1 uppercase">
+          Demand
+        </p>
+
+        <h4 className="text-lg font-bold text-green-400 whitespace-nowrap">
+          Very High
+        </h4>
+      </div>
+
+      {/* DIFFICULTY */}
+
+      <div>
+        <p className="text-zinc-400 text-[11px] mb-1 uppercase">
+          Difficulty
+        </p>
+
+        <h4 className="text-lg font-bold text-white whitespace-nowrap">
+          Advanced
+        </h4>
+      </div>
+
+    </div>
+
+    {/* BUTTON */}
+
+    {/* <button
+      className="
+      px-5 py-3
+
+      rounded-full
+
+      text-sm
+      font-semibold
+
+      text-white
+
+      whitespace-nowrap
+
+      transition-all
+      duration-300
+
+      hover:scale-105
+      "
+      style={{
+        background: `
+        linear-gradient(
+          135deg,
+          ${career.primary_color || "#d946ef"},
+          ${career.secondary_color || "#9333ea"}
+        )
+        `,
+      }}
+    >
+      Enter Career →
+    </button> */}
+
+  </div>
+
+</div>
+
+  </div>
+
+</motion.div>
 
           </Link>
 

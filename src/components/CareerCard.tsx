@@ -31,6 +31,7 @@ export default function CareerCard({
 
   category = "Future Career",
 }: Props) {
+
   return (
     <Link
       href={`/career/${slug}`}
@@ -39,9 +40,9 @@ export default function CareerCard({
       relative
       overflow-hidden
 
-      rounded-[38px]
+      rounded-[42px]
 
-      min-h-[520px]
+      min-h-[400px]
 
       border border-white/10
 
@@ -52,38 +53,41 @@ export default function CareerCard({
       justify-between
 
       transition-all
-      duration-500
+      duration-700
 
       hover:scale-[1.02]
       hover:border-white/20
-      hover:shadow-[0_20px_80px_rgba(0,0,0,0.6)]
+
+      shadow-[0_20px_90px_rgba(0,0,0,0.55)]
       "
     >
 
-      {/* IMAGE */}
+      {/* CINEMATIC IMAGE */}
+
       <img
         src={image || "/images/default.jpg"}
         alt={title}
         className="
-        absolute inset-0
+        absolute
+        inset-0
 
-        w-full h-full
+        w-full
+        h-full
 
         object-cover
 
-        opacity-90
-
         scale-100
 
-        group-hover:scale-105
+        group-hover:scale-110
 
         transition-transform
-        duration-700
+        duration-[1800ms]
         ease-out
         "
       />
 
-      {/* SOFT BOTTOM FADE */}
+      {/* ATMOSPHERIC OVERLAY */}
+
       <div
         className="
         absolute
@@ -91,150 +95,294 @@ export default function CareerCard({
 
         bg-gradient-to-t
         from-black/85
-        via-black/20
+        via-black/10
         to-transparent
         "
       />
 
-      {/* TOP CONTENT */}
-      <div className="relative z-10 p-8">
+      {/* CINEMATIC HOVER GLOW */}
 
-        {/* CATEGORY */}
-        <p
-          className="
-          uppercase
+      <div
+        className="
+        absolute
+        inset-0
 
-          tracking-[0.35em]
+        opacity-0
+        group-hover:opacity-100
 
-          text-xs
+        transition
+        duration-700
+        "
+        style={{
+          background: `
+          radial-gradient(
+            circle at center,
+            ${primaryColor}20,
+            transparent 65%
+          )
+          `,
+        }}
+      />
 
-          text-white/70
+      {/* CONTENT */}
 
-          mb-6
-          "
-        >
-          {category}
-        </p>
+      <div
+        className="
+        relative
+        z-10
 
-        {/* TITLE */}
-        <h2
-          className="
-          text-5xl
+        h-full
 
-          font-black
+        flex
+        flex-col
+        justify-between
 
-          leading-[0.95]
+        p-8
+        "
+      >
 
-          tracking-[-0.05em]
+        {/* TOP SECTION */}
 
-          max-w-[280px]
+        <div>
 
-          text-white
+          {/* CATEGORY */}
 
-          drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]
-          "
-        >
-          {title}
-        </h2>
+          <p
+            className="
+            uppercase
 
-        {/* TAGLINE */}
-        <p
-          className="
-          mt-6
+            tracking-[0.4em]
 
-          text-zinc-200
+            text-[11px]
 
-          text-lg
+            text-fuchsia-300/90
 
-          leading-relaxed
+            mb-6
+            "
+          >
+            {category}
+          </p>
 
-          max-w-[320px]
+          {/* TITLE */}
 
-          drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]
-          "
-        >
-          {tagline ||
-            "Builds intelligent systems and future-ready technologies."}
-        </p>
+          <h2
+            className="
+            text-4xl
 
-      </div>
+            font-black
 
-      {/* BOTTOM SECTION */}
-      <div className="relative z-10 p-8 pt-0">
+            leading-[0.88]
 
-        {/* GLASS PANEL */}
-        <div
-          className="
-          rounded-[28px]
+            tracking-[-0.07em]
 
-          border border-white/10
+            max-w-[280px]
 
-          bg-black/35
+            text-white
 
-          backdrop-blur-xl
+            drop-shadow-[0_8px_30px_rgba(0,0,0,0.9)]
+            "
+          >
+            {title}
+          </h2>
 
-          p-6
-          "
-        >
+          {/* EMOTIONAL ONE LINER */}
 
-          {/* STATS */}
-          <div className="space-y-5 mb-6">
+          <p
+            className="
+            mt-6
 
-            <div>
-              <p className="text-zinc-400 text-sm mb-1">
-                Salary Range
-              </p>
+            text-zinc-200
 
-              <h3 className="text-4xl font-black text-white">
-                {salary || "₹10L - ₹45L"}
-              </h3>
+            text-[17px]
+
+            leading-relaxed
+
+            max-w-[320px]
+
+            drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]
+            "
+          >
+            {tagline ||
+              "Build the intelligent systems shaping the future of humanity."}
+          </p>
+
+          {/* FUTURE TAGS */}
+
+          <div className="flex flex-wrap gap-2 mt-7">
+
+            <div
+              className="
+              px-3 py-1.5
+
+              rounded-full
+
+              bg-white/10
+
+              backdrop-blur-md
+
+              border border-white/10
+
+              text-xs
+              text-white/85
+              "
+            >
+              Future Ready
             </div>
 
-            <div>
-              <p className="text-zinc-400 text-sm mb-1">
-                Industry Demand
-              </p>
+            <div
+              className="
+              px-3 py-1.5
 
-              <h3 className="text-2xl font-black text-green-400">
-                {demand}
-              </h3>
+              rounded-full
+
+              bg-white/10
+
+              backdrop-blur-md
+
+              border border-white/10
+
+              text-xs
+              text-white/85
+              "
+            >
+              High Demand
+            </div>
+
+            <div
+              className="
+              px-3 py-1.5
+
+              rounded-full
+
+              bg-white/10
+
+              backdrop-blur-md
+
+              border border-white/10
+
+              text-xs
+              text-white/85
+              "
+            >
+              Remote Friendly
             </div>
 
           </div>
 
-          {/* BUTTON */}
-          <button
+        </div>
+
+        {/* HOVER REVEAL PANEL */}
+
+        <div
+          className="
+          translate-y-16
+          opacity-0
+
+          group-hover:translate-y-0
+          group-hover:opacity-100
+
+          transition-all
+          duration-700
+          ease-out
+          "
+        >
+
+          <div
             className="
-            w-full
+            rounded-[30px]
 
-            py-4
+            border border-white/10
 
-            rounded-full
+            bg-black/10
 
-            text-lg
-            font-semibold
+            backdrop-blur-md
 
-            text-white
-
-            transition-all
-            duration-300
-
-            hover:scale-[1.02]
-
-            shadow-[0_10px_40px_rgba(0,0,0,0.4)]
+            p-4
             "
-            style={{
-              background: `
-              linear-gradient(
-                135deg,
-                ${primaryColor},
-                ${secondaryColor}
-              )
-              `,
-            }}
           >
-            Explore Career
-          </button>
+
+            {/* STATS */}
+
+            <div className="space-y-3 mb-6">
+
+              <div>
+
+                <p className="text-zinc-500 text-sm mb-1">
+                  Future Salary
+                </p>
+
+                <h3 className="text-2xl font-black text-white">
+                  {salary || "₹10L - ₹45L"}
+                </h3>
+
+              </div>
+
+              <div className="flex items-center justify-between">
+
+                <div>
+
+                  <p className="text-zinc-500 text-sm">
+                    Industry Demand
+                  </p>
+
+                  <p className="text-green-400 font-semibold mt-1">
+                    {demand}
+                  </p>
+
+                </div>
+
+                <div>
+
+                  <p className="text-zinc-500 text-sm">
+                    Difficulty
+                  </p>
+
+                  <p className="text-white font-semibold mt-1">
+                    Advanced
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* CTA */}
+
+            <div
+              className="
+              w-full
+
+              py-4
+
+              rounded-full
+
+              text-center
+
+              text-white
+              font-semibold
+
+              transition-all
+              duration-300
+
+              group-hover:scale-[1.02]
+
+              shadow-[0_10px_40px_rgba(0,0,0,0.45)]
+              "
+              style={{
+                background: `
+                linear-gradient(
+                  135deg,
+                  ${primaryColor},
+                  ${secondaryColor}
+                )
+                `,
+              }}
+            >
+              Enter Future
+            </div>
+
+          </div>
 
         </div>
 
