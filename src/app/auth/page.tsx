@@ -100,7 +100,7 @@ export default function AuthPage() {
               options: {
 
                 emailRedirectTo:
-                  "http://localhost:3000/auth/callback",
+                  `${window.location.origin}/auth/callback`,
 
               },
 
