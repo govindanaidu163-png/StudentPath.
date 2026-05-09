@@ -31,9 +31,7 @@ export default function CareerCard({
 
   category = "Future Career",
 }: Props) {
-
   return (
-
     <Link
       href={`/career/${slug}`}
       className="
@@ -47,11 +45,7 @@ export default function CareerCard({
 
       border border-white/10
 
-      bg-black/40
-
-      backdrop-blur-2xl
-
-      p-8
+      bg-black
 
       flex
       flex-col
@@ -60,13 +54,13 @@ export default function CareerCard({
       transition-all
       duration-500
 
-      hover:scale-[1.03]
+      hover:scale-[1.02]
       hover:border-white/20
+      hover:shadow-[0_20px_80px_rgba(0,0,0,0.6)]
       "
     >
 
-      {/* BACKGROUND IMAGE */}
-
+      {/* IMAGE */}
       <img
         src={image || "/images/default.jpg"}
         alt={title}
@@ -77,56 +71,35 @@ export default function CareerCard({
 
         object-cover
 
-        opacity-40
+        opacity-90
 
-        scale-105
+        scale-100
 
-        group-hover:scale-110
+        group-hover:scale-105
 
-        transition duration-700
+        transition-transform
+        duration-700
+        ease-out
         "
       />
 
-      {/* DARK OVERLAY */}
-
-      <div
-        className="
-        absolute inset-0
-
-        bg-gradient-to-b
-        from-black/20
-        via-black/50
-        to-black
-        "
-      />
-
-      {/* COLOR GLOW */}
-
+      {/* SOFT BOTTOM FADE */}
       <div
         className="
         absolute
-
         inset-0
 
-        opacity-70
+        bg-gradient-to-t
+        from-black/85
+        via-black/20
+        to-transparent
         "
-        style={{
-          background: `
-          radial-gradient(
-            circle at top left,
-            ${primaryColor}55,
-            transparent 45%
-          )
-          `,
-        }}
       />
 
-      {/* CONTENT */}
-
-      <div className="relative z-10">
+      {/* TOP CONTENT */}
+      <div className="relative z-10 p-8">
 
         {/* CATEGORY */}
-
         <p
           className="
           uppercase
@@ -144,7 +117,6 @@ export default function CareerCard({
         </p>
 
         {/* TITLE */}
-
         <h2
           className="
           text-5xl
@@ -156,99 +128,118 @@ export default function CareerCard({
           tracking-[-0.05em]
 
           max-w-[280px]
+
+          text-white
+
+          drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]
           "
         >
           {title}
         </h2>
 
         {/* TAGLINE */}
-
         <p
           className="
           mt-6
 
-          text-zinc-300
+          text-zinc-200
 
           text-lg
 
           leading-relaxed
 
           max-w-[320px]
+
+          drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]
           "
         >
-          {tagline || "Builds intelligent systems and future-ready technologies."}
+          {tagline ||
+            "Builds intelligent systems and future-ready technologies."}
         </p>
 
       </div>
 
-      {/* BOTTOM */}
+      {/* BOTTOM SECTION */}
+      <div className="relative z-10 p-8 pt-0">
 
-      <div className="relative z-10">
+        {/* GLASS PANEL */}
+        <div
+          className="
+          rounded-[28px]
 
-        {/* STATS */}
+          border border-white/10
 
-        <div className="space-y-5 mb-8">
+          bg-black/35
 
-          <div>
-            <p className="text-zinc-400 text-sm mb-1">
-              Salary Range
-            </p>
+          backdrop-blur-xl
 
-            <h3 className="text-4xl font-black">
-              {salary || "₹10L - ₹45L"}
-            </h3>
+          p-6
+          "
+        >
+
+          {/* STATS */}
+          <div className="space-y-5 mb-6">
+
+            <div>
+              <p className="text-zinc-400 text-sm mb-1">
+                Salary Range
+              </p>
+
+              <h3 className="text-4xl font-black text-white">
+                {salary || "₹10L - ₹45L"}
+              </h3>
+            </div>
+
+            <div>
+              <p className="text-zinc-400 text-sm mb-1">
+                Industry Demand
+              </p>
+
+              <h3 className="text-2xl font-black text-green-400">
+                {demand}
+              </h3>
+            </div>
+
           </div>
 
-          <div>
-            <p className="text-zinc-400 text-sm mb-1">
-              Industry Demand
-            </p>
+          {/* BUTTON */}
+          <button
+            className="
+            w-full
 
-            <h3 className="text-2xl font-black text-green-400">
-              {demand}
-            </h3>
-          </div>
+            py-4
+
+            rounded-full
+
+            text-lg
+            font-semibold
+
+            text-white
+
+            transition-all
+            duration-300
+
+            hover:scale-[1.02]
+
+            shadow-[0_10px_40px_rgba(0,0,0,0.4)]
+            "
+            style={{
+              background: `
+              linear-gradient(
+                135deg,
+                ${primaryColor},
+                ${secondaryColor}
+              )
+              `,
+            }}
+          >
+            Explore Career
+          </button>
 
         </div>
-
-        {/* BUTTON */}
-
-        <button
-          className="
-          w-full
-
-          py-4
-
-          rounded-full
-
-          text-lg
-          font-semibold
-
-          text-white
-
-          transition-all
-          duration-300
-
-          shadow-[0_0_40px_rgba(217,70,239,0.45)]
-
-          group-hover:scale-[1.03]
-          "
-          style={{
-            background: `
-            linear-gradient(
-              135deg,
-              ${primaryColor},
-              ${secondaryColor}
-            )
-            `,
-          }}
-        >
-          Explore Career
-        </button>
 
       </div>
 
     </Link>
-
   );
 }
