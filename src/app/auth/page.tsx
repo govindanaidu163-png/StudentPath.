@@ -2,15 +2,11 @@
 
 import { useState } from "react";
 
-import { useRouter } from "next/navigation";
-
 import Link from "next/link";
 
 import { supabaseAuth } from "@/lib/auth";
 
 export default function AuthPage() {
-
-  const router = useRouter();
 
   const [mode, setMode] =
     useState<"login" | "signup">(
@@ -69,17 +65,17 @@ export default function AuthPage() {
         }
 
         if (
-          formData.email ===
-          "govindanaidu163@gmail.com"
-        ) {
+           formData.email ===
+             "govindanaidu163@gmail.com"
+              ) {
 
-          router.push("/admin");
+           window.location.href = "/admin";
 
-        } else {
+               } else {
 
-          router.push("/explore");
+           window.location.href = "/explore";
 
-        }
+}
 
       }
 
