@@ -2,7 +2,9 @@ import DashboardNavbar from "@/components/DashboardNavbar";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import Link from "next/link";
 import CareerRow from "@/components/CareerRow";
+import TrendingCareers from "@/components/TrendingCareers";
 import { supabase } from "@/lib/supabase";
+import TrendingHero from "@/components/TrendingHero";
 
 export default async function ExplorePage() {
 
@@ -84,7 +86,6 @@ export default async function ExplorePage() {
         min-h-screen
         bg-black
         text-white
-        overflow-x-hidden
         "
       >
 
@@ -92,353 +93,467 @@ export default async function ExplorePage() {
 
         <DashboardNavbar />
 
-        {/* MOBILE CONTAINER */}
+        {/* HERO SECTION */}
 
         <section
           className="
+          relative
+
           px-4
           md:px-8
 
           pt-4
-          md:pt-10
+          md:pt-0
+
+          pb-10
           "
         >
 
-          {/* TOP NAVIGATION */}
+          {/* BACKGROUND GLOW */}
 
           <div
             className="
-            flex items-center justify-around
+            absolute
 
-            mb-5
+            top-[-300px]
+            left-1/2
 
-            border-b border-white/10
+            -translate-x-1/2
+
+            w-[700px]
+            md:w-[1100px]
+
+            h-[700px]
+            md:h-[1100px]
+
+            rounded-full
+
+            bg-fuchsia-500/15
+
+            blur-[120px]
+            md:blur-[180px]
             "
-          >
+          />
 
-            {/* CAREER */}
+          <div className="relative z-10">
 
-            <Link
-              href="/explore"
-              className="
-              relative
-
-              pb-4
-
-              text-sm
-              font-semibold
-
-              text-fuchsia-400
-              "
-            >
-              Career
-
-              <div
-                className="
-                absolute
-
-                bottom-0
-                left-1/2
-
-                -translate-x-1/2
-
-                w-12
-                h-[2px]
-
-                rounded-full
-
-                bg-fuchsia-500
-                "
-              />
-
-            </Link>
-
-            {/* EXAMS */}
-
-            <Link
-              href="/exams"
-              className="
-              pb-4
-
-              text-sm
-              font-medium
-
-              text-zinc-500
-
-              hover:text-white
-
-              transition
-              "
-            >
-              Exam
-            </Link>
-
-            {/* GUIDE PATH */}
-
-            <Link
-              href="/guide-path"
-              className="
-              pb-4
-
-              text-sm
-              font-medium
-
-              text-zinc-500
-
-              hover:text-white
-
-              transition
-              "
-            >
-              Guide Path
-            </Link>
-
-          </div>
-
-          {/* SEARCH */}
-
-          <div className="mb-5">
+            {/* MOBILE TOP NAVIGATION */}
 
             <div
               className="
-              h-14
+              md:hidden
 
-              rounded-full
+              flex items-center justify-around
 
-              border border-white/10
+              mb-5
 
-              bg-white/[0.04]
-
-              backdrop-blur-xl
-
-              px-5
-
-              flex items-center
-
-              text-zinc-500
-
-              shadow-[0_0_40px_rgba(217,70,239,0.08)]
-              "
-            >
-              🔍 Search future careers...
-            </div>
-
-          </div>
-
-          {/* TRENDING CARD */}
-
-          <div
-            className="
-            relative
-
-            h-[230px]
-            md:h-[320px]
-
-            rounded-[30px]
-
-            overflow-hidden
-
-            border border-white/10
-            "
-          >
-
-            {/* IMAGE */}
-
-            <img
-              src="/images/trending-ai.jpg"
-              alt="Trending Career"
-              className="
-              absolute inset-0
-
-              w-full h-full
-
-              object-cover
-              "
-            />
-
-            {/* OVERLAY */}
-
-            <div
-              className="
-              absolute inset-0
-
-              bg-gradient-to-r
-
-              from-black/85
-              via-black/40
-              to-transparent
-              "
-            />
-
-            {/* CONTENT */}
-
-            <div
-              className="
-              relative z-10
-
-              h-full
-
-              flex flex-col justify-end
-
-              p-6
-              md:p-10
+              border-b border-white/10
               "
             >
 
-              <p
+              {/* CAREER */}
+
+              <Link
+                href="/explore"
                 className="
-                text-fuchsia-400
+                relative
 
-                text-sm
-
-                mb-2
-                "
-              >
-                Trending Career
-              </p>
-
-              <h2
-                className="
-                text-4xl
-                md:text-6xl
-
-                font-black
-
-                leading-[0.9]
-
-                tracking-[-0.05em]
-
-                max-w-[240px]
-                md:max-w-[500px]
-                "
-              >
-                Data Scientist
-              </h2>
-
-              <p
-                className="
-                text-zinc-300
-
-                mt-3
-
-                text-sm
-                md:text-lg
-                "
-              >
-                High Demand • Great Salary
-              </p>
-
-              <button
-                className="
-                mt-5
-
-                w-fit
-
-                px-6 py-3
-
-                rounded-full
+                pb-4
 
                 text-sm
                 font-semibold
 
-                text-white
-
-                bg-fuchsia-600
-
-                shadow-[0_0_40px_rgba(217,70,239,0.45)]
+                text-fuchsia-400
                 "
               >
-                Explore Now
-              </button>
+
+                Career
+
+                <div
+                  className="
+                  absolute
+
+                  bottom-0
+                  left-1/2
+
+                  -translate-x-1/2
+
+                  w-12
+                  h-[2px]
+
+                  rounded-full
+
+                  bg-fuchsia-500
+                  "
+                />
+
+              </Link>
+
+              {/* EXAMS */}
+
+              <Link
+                href="/exams"
+                className="
+                pb-4
+
+                text-sm
+                font-medium
+
+                text-zinc-500
+
+                hover:text-white
+
+                transition
+                "
+              >
+                Exam
+              </Link>
+
+              {/* GUIDE PATH */}
+
+              <Link
+                href="/guide-path"
+                className="
+                pb-4
+
+                text-sm
+                font-medium
+
+                text-zinc-500
+
+                hover:text-white
+
+                transition
+                "
+              >
+                Guide Path
+              </Link>
 
             </div>
 
-          </div>
+            {/* MOBILE SEARCH */}
 
-          {/* HERO TEXT */}
+            <div className="mb-5 md:hidden">
 
-          <div
-            className="
-            mt-10
-            md:mt-16
-            "
-          >
-
-            <p
-              className="
-              uppercase
-
-              tracking-[0.35em]
-
-              text-fuchsia-400
-
-              text-[10px]
-              md:text-xs
-
-              mb-4
-              "
-            >
-              Explore Futures
-            </p>
-
-            <h1
-              className="
-              text-4xl
-              sm:text-5xl
-              md:text-7xl
-
-              font-black
-
-              leading-[0.92]
-
-              tracking-[-0.06em]
-              "
-            >
-
-              Discover Careers
-
-              <br />
-
-              Beyond Traditional
-
-              <br />
-
-              <span
+              <div
                 className="
-                bg-gradient-to-r
+                h-14
 
-                from-fuchsia-400
-                via-purple-400
-                to-cyan-400
+                rounded-full
 
-                bg-clip-text
-                text-transparent
+                border border-white/10
+
+                bg-white/[0.04]
+
+                backdrop-blur-xl
+
+                px-5
+
+                flex items-center
+
+                text-zinc-500
+
+                shadow-[0_0_40px_rgba(217,70,239,0.08)]
                 "
               >
-                Imagination
-              </span>
+                🔍 Search future careers...
+              </div>
 
-            </h1>
+            </div>
 
-            <p
+            {/* MOBILE TRENDING CARD */}
+
+            <div
               className="
-              mt-5
+              relative
 
-              text-zinc-400
+              md:hidden
 
-              text-base
-              md:text-lg
+              h-[230px]
 
-              max-w-2xl
+              rounded-[30px]
 
-              leading-relaxed
+              overflow-hidden
+
+              border border-white/10
               "
             >
-              Explore hidden industries,
-              futuristic opportunities,
-              and next-generation careers
-              shaping humanity’s future.
-            </p>
+
+              {/* IMAGE */}
+
+              <img
+                src="/images/trending-ai.jpg"
+                alt="Trending Career"
+                className="
+                absolute inset-0
+
+                w-full h-full
+
+                object-cover
+                "
+              />
+
+              {/* OVERLAY */}
+
+              <div
+                className="
+                absolute inset-0
+
+                bg-gradient-to-r
+
+                from-black/85
+                via-black/40
+                to-transparent
+                "
+              />
+
+              {/* CONTENT */}
+
+              <div
+                className="
+                relative z-10
+
+                h-full
+
+                flex flex-col justify-end
+
+                p-6
+                "
+              >
+
+                <p
+                  className="
+                  text-fuchsia-400
+
+                  text-sm
+
+                  mb-2
+                  "
+                >
+                  Trending Career
+                </p>
+
+                <h2
+                  className="
+                  text-4xl
+
+                  font-black
+
+                  leading-[0.9]
+
+                  tracking-[-0.05em]
+
+                  max-w-[240px]
+                  "
+                >
+                  Data Scientist
+                </h2>
+
+                <p
+                  className="
+                  text-zinc-300
+
+                  mt-3
+
+                  text-sm
+                  "
+                >
+                  High Demand • Great Salary
+                </p>
+
+                <button
+                  className="
+                  mt-5
+
+                  w-fit
+
+                  px-6 py-3
+
+                  rounded-full
+
+                  text-sm
+                  font-semibold
+
+                  text-white
+
+                  bg-fuchsia-600
+
+                  shadow-[0_0_40px_rgba(217,70,239,0.45)]
+                  "
+                >
+                  Explore Now
+                </button>
+
+              </div>
+
+            </div>
+
+            {/* DESKTOP HERO */}
+
+
+<div className="hidden md:block">
+
+        <TrendingHero />
+
+  <div className="mt-20 max-w-5xl">
+
+    <p
+      className="
+      uppercase
+
+      tracking-[0.45em]
+
+      text-fuchsia-400
+
+      text-xs
+
+      mb-6
+      "
+    >
+      Explore Futures
+    </p>
+
+    <h1
+      className="
+      text-7xl
+
+      font-black
+
+      leading-[0.9]
+
+      tracking-[-0.06em]
+      "
+    >
+
+      Discover Careers
+
+      <br />
+
+      Beyond Traditional
+
+      <br />
+
+      <span
+        className="
+        bg-gradient-to-r
+
+        from-fuchsia-400
+        via-purple-400
+        to-cyan-400
+
+        bg-clip-text
+        text-transparent
+        "
+      >
+        Imagination
+      </span>
+
+    </h1>
+
+    <p
+      className="
+      mt-8
+
+      text-zinc-400
+
+      text-xl
+
+      max-w-2xl
+
+      leading-relaxed
+      "
+    >
+      Explore hidden industries,
+      futuristic opportunities,
+      and next-generation careers
+      shaping humanity’s future.
+                   </p>
+
+                     </div>
+
+              </div>
+
+            {/* MOBILE HERO TEXT */}
+
+            <div
+              className="
+              md:hidden
+
+              mt-10
+              "
+            >
+
+              <p
+                className="
+                uppercase
+
+                tracking-[0.35em]
+
+                text-fuchsia-400
+
+                text-[10px]
+
+                mb-4
+                "
+              >
+                Explore Futures
+              </p>
+
+              <h1
+                className="
+                text-4xl
+
+                font-black
+
+                leading-[0.92]
+
+                tracking-[-0.06em]
+                "
+              >
+
+                Discover Careers
+
+                <br />
+
+                Beyond Traditional
+
+                <br />
+
+                <span
+                  className="
+                  bg-gradient-to-r
+
+                  from-fuchsia-400
+                  via-purple-400
+                  to-cyan-400
+
+                  bg-clip-text
+                  text-transparent
+                  "
+                >
+                  Imagination
+                </span>
+
+              </h1>
+
+              <p
+                className="
+                mt-5
+
+                text-zinc-400
+
+                text-base
+
+                leading-relaxed
+                "
+              >
+                Explore hidden industries,
+                futuristic opportunities,
+                and next-generation careers
+                shaping humanity’s future.
+              </p>
+
+            </div>
 
           </div>
 
@@ -490,7 +605,7 @@ export default async function ExplorePage() {
 
       </main>
 
-      {/* MOBILE NAV */}
+      {/* MOBILE BOTTOM NAV */}
 
       <MobileBottomNav />
 

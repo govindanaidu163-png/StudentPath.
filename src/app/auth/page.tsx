@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-
+import { motion } from "framer-motion";
 import Link from "next/link";
-
 import { supabaseAuth } from "@/lib/auth";
 
 export default function AuthPage() {
@@ -20,13 +19,16 @@ export default function AuthPage() {
     useState("");
 
   const [formData, setFormData] =
-    useState({
 
-      email: "",
+  useState({
 
-      password: "",
+    full_name: "",
 
-    });
+    email: "",
+
+    password: "",
+
+  });
 
   async function handleAuth(
     e: React.FormEvent
@@ -37,7 +39,6 @@ export default function AuthPage() {
     try {
 
       setLoading(true);
-
       setError("");
 
       /* LOGIN */
@@ -47,76 +48,113 @@ export default function AuthPage() {
         const { error } =
           await supabaseAuth.auth
             .signInWithPassword({
-
-              email:
-                formData.email,
-
+              email: formData.email,
               password:
                 formData.password,
-
             });
 
         if (error) {
 
           setError(error.message);
-
           return;
 
         }
 
         if (
-           formData.email ===
-             "govindanaidu163@gmail.com"
-              ) {
+          formData.email ===
+          "govindanaidu163@gmail.com"
+        ) {
 
-           window.location.href = "/admin";
+          window.location.href =
+            "/admin";
 
-               } else {
+        } else {
 
-           window.location.href = "/explore";
+          window.location.href =
+            "/explore";
 
-}
+        }
 
       }
 
       /* SIGNUP */
 
-      else {
+/* SIGNUP */
 
-        const { error } =
-          await supabaseAuth.auth
-            .signUp({
+else {
 
-              email:
-                formData.email,
+  const {
 
-              password:
-                formData.password,
+    data,
 
-              options: {
+    error,
 
-                emailRedirectTo:
-                  `${window.location.origin}/auth/callback`,
+  } = await supabaseAuth.auth
 
-              },
+    .signUp({
 
-            });
+      email: formData.email,
 
-        if (error) {
+      password:
+        formData.password,
 
-          setError(error.message);
+      options: {
 
-          return;
+        emailRedirectTo:
+          `${window.location.origin}/auth/callback`,
 
-        }
+      },
 
-        setMode("login");
+    });
 
-        setError(
-          "Account created successfully. Please login."
-        );
+  if (error) {
 
-      }
+    setError(error.message);
+
+    return;
+
+  }
+
+  /* CREATE PROFILE */
+
+  if (data.user) {
+
+    const {
+
+      error: profileError,
+
+    } = await supabaseAuth
+
+      .from("profiles")
+
+      .insert({
+
+        id: data.user.id,
+
+        full_name:
+          formData.full_name,
+
+      });
+
+    if (profileError) {
+
+      setError(profileError.message);
+
+      return;
+
+    }
+
+  }
+
+  setMode("login");
+
+  setError(
+
+    "Account created successfully. Please login."
+
+  );
+
+}
 
     } catch (err) {
 
@@ -132,19 +170,42 @@ export default function AuthPage() {
 
   }
 
+  async function handleGoogleAuth() {
+
+  const { error } =
+    await supabaseAuth.auth
+      .signInWithOAuth({
+
+        provider: "google",
+
+        options: {
+          redirectTo:
+            `${window.location.origin}/explore`,
+        },
+
+      });
+
+  if (error) {
+
+    setError(error.message);
+
+  }
+
+}
+
   return (
 
     <main
       className="
       relative
+
       min-h-screen
+
       overflow-hidden
-      bg-black
+
+      bg-[#030014]
+
       text-white
-      flex
-      items-center
-      justify-center
-      px-6
       "
     >
 
@@ -152,337 +213,1012 @@ export default function AuthPage() {
 
       <div
         className="
-        absolute
-        inset-0
-        bg-[radial-gradient(circle_at_top,rgba(217,70,239,0.22),transparent_40%)]
+        absolute inset-0
+
+        bg-[radial-gradient(circle_at_top,rgba(139,92,246,0.25),transparent_35%)]
         "
       />
 
       <div
         className="
         absolute
-        inset-0
-        opacity-[0.06]
+
+        top-[-200px]
+        right-[-120px]
+
+        w-[500px]
+        h-[500px]
+
+        rounded-full
+
+        bg-fuchsia-500/20
+
+        blur-[160px]
+        "
+      />
+
+      <div
+        className="
+        absolute
+
+        bottom-[-200px]
+        left-[-120px]
+
+        w-[500px]
+        h-[500px]
+
+        rounded-full
+
+        bg-cyan-500/20
+
+        blur-[160px]
+        "
+      />
+
+      {/* GRID */}
+
+      <div
+        className="
+        absolute inset-0
+
+        opacity-[0.05]
+
         bg-[linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)]
+
         bg-[size:80px_80px]
         "
       />
 
-      {/* CARD */}
+      {/* MAIN CONTAINER */}
 
       <div
         className="
         relative
         z-10
-        w-full
-        max-w-xl
-        rounded-[40px]
-        border
-        border-white/10
-        bg-white/[0.04]
-        backdrop-blur-2xl
-        p-10
-        lg:p-14
-        shadow-[0_0_80px_rgba(217,70,239,0.15)]
+
+        flex
+        items-center
+        justify-center
+
+        min-h-screen
+
+        px-4
+        md:px-8
         "
       >
 
-        {/* TOP */}
-
         <div
           className="
-          flex
-          items-center
-          justify-between
-          mb-10
-          "
-        >
+          relative
 
-          <div>
+          w-full
+          max-w-[1400px]
 
-            <p
-              className="
-              uppercase
-              tracking-[0.45em]
-              text-fuchsia-400
-              text-xs
-              mb-4
-              "
-            >
-              StudentPath Access
-            </p>
+          h-[92vh]
+          overflow-hidden
 
-            <h1
-              className="
-              text-5xl
-              font-black
-              leading-[0.95]
-              tracking-[-0.05em]
-              "
-            >
+          rounded-[42px]
 
-              {mode === "login"
-                ? (
-                  <>
-                    Welcome
-                    <br />
-                    Back
-                  </>
-                )
-                : (
-                  <>
-                    Create
-                    <br />
-                    Account
-                  </>
-                )}
+          border border-white/10
 
-            </h1>
-
-          </div>
-
-          <Link
-            href="/"
-            className="
-            text-zinc-500
-            hover:text-white
-            transition
-            "
-          >
-            Home
-          </Link>
-
-        </div>
-
-        <p
-          className="
-          text-zinc-400
-          text-lg
-          leading-relaxed
-          mb-10
-          "
-        >
-
-          {mode === "login"
-            ? "Continue exploring the future of intelligent careers."
-            : "Begin your future journey with intelligent career discovery."}
-
-        </p>
-
-        {/* TOGGLE */}
-
-        <div
-          className="
-          mb-8
-          grid
-          grid-cols-2
-          rounded-2xl
           bg-white/[0.04]
-          border
-          border-white/10
-          p-2
+
+          backdrop-blur-3xl
+
+          shadow-[0_0_120px_rgba(139,92,246,0.18)]
           "
         >
 
-          <button
-            onClick={() =>
-              setMode("login")
-            }
-            className={`
-            py-3
-            rounded-xl
-            transition
-            font-medium
-
-            ${
-              mode === "login"
-                ? "bg-fuchsia-600 text-white"
-                : "text-zinc-400"
-            }
-            `}
-          >
-            Login
-          </button>
-
-          <button
-            onClick={() =>
-              setMode("signup")
-            }
-            className={`
-            py-3
-            rounded-xl
-            transition
-            font-medium
-
-            ${
-              mode === "signup"
-                ? "bg-fuchsia-600 text-white"
-                : "text-zinc-400"
-            }
-            `}
-          >
-            Signup
-          </button>
-
-        </div>
-
-        {/* ERROR */}
-
-        {error && (
+      {/* FORMS CONTAINER */}
 
           <div
             className="
-            mb-6
-            rounded-2xl
-            border
-            border-red-500/20
-            bg-red-500/10
-            px-5
-            py-4
-            text-red-300
+            absolute inset-0
+
+            flex
             "
           >
-            {error}
-          </div>
 
-        )}
+            {/* LOGIN PANEL */}
 
-        {/* FORM */}
-
-        <form
-          onSubmit={handleAuth}
-          className="space-y-6"
-        >
-
-          {/* EMAIL */}
-
-          <div>
-
-            <label
-              className="
-              block
-              mb-3
-              text-zinc-400
-              "
-            >
-              Email Address
-            </label>
-
-            <input
-              type="email"
-              required
-              value={formData.email}
-              onChange={(e) =>
-                setFormData({
-
-                  ...formData,
-
-                  email:
-                    e.target.value,
-
-                })
-              }
+            <motion.div
+              animate={{
+                x:
+                  mode === "signup"
+                    ? "100%"
+                    : "0%",
+                opacity:
+                  mode === "signup"
+                    ? 0
+                    : 1,
+              }}
+              transition={{
+                duration: 0.7,
+                ease: "easeInOut",
+              }}
               className="
               w-full
-              rounded-2xl
-              bg-white/[0.04]
-              border
-              border-white/10
-              px-5
-              py-4
-              outline-none
-              focus:border-fuchsia-500
-              transition
-              "
-              placeholder="you@example.com"
-            />
+              lg:w-1/2
 
-          </div>
+              flex
+              items-center
+              justify-center
 
-          {/* PASSWORD */}
+              px-8
+              lg:px-20
 
-          <div>
-
-            <label
-              className="
-              block
-              mb-3
-              text-zinc-400
+              py-10
+              lg:py-16
               "
             >
-              Password
-            </label>
 
-            <input
-              type="password"
-              required
-              value={formData.password}
-              onChange={(e) =>
-                setFormData({
+              <form
+                onSubmit={handleAuth}
+                className="
+                w-full
+                max-w-[460px]
+                "
+              >
 
-                  ...formData,
+                <p
+                  className="
+                  uppercase
 
-                  password:
-                    e.target.value,
+                  tracking-[0.4em]
 
-                })
-              }
+                  text-fuchsia-400
+
+                  text-xs
+
+                  mb-5
+                  "
+                >
+                  StudentPath Access
+                </p>
+
+                <h1
+                  className="
+                  text-5xl
+                  lg:text-6xl
+
+                  font-black
+
+                  leading-[0.9]
+
+                  tracking-[-0.06em]
+                  "
+                >
+                  Welcome
+                  <br />
+                  Back
+                </h1>
+
+            
+
+                {error && (
+
+                  <div
+                    className="
+                    mt-8
+
+                    rounded-2xl
+
+                    border border-red-500/20
+
+                    bg-red-500/10
+
+                    px-5 py-4
+
+                    text-red-300
+                    "
+                  >
+                    {error}
+                  </div>
+
+                )}
+
+                {/* EMAIL */}
+
+
+                
+
+                <div className="mt-5">
+
+                  {/* <p
+                    className="
+                    text-sm
+
+                    text-zinc-400
+
+                    mb-3
+                    "
+                  >
+                    Email Address
+                  </p> */}
+
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        email:
+                          e.target.value,
+                      })
+                    }
+                    placeholder="Email you used to sign up"
+                    className="
+                    w-full
+
+                    h-16
+
+                    rounded-2xl
+
+                    border border-white/10
+
+                    bg-white/[0.05]
+
+                    px-6
+
+                    outline-none
+
+                    transition-all
+
+                    focus:border-fuchsia-500
+
+                    focus:bg-white/[0.08]
+
+                    shadow-[0_0_40px_rgba(139,92,246,0.08)]
+                    "
+                  />
+
+                </div>
+
+                {/* PASSWORD */}
+
+                <div className="mt-6">
+
+                  {/* <p
+                    className="
+                    text-sm
+
+                    text-zinc-400
+
+                    mb-3
+                    "
+                  >
+                    Password
+                  </p> */}
+
+                  <input
+                    type="password"
+                    required
+                    value={formData.password}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        password:
+                          e.target.value,
+                      })
+                    }
+                    placeholder="Enter your password"
+                    className="
+                    w-full
+
+                    h-16
+
+                    rounded-2xl
+
+                    border border-white/10
+
+                    bg-white/[0.05]
+
+                    px-6
+
+                    outline-none
+
+                    transition-all
+
+                    focus:border-fuchsia-500
+
+                    focus:bg-white/[0.08]
+
+                    shadow-[0_0_40px_rgba(139,92,246,0.08)]
+                    "
+                  />
+
+                </div>
+
+                {/* BUTTON */}
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="
+                  mt-8
+
+                  w-full
+
+                  h-16
+
+                  rounded-2xl
+
+                  bg-gradient-to-r
+                  from-fuchsia-600
+                  via-purple-600
+                  to-blue-600
+
+                  font-semibold
+                  text-lg
+
+                  transition-all
+                  duration-300
+
+                  hover:scale-[1.02]
+
+                  shadow-[0_0_60px_rgba(139,92,246,0.45)]
+                  "
+                >
+
+                  {loading
+                    ? "Signing In..."
+                    : "Login"}
+
+                </button>
+
+                <div className="mt-5">
+
+  <div className="flex items-center gap-4">
+
+    <div className="h-px flex-1 bg-white/10" />
+
+    <p className="text-sm text-zinc-500">
+      or continue with
+    </p>
+
+    <div className="h-px flex-1 bg-white/10" />
+
+  </div>
+
+  <button
+    type="button"
+
+    onClick={handleGoogleAuth}
+
+    className="
+    mt-5
+
+    w-full
+
+    h-14
+
+    rounded-2xl
+
+    border border-white/10
+
+    bg-white/[0.04]
+
+    hover:bg-white/[0.08]
+
+    transition-all
+    duration-300
+
+    flex
+    items-center
+    justify-center
+    gap-3
+    "
+  >
+
+    <img
+      src="https://www.svgrepo.com/show/475656/google-color.svg"
+      alt="Google"
+      className="w-5 h-5"
+    />
+
+    Continue with Google
+
+  </button>
+
+</div>
+
+                <p
+                  className="
+                  mt-8
+
+                  text-zinc-500
+
+                  text-sm
+                  "
+                >
+                  Don’t have an account?
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setMode("signup")
+                    }
+                    className="
+                    ml-2
+
+                    text-fuchsia-400
+
+                    hover:text-fuchsia-300
+                    "
+                  >
+                    Create one
+                  </button>
+
+                  
+
+                </p>
+
+              </form>
+
+            </motion.div>
+
+            {/* SIGNUP PANEL */}
+
+
+
+            
+
+            <motion.div
+              animate={{
+                x:
+                  mode === "signup"
+                    ? "0%"
+                    : "100%",
+                opacity:
+                  mode === "signup"
+                    ? 1
+                    : 0,
+              }}
+              transition={{
+                duration: 0.7,
+                ease: "easeInOut",
+              }}
               className="
+              absolute
+              right-0
+              top-0
+
               w-full
-              rounded-2xl
-              bg-white/[0.04]
-              border
-              border-white/10
-              px-5
-              py-4
-              outline-none
-              focus:border-fuchsia-500
-              transition
+              lg:w-1/2
+
+              h-full
+
+              flex
+              items-center
+              justify-center
+
+              px-8
+              lg:px-20
+
+              py-10
+              lg:py-16
               "
-              placeholder={
-                mode === "login"
-                  ? "Enter your password"
-                  : "Create secure password"
-              }
-            />
+            >
+
+              <form
+                onSubmit={handleAuth}
+                className="
+                w-full
+                max-w-[460px]
+                "
+              >
+
+                <p
+                  className="
+                  uppercase
+
+                  tracking-[0.4em]
+
+                  text-cyan-400
+
+                  text-xs
+
+                  mb-5
+                  "
+                >
+                  Future Identity
+                </p>
+
+                <h1
+                  className="
+                  text-5xl
+                  lg:text-6xl
+
+                  font-black
+
+                  leading-[0.9]
+
+                  tracking-[-0.06em]
+                  "
+                >
+                  Create Account
+                </h1>
+
+
+{/* FULL NAME */}
+
+<div className="mt-5">
+
+  {/* <p
+    className="
+    text-sm
+
+    text-zinc-400
+
+    mb-3
+    "
+  >
+    Full Name
+  </p> */}
+
+  <input
+    type="text"
+
+    required
+
+    value={formData.full_name}
+
+    onChange={(e) =>
+      setFormData({
+        ...formData,
+        full_name:
+          e.target.value,
+      })
+    }
+
+    placeholder="Enter your full name"
+
+    className="
+    w-full
+
+    h-14
+    lg:h-16
+
+    rounded-2xl
+
+    border border-white/10
+
+    bg-white/[0.05]
+
+    px-6
+
+    outline-none
+
+    transition-all
+
+    focus:border-cyan-500
+
+    focus:bg-white/[0.08]
+    "
+  />
+
+</div>
+
+
+                {/* EMAIL */}
+
+                <div className="mt-5">
+
+                  {/* <p
+                    className="
+                    text-sm
+
+                    text-zinc-400
+
+                    mb-3
+                    "
+                  >
+                    Email Address
+                  </p> */}
+
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        email:
+                          e.target.value,
+                      })
+                    }
+                    placeholder="Email you used to sign up"
+                    className="
+                    w-full
+
+                    h-16
+
+                    rounded-2xl
+
+                    border border-white/10
+
+                    bg-white/[0.05]
+
+                    px-6
+
+                    outline-none
+
+                    transition-all
+
+                    focus:border-cyan-500
+
+                    focus:bg-white/[0.08]
+                    "
+                  />
+
+                </div>
+
+                {/* PASSWORD */}
+
+                <div className="mt-5">
+
+                  {/* <p
+                    className="
+                    text-sm
+
+                    text-zinc-400
+
+                    mb-3
+                    "
+                  >
+                    Password
+                  </p> */}
+
+                  <input
+                    type="password"
+                    required
+                    value={formData.password}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        password:
+                          e.target.value,
+                      })
+                    }
+                    placeholder="Create secure password"
+                    className="
+                    w-full
+
+                    h-16
+
+                    rounded-2xl
+
+                    border border-white/10
+
+                    bg-white/[0.05]
+
+                    px-6
+
+                    outline-none
+
+                    transition-all
+
+                    focus:border-cyan-500
+
+                    focus:bg-white/[0.08]
+                    "
+                  />
+
+                </div>
+
+                {/* BUTTON */}
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="
+                  mt-7
+
+                  w-full
+
+                  h-16
+
+                  rounded-2xl
+
+                  bg-gradient-to-r
+                  from-cyan-500
+                  via-blue-600
+                  to-purple-600
+
+                  font-semibold
+                  text-lg
+
+                  transition-all
+                  duration-300
+
+                  hover:scale-[1.02]
+
+                  shadow-[0_0_60px_rgba(59,130,246,0.4)]
+                  "
+                >
+
+                  {loading
+                    ? "Creating Account..."
+                    : "Start Journey"}
+
+                </button>
+
+                <div className="mt-5">
+
+  <div className="flex items-center gap-4">
+
+    <div className="h-px flex-1 bg-white/10" />
+
+    <p className="text-sm text-zinc-500">
+      or continue with
+    </p>
+
+    <div className="h-px flex-1 bg-white/10" />
+
+  </div>
+
+  <button
+    type="button"
+
+    onClick={handleGoogleAuth}
+
+    className="
+    mt-5
+
+    w-full
+
+    h-14
+
+    rounded-2xl
+
+    border border-white/10
+
+    bg-white/[0.04]
+
+    hover:bg-white/[0.08]
+
+    transition-all
+    duration-300
+
+    flex
+    items-center
+    justify-center
+    gap-3
+    "
+  >
+
+    <img
+      src="https://www.svgrepo.com/show/475656/google-color.svg"
+      alt="Google"
+      className="w-5 h-5"
+    />
+
+    Continue with Google
+
+  </button>
+
+</div>
+
+                <p
+                  className="
+                  mt-8
+
+                  text-zinc-500
+
+                  text-sm
+                  "
+                >
+                  Already have an account?
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setMode("login")
+                    }
+                    className="
+                    ml-2
+
+                    text-cyan-400
+
+                    hover:text-cyan-300
+                    "
+                  >
+                    Login
+                  </button>
+
+                </p>
+
+              </form>
+
+            </motion.div>
 
           </div>
 
-          {/* BUTTON */}
+          {/* OVERLAY PANEL */}
 
-          <button
-            type="submit"
-            disabled={loading}
+          <motion.div
+            animate={{
+              x:
+                mode === "signup"
+                  ? "-100%"
+                  : "0%",
+            }}
+            transition={{
+              duration: 0.7,
+              ease: "easeInOut",
+            }}
             className="
-            w-full
-            py-5
-            rounded-2xl
-            bg-fuchsia-600
-            hover:bg-fuchsia-500
-            transition-all
-            duration-300
-            font-semibold
-            text-lg
-            shadow-[0_0_40px_rgba(217,70,239,0.35)]
-            disabled:opacity-50
+            absolute
+            top-0
+            right-0
+
+            hidden lg:flex
+
+            w-1/2
+            h-full
+
+            items-center
+            justify-center
+
+            overflow-hidden
             "
           >
 
-            {loading
-              ? (
-                mode === "login"
-                  ? "Signing In..."
-                  : "Creating Account..."
-              )
-              : (
-                mode === "login"
-                  ? "Login"
-                  : "Create Account"
-              )}
+            {/* DIAGONAL */}
 
-          </button>
+            <div
+              className="
+              absolute inset-0
 
-        </form>
+              bg-gradient-to-br
+              from-fuchsia-600
+              via-purple-700
+              to-blue-700
+
+              [clip-path:polygon(12%_0,100%_0,100%_100%,0_100%)]
+              "
+            />
+
+            {/* GLOW */}
+
+            <div
+              className="
+              absolute
+
+              w-[700px]
+              h-[700px]
+
+              rounded-full
+
+              bg-white/10
+
+              blur-[140px]
+              "
+            />
+
+            {/* ROTATING RING */}
+
+            <motion.div
+              animate={{
+                rotate: 360,
+              }}
+              transition={{
+                duration: 40,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              className="
+              absolute
+
+              w-[520px]
+              h-[520px]
+
+              rounded-full
+
+              border border-white/10
+              "
+            />
+
+            {/* CONTENT */}
+
+            <div
+              className="
+              relative
+              z-10
+
+              max-w-[420px]
+
+              px-12
+              "
+            >
+
+              <p
+                className="
+                uppercase
+
+                tracking-[0.4em]
+
+                text-white/70
+
+                text-xs
+
+                mb-6
+                "
+              >
+                StudentPath Portal
+              </p>
+
+              <h2
+                className="
+                text-7xl
+
+                font-black
+
+                leading-[0.88]
+
+                tracking-[-0.08em]
+                "
+              >
+                Your
+                <br />
+                Future
+                <br />
+                Starts
+                <br />
+                Here.
+              </h2>
+
+              <p
+                className="
+                mt-8
+
+                text-white/70
+
+                text-lg
+
+                leading-relaxed
+                "
+              >
+                Explore intelligent careers,
+                futuristic opportunities,
+                and next-generation paths.
+              </p><br />
+
+              <Link
+                href="/"
+                className="
+                inline-flex
+
+                mt-
+
+                items-center
+                justify-center
+
+                px-7 py-4
+
+                rounded-full
+
+                border border-white/20
+
+                bg-white/10
+
+                backdrop-blur-xl
+
+                hover:bg-white/15
+
+                transition-all
+                duration-300
+                "
+              >
+                Return Home
+              </Link>
+
+            </div>
+
+          </motion.div>
+
+        </div>
 
       </div>
 
