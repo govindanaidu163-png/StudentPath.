@@ -1,23 +1,55 @@
 "use client";
-
+import { useEffect,useState } from "react";
 import { motion } from "framer-motion";
-
+import { supabaseAuth } from "@/lib/auth";
 type Insight = {
+  id?: string;
+  small_heading?: string;
   title?: string;
-  value?: string;
-  description?: string;
-  deepInsight?: string;
-  tags?: string[];
+  short_description?: string;
+  deep_details?: string;
+  card_order?: number;
   position?: string;
+  tags?:string[];
 };
 
 export default function CareerInsights({
-  insights = [],
+  careerSlug,
 }: {
-  insights?: Insight[];
+  careerSlug: string;
 }) {
 
-  const safeInsights = insights || [];
+const [safeInsights, setSafeInsights] =
+  useState<Insight[]>([]);
+
+useEffect(() => {
+
+  async function fetchInsights() {
+
+    const { data, error } =
+      await supabaseAuth
+
+        .from("career_insights")
+
+        .select("*")
+
+        .eq("career_slug", careerSlug)
+
+        .order("card_order", {
+          ascending: true,
+        });
+
+    if (!error && data) {
+
+      setSafeInsights(data);
+
+    }
+
+  }
+
+  fetchInsights();
+
+}, [careerSlug]);
 
   return (
     <section
@@ -197,7 +229,7 @@ export default function CareerInsights({
                   text-xs
                   "
                 >
-                  {item.title || "Career Insight"}
+                  {item.small_heading || "Career Insight"}
                 </p>
 
                 <h3
@@ -208,7 +240,7 @@ export default function CareerInsights({
                   leading-tight
                   "
                 >
-                  {item.value || "Growing"}
+                  {item.title || "Growing"}
                 </h3>
 
                 <p
@@ -218,7 +250,7 @@ export default function CareerInsights({
                   leading-relaxed
                   "
                 >
-                  {item.description ||
+                  {item.short_description ||
                     "This field is evolving rapidly with strong opportunities for future growth."}
                 </p>
 
@@ -329,7 +361,7 @@ export default function CareerInsights({
                       max-w-[90%]
                       "
                     >
-                      {item.deepInsight ||
+                      {item.deep_details ||
                         "This career area is evolving rapidly and offers strong long-term growth for people who develop deep technical expertise and future-ready skills."}
                     </p>
 
@@ -351,7 +383,11 @@ export default function CareerInsights({
                       "📈 High Growth",
                       "🌍 Global Scope",
                       "🚀 Future Ready",
-                    ]).map((tag, tagIndex) => (
+                    ]).map(
+                      (
+                        tag: string,
+                        tagIndex: number
+                      ) => (
 
                       <div
                         key={tagIndex}

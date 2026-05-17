@@ -46,6 +46,10 @@ export async function updateCareer(
   const secondary_color =
     formData.get("secondary_color") as string;
 
+  const insights = JSON.parse(
+  formData.get("insights") as string
+);
+
   const { error } = await supabase
     .from("careers")
     .update({
@@ -72,6 +76,56 @@ export async function updateCareer(
     );
 
   }
+
+  /* DELETE OLD INSIGHTS */
+
+await supabase
+  .from("career_insights")
+  .delete()
+  .eq("career_slug", slug);
+
+/* INSERT NEW INSIGHTS */
+
+if (insights.length > 0) {
+
+  const formattedInsights =
+    insights.map(
+      (
+        insight: any,
+        index: number
+      ) => ({
+        career_slug: slug,
+
+        small_heading:
+          insight.small_heading,
+
+        title: insight.title,
+
+        short_description:
+          insight.short_description,
+
+        deep_details:
+          insight.deep_details,
+
+        card_order: index + 1,
+      })
+    );
+
+  const {
+    error: insightsError,
+  } = await supabase
+
+    .from("career_insights")
+
+    .insert(formattedInsights);
+
+  if (insightsError) {
+
+    console.log(insightsError);
+
+  }
+
+}
 
   revalidatePath("/");
 
@@ -122,7 +176,6 @@ export async function createCareer() {
 
         universe_nodes: [],
 
-        insights: [],
 
         paths: [],
       })

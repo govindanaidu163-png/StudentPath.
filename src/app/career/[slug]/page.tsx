@@ -114,7 +114,7 @@ export default async function CareerDetailsPage({
       {/* INSIGHTS */}
 
       <CareerInsights
-        insights={career.insights || []}
+        careerSlug={career.slug}
       />
 
       {/* PATHS */}

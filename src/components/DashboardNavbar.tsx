@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import ProfilePanel from "@/components/ProfilePanel";
+
 
 import {
   Search,
-  Bell,
   Sparkles,
+  SlidersHorizontal,
+  Bookmark,
 } from "lucide-react";
 
 import {
@@ -18,9 +19,10 @@ import { supabaseAuth } from "@/lib/auth";
 
 export default function DashboardNavbar() {
 
-  const [openProfile,
-    setOpenProfile] =
-    useState(false);
+  const [
+    openProfile,
+    setOpenProfile,
+  ] = useState(false);
 
   const [user, setUser] =
     useState<any>(null);
@@ -49,32 +51,30 @@ export default function DashboardNavbar() {
       className="
       sticky
       top-0
-
       z-50
-
       w-full
 
-      border-b
-      border-white/10
+      bg-[#050816]/95
 
-      bg-[#050816]/80
-
-      backdrop-blur-xl
+      backdrop-blur-2xl
       "
     >
 
+      {/* DESKTOP NAVBAR */}
+
       <div
         className="
-        flex
+        hidden
+        md:flex
 
         items-center
         justify-between
 
-        px-4
-        md:px-8
+        px-8
+        py-5
 
-        py-4
-        md:py-5
+        border-b
+        border-white/10
         "
       >
 
@@ -83,11 +83,8 @@ export default function DashboardNavbar() {
         <div
           className="
           flex
-
           items-center
-
-          gap-6
-          md:gap-12
+          gap-12
           "
         >
 
@@ -96,11 +93,8 @@ export default function DashboardNavbar() {
           <Link
             href="/"
             className="
-            text-2xl
-            md:text-3xl
-
+            text-3xl
             font-black
-
             tracking-tight
             "
           >
@@ -117,16 +111,11 @@ export default function DashboardNavbar() {
 
           <nav
             className="
-            hidden
-
-            lg:flex
-
+            flex
             items-center
-
             gap-8
 
             text-sm
-
             font-medium
 
             text-zinc-300
@@ -137,7 +126,6 @@ export default function DashboardNavbar() {
               href="/explore"
               className="
               hover:text-white
-
               transition
               "
             >
@@ -148,7 +136,6 @@ export default function DashboardNavbar() {
               href="/explore/exams"
               className="
               hover:text-white
-
               transition
               "
             >
@@ -159,7 +146,6 @@ export default function DashboardNavbar() {
               href="/explore/guide-path"
               className="
               hover:text-white
-
               transition
               "
             >
@@ -170,12 +156,10 @@ export default function DashboardNavbar() {
               href="/explore/mentor"
               className="
               hover:text-white
-
               transition
 
               flex
               items-center
-
               gap-2
               "
             >
@@ -195,11 +179,8 @@ export default function DashboardNavbar() {
         <div
           className="
           flex
-
           items-center
-
           gap-3
-          md:gap-4
           "
         >
 
@@ -207,16 +188,12 @@ export default function DashboardNavbar() {
 
           <div
             className="
-            hidden
-
-            md:flex
-
+            flex
             items-center
-
             gap-3
 
-            px-4
-            py-2
+            px-5
+            py-3
 
             rounded-full
 
@@ -237,98 +214,258 @@ export default function DashboardNavbar() {
               placeholder="Search careers..."
               className="
               bg-transparent
-
               outline-none
-
               text-sm
-
               placeholder:text-zinc-500
               "
             />
 
           </div>
 
-          {/* NOTIFICATION */}
+          {/* PROFILE */}
 
-          <button
+          <Link
+  href="/profile"
+  className="
+  w-12
+  h-12
+
+  rounded-full
+
+  bg-gradient-to-r
+  from-fuchsia-600
+  to-purple-600
+
+  flex
+  items-center
+  justify-center
+
+  font-bold
+
+  hover:scale-110
+
+  transition
+
+  shadow-[0_0_25px_rgba(217,70,239,0.6)]
+  "
+>
+
+  {user?.email
+    ?.charAt(0)
+    ?.toUpperCase() || "G"}
+
+</Link>
+
+        </div>
+
+      </div>
+
+      {/* MOBILE NAVBAR */}
+
+      <div
+        className="
+        md:hidden
+
+        px-4
+        pt-3
+        pb-3
+        "
+      >
+
+        {/* TOP SECTION */}
+
+        <div
+          className="
+          flex
+          items-start
+          justify-between
+
+          mb-4
+          "
+        >
+
+          {/* LEFT */}
+
+          <div
             className="
-            w-11
-            h-11
+            flex
+            items-center
+            gap-3
+            "
+          >
 
-            rounded-full
+            {/* PROFILE IMAGE */}
+
+            <Link
+  href="/profile"
+  className="
+  w-14 h-14
+  rounded-full
+  overflow-hidden
+  border
+  border-fuchsia-500/30
+  block
+  "
+>
+  </Link>
+
+            {/* TEXT */}
+
+            <div className="pt-1">
+
+              <p
+                className="
+                text-zinc-400
+                text-[16px]
+                mb-1
+                "
+              >
+                Hi Govinda
+              </p>
+
+              <h1
+                className="
+                text-[1.5rem]
+
+                leading-[0.8]
+
+                font-bold
+
+                tracking-[-0.09em]
+                "
+              >
+                Good Morning
+              </h1>
+
+            </div>
+
+          </div>
+
+          {/* SAVE */}
+
+          <div
+            className="
+            flex
+            flex-col
+            items-center
+
+            pt-1
+            "
+          >
+
+            <button
+              className="
+              w-10
+              h-10
+
+              rounded-2xl
+
+              border
+              border-white/10
+
+              bg-[#0d1324]
+
+              flex
+              items-center
+              justify-center
+
+              mb-2
+              "
+            >
+
+              <Bookmark
+                size={22}
+                className="text-white"
+              />
+
+            </button>
+
+            <span
+              className="
+              text-[13px]
+              text-zinc-400
+              "
+            >
+              Save
+            </span>
+
+          </div>
+
+        </div>
+
+        {/* SEARCH ROW */}
+
+        <div
+          className="
+          flex
+          gap-2
+          "
+        >
+
+          {/* SEARCH */}
+
+          <div
+            className="
+            flex-1
+
+            h-[54px]
+
+            rounded-[25px]
+            mx-1
 
             border
             border-white/10
 
-            bg-white/[0.04]
+            bg-[#0d1324]
+            px-4
 
             flex
-
             items-center
-            justify-center
 
-            hover:bg-white/[0.08]
-
-            transition
+            text-zinc-500
             "
           >
 
-            <Bell size={18} />
-
-          </button>
-
-          {/* PROFILE */}
-
-          <div className="relative">
-
-            <button
-              onClick={() =>
-                setOpenProfile(
-                  !openProfile
-                )
-              }
+            <Search
+              size={30}
               className="
-              w-12
-              h-12
-
-              rounded-full
-
-              bg-gradient-to-r
-
-              from-fuchsia-600
-              to-purple-600
-
-              flex
-
-              items-center
-              justify-center
-
-              font-bold
-
-              hover:scale-110
-
-              transition
-
-              shadow-[0_0_25px_rgba(217,70,239,0.6)]
+              mr-4
+              shrink-0
               "
-            >
-
-              {user?.email
-                ?.charAt(0)
-                ?.toUpperCase() || "G"}
-
-            </button>
-
-            {/* PROFILE PANEL */}
-
-            <ProfilePanel
-              open={openProfile}
-              onClose={() =>
-                setOpenProfile(false)
-              }
             />
 
+            <span className="text-[1.15rem]">
+              Discover a career
+            </span>
+
           </div>
+
+          {/* FILTER */}
+
+          <button
+            className="
+            w-[54px]
+            h-[54px]
+
+            rounded-[30px]
+
+            bg-gradient-to-br
+            from-fuchsia-600
+            to-purple-600
+
+            flex
+            items-center
+            justify-center
+
+            shadow-[0_0_45px_rgba(217,70,239,0.35)]
+            "
+          >
+
+            <SlidersHorizontal
+              size={30}
+            />
+
+          </button>
 
         </div>
 

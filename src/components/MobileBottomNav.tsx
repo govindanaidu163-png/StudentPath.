@@ -19,9 +19,9 @@ export default function MobileBottomNav() {
       href: "/mentor",
     },
     {
-      name: "Profile",
-      icon: "👤",
-      href: "/profile",
+      name: "Guide Path",
+      icon: "🎯",
+      href: "/guide-path",
     },
   ];
 

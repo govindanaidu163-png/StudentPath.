@@ -45,6 +45,11 @@ export default function AdminCareerForm({
       hero_video:
         career.hero_video || "",
 
+      insights:
+        career.career_insights || [],
+
+      
+
     });
 
   function updateField(
@@ -58,6 +63,63 @@ export default function AdminCareerForm({
     });
 
   }
+
+  function updateInsight(
+  index: number,
+  key: string,
+  value: string
+) {
+
+  const updatedInsights =
+    [...formData.insights];
+
+  updatedInsights[index] = {
+    ...updatedInsights[index],
+    [key]: value,
+  };
+
+  setFormData({
+    ...formData,
+    insights: updatedInsights,
+  });
+
+}
+
+function addInsight() {
+
+  setFormData({
+    ...formData,
+
+    insights: [
+      ...formData.insights,
+
+      {
+        small_heading: "",
+        title: "",
+        short_description: "",
+        deep_details: "",
+        card_order:
+          formData.insights.length + 1,
+      },
+    ],
+  });
+
+}
+
+function removeInsight(index: number) {
+
+  const updatedInsights =
+    formData.insights.filter(
+      (_: any, i: number) =>
+        i !== index
+    );
+
+  setFormData({
+    ...formData,
+    insights: updatedInsights,
+  });
+
+}
 
   function SectionTitle({
     title,
@@ -171,6 +233,12 @@ export default function AdminCareerForm({
           name="id"
           value={career.id}
         />
+
+        <input
+  type="hidden"
+  name="insights"
+  value={JSON.stringify(formData.insights)}
+/>
 
         {/* HERO */}
 
@@ -429,6 +497,278 @@ export default function AdminCareerForm({
           </div>
 
         </section>
+
+        {/* CAREER INSIGHTS */}
+
+<section
+  className="
+  relative
+  overflow-hidden
+  rounded-[36px]
+  border
+  border-white/10
+  bg-white/[0.04]
+  backdrop-blur-2xl
+  p-8
+  lg:p-10
+  "
+>
+
+  <div className="relative z-10">
+
+    <SectionTitle
+      title="Career Insights"
+      desc="Manage premium insight cards shown inside the public career experience."
+    />
+
+    <div className="space-y-8">
+
+      {formData.insights.map(
+        (insight: any, index: number) => (
+
+          <div
+            key={index}
+            className="
+            rounded-[28px]
+            border
+            border-white/10
+            bg-black/30
+            p-6
+            "
+          >
+
+            <div
+              className="
+              flex
+              items-center
+              justify-between
+              mb-6
+              "
+            >
+
+              <h3
+                className="
+                text-2xl
+                font-black
+                "
+              >
+                Insight {index + 1}
+              </h3>
+
+              <button
+                type="button"
+                onClick={() =>
+                  removeInsight(index)
+                }
+                className="
+                px-4
+                py-2
+                rounded-xl
+                bg-red-500/20
+                text-red-300
+                hover:bg-red-500/30
+                transition
+                "
+              >
+                Delete
+              </button>
+
+            </div>
+
+            <div
+              className="
+              grid
+              lg:grid-cols-2
+              gap-6
+              "
+            >
+
+              <div>
+
+  <label
+    className="
+    block
+    mb-3
+    text-zinc-400
+    "
+  >
+    Small Heading
+  </label>
+
+  <input
+    value={insight.small_heading || ""}
+    onChange={(e) =>
+      updateInsight(
+        index,
+        "small_heading",
+        e.target.value
+      )
+    }
+    className="
+    w-full
+    rounded-2xl
+    bg-white/[0.04]
+    border
+    border-white/10
+    px-5
+    py-4
+    outline-none
+    focus:border-fuchsia-500
+    transition
+    "
+  />
+
+</div>
+
+              <div>
+  <label
+    className="
+    block
+    mb-3
+    text-zinc-400
+    "
+  >
+    Main Title
+  </label>
+
+  <input
+    value={insight.title || ""}
+    onChange={(e) =>
+      updateInsight(
+        index,
+        "title",
+        e.target.value
+      )
+    }
+    className="
+    w-full
+    rounded-2xl
+    bg-white/[0.04]
+    border
+    border-white/10
+    px-5
+    py-4
+    outline-none
+    focus:border-fuchsia-500
+    transition
+    "
+  />
+</div>
+
+
+            </div>
+
+            <div className="mt-6">
+
+              <label
+                className="
+                block
+                mb-3
+                text-zinc-400
+                "
+              >
+                Short Description
+              </label>
+
+              <textarea
+                value={
+                  insight.short_description
+                }
+                onChange={(e) =>
+                  updateInsight(
+                    index,
+                    "short_description",
+                    e.target.value
+                  )
+                }
+                rows={3}
+                className="
+                w-full
+                rounded-2xl
+                bg-white/[0.04]
+                border
+                border-white/10
+                px-5
+                py-4
+                outline-none
+                focus:border-fuchsia-500
+                transition
+                "
+              />
+
+            </div>
+
+            <div className="mt-6">
+
+              <label
+                className="
+                block
+                mb-3
+                text-zinc-400
+                "
+              >
+                Deep Details
+              </label>
+
+              <textarea
+                value={
+                  insight.deep_details
+                }
+                onChange={(e) =>
+                  updateInsight(
+                    index,
+                    "deep_details",
+                    e.target.value
+                  )
+                }
+                rows={6}
+                className="
+                w-full
+                rounded-2xl
+                bg-white/[0.04]
+                border
+                border-white/10
+                px-5
+                py-4
+                outline-none
+                focus:border-fuchsia-500
+                transition
+                leading-relaxed
+                "
+              />
+
+            </div>
+
+          </div>
+
+        )
+      )}
+
+      <button
+        type="button"
+        onClick={addInsight}
+        className="
+        w-full
+        py-5
+        rounded-[28px]
+        border
+        border-dashed
+        border-fuchsia-500/40
+        bg-fuchsia-500/10
+        hover:bg-fuchsia-500/15
+        transition-all
+        text-lg
+        font-semibold
+        "
+      >
+        + Add Insight
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
 
         {/* ACTION BAR */}
 

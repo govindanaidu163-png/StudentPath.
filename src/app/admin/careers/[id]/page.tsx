@@ -14,12 +14,16 @@ export default async function EditCareerPage({
 
   const { id } = await params;
 
+  /* FETCH CAREER */
+
   const { data: career, error } =
     await supabase
       .from("careers")
       .select("*")
       .eq("id", id)
       .single();
+
+  /* CAREER NOT FOUND */
 
   if (error || !career) {
 
@@ -41,6 +45,25 @@ export default async function EditCareerPage({
     );
 
   }
+
+  /* FETCH INSIGHTS */
+
+  const { data: insights } =
+    await supabase
+      .from("career_insights")
+      .select("*")
+      .eq("career_slug", career.slug)
+      .order("card_order", {
+        ascending: true,
+      });
+
+  /* MERGE DATA */
+
+  const careerWithInsights = {
+    ...career,
+    career_insights:
+      insights || [],
+  };
 
   return (
 
@@ -254,7 +277,9 @@ export default async function EditCareerPage({
 
       <div className="relative z-10">
 
-        <AdminCareerForm career={career} />
+        <AdminCareerForm
+          career={careerWithInsights}
+        />
 
       </div>
 

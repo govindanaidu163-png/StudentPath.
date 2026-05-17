@@ -1,23 +1,131 @@
 "use client";
 
-import DashboardNavbar from "@/components/DashboardNavbar";
+import Link from "next/link";
+
+import { useRouter } from "next/navigation";
+
+import {
+  ChevronLeft,
+  MapPin,
+  Mail,
+  User,
+  Palette,
+  Headphones,
+  Settings,
+  LogOut,
+  ChevronRight,
+  MessageCircle,
+  Info,
+  Shield,
+  Check,
+  X,
+} from "lucide-react";
+
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import { motion, AnimatePresence } from "framer-motion";
+
+import { supabaseAuth } from "@/lib/auth";
 
 export default function ProfilePage() {
+
+  const router = useRouter();
+
+  const [user, setUser] =
+    useState<any>(null);
+
+  const [showThemes,
+    setShowThemes] =
+    useState(false);
+
+  const [showSupport,
+    setShowSupport] =
+    useState(false);
+
+  const [showLogout,
+    setShowLogout] =
+    useState(false);
+
+  const [selectedTheme,
+    setSelectedTheme] =
+    useState("purple");
+
+  useEffect(() => {
+
+    async function getUser() {
+
+      const {
+        data: { user },
+      } =
+        await supabaseAuth.auth
+          .getUser();
+
+      setUser(user);
+
+    }
+
+    getUser();
+
+  }, []);
+
+  const handleLogout =
+    async () => {
+
+      await supabaseAuth.auth
+        .signOut();
+
+      router.push("/");
+
+    };
+
+  const menuItems = [
+
+    {
+      title: "Edit Profile",
+      icon: User,
+    },
+
+    {
+      title: "Themes",
+      icon: Palette,
+    },
+
+    {
+      title: "Support",
+      icon: Headphones,
+    },
+
+    {
+      title: "Settings",
+      icon: Settings,
+    },
+
+    {
+      title: "Log Out",
+      icon: LogOut,
+      danger: true,
+    },
+
+  ];
 
   return (
 
     <main
       className="
       min-h-screen
+
       bg-[#030014]
+
       text-white
+
       overflow-x-hidden
+
+      relative
       "
     >
-
-      {/* NAVBAR */}
-
-      <DashboardNavbar />
 
       {/* BACKGROUND */}
 
@@ -27,7 +135,7 @@ export default function ProfilePage() {
 
         pointer-events-none
 
-        bg-[radial-gradient(circle_at_top,rgba(139,92,246,0.14),transparent_30%)]
+        bg-[radial-gradient(circle_at_top,rgba(168,85,247,0.18),transparent_30%)]
         "
       />
 
@@ -38,8 +146,8 @@ export default function ProfilePage() {
         top-[-250px]
         right-[-150px]
 
-        w-[600px]
-        h-[600px]
+        w-[500px]
+        h-[500px]
 
         rounded-full
 
@@ -53,11 +161,11 @@ export default function ProfilePage() {
         className="
         fixed
 
-        bottom-[-300px]
+        bottom-[-250px]
         left-[-180px]
 
-        w-[650px]
-        h-[650px]
+        w-[500px]
+        h-[500px]
 
         rounded-full
 
@@ -74,24 +182,278 @@ export default function ProfilePage() {
         relative
         z-10
 
-        px-4
-        md:px-8
-        xl:px-12
+        px-5
 
-        pt-8
+        pt-6
         pb-32
+
+        max-w-md
+        md:max-w-2xl
+        xl:max-w-3xl
+
+        mx-auto
         "
       >
 
-        {/* HERO COMMAND CENTER */}
+        {/* TOP BAR */}
 
-        <section
+        <div
           className="
-          relative
+          flex
+          items-center
+          justify-between
 
-          overflow-hidden
+          mb-12
+          "
+        >
 
-          rounded-[40px]
+          <Link
+            href="/explore"
+            className="
+            w-14 h-14
+
+            rounded-[22px]
+
+            border border-white/10
+
+            bg-white/[0.04]
+
+            backdrop-blur-xl
+
+            flex
+            items-center
+            justify-center
+
+            hover:scale-105
+
+            transition-all
+
+            duration-300
+            "
+          >
+
+            <ChevronLeft size={28} />
+
+          </Link>
+
+          <div className="w-14" />
+
+        </div>
+
+        {/* PROFILE */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 40,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.6,
+          }}
+          className="text-center"
+        >
+
+          {/* AVATAR */}
+
+          <div
+            className="
+            relative
+
+            mx-auto
+
+            w-40 h-40
+
+            rounded-full
+
+            bg-gradient-to-r
+            from-fuchsia-500
+            via-purple-500
+            to-cyan-500
+
+            p-[3px]
+
+            shadow-[0_0_70px_rgba(217,70,239,0.45)]
+            "
+          >
+
+            <div
+              className="
+              w-full
+              h-full
+
+              rounded-full
+
+              bg-[#050816]
+
+              overflow-hidden
+              "
+            >
+
+              <img
+                src="/images/default-avatar.jpg"
+                alt="Profile"
+                className="
+                w-full
+                h-full
+
+                object-cover
+                "
+              />
+
+            </div>
+
+          </div>
+
+          {/* NAME */}
+
+          <h1
+            className="
+            mt-7
+
+            text-[3rem]
+            md:text-[4rem]
+
+            font-black
+
+            tracking-[-0.06em]
+
+            leading-none
+            "
+          >
+
+            GOVINDA
+
+          </h1>
+
+          {/* LOCATION */}
+
+          <div
+            className="
+            mt-4
+
+            flex
+            items-center
+            justify-center
+
+            gap-2
+
+            text-zinc-400
+            "
+          >
+
+            <MapPin
+              size={18}
+              className="text-fuchsia-400"
+            />
+
+            <span className="text-lg">
+              India
+            </span>
+
+          </div>
+
+          {/* EMAIL */}
+
+          <div
+            className="
+            mt-8
+
+            rounded-[30px]
+
+            border border-white/10
+
+            bg-white/[0.04]
+
+            backdrop-blur-2xl
+
+            px-5
+            py-5
+
+            flex
+            items-center
+
+            gap-4
+
+            shadow-[0_0_40px_rgba(255,255,255,0.03)]
+            "
+          >
+
+            <div
+              className="
+              w-14 h-14
+
+              rounded-2xl
+
+              bg-fuchsia-500/10
+
+              flex
+              items-center
+              justify-center
+
+              text-fuchsia-400
+              "
+            >
+
+              <Mail size={24} />
+
+            </div>
+
+            <div className="text-left">
+
+              <p
+                className="
+                text-zinc-500
+
+                text-sm
+
+                mb-1
+                "
+              >
+                Email Address
+              </p>
+
+              <p
+                className="
+                text-base
+
+                text-zinc-200
+                "
+              >
+
+                {user?.email ||
+                  "govinda@gmail.com"}
+
+              </p>
+
+            </div>
+
+          </div>
+
+        </motion.div>
+
+        {/* SETTINGS */}
+
+        <motion.section
+          initial={{
+            opacity: 0,
+            y: 40,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            delay: 0.2,
+            duration: 0.6,
+          }}
+          className="
+          mt-10
+
+          rounded-[34px]
 
           border border-white/10
 
@@ -99,633 +461,652 @@ export default function ProfilePage() {
 
           backdrop-blur-2xl
 
-          p-6
-          md:p-10
-          xl:p-14
+          overflow-hidden
+
+          shadow-[0_0_60px_rgba(168,85,247,0.08)]
           "
         >
 
-          {/* GRID */}
+          {menuItems.map(
+            (
+              item,
+              index
+            ) => {
 
-          <div
-            className="
-            grid
+              const Icon =
+                item.icon;
 
-            grid-cols-1
-            xl:grid-cols-[320px_1fr_280px]
+              return (
 
-            gap-10
-            items-center
-            "
-          >
+                <button
+                  key={item.title}
+                  onClick={() => {
 
-            {/* LEFT */}
+                    if (
+                      item.title ===
+                      "Themes"
+                    ) {
+                      setShowThemes(
+                        !showThemes
+                      );
+                    }
 
-            <div className="flex justify-center">
+                    if (
+                      item.title ===
+                      "Support"
+                    ) {
+                      setShowSupport(
+                        !showSupport
+                      );
+                    }
 
-              <div
-                className="
-                relative
+                    if (
+                      item.title ===
+                      "Log Out"
+                    ) {
+                      setShowLogout(
+                        true
+                      );
+                    }
 
-                w-52
-                h-52
-
-                rounded-full
-
-                bg-gradient-to-r
-                from-fuchsia-600
-                via-purple-600
-                to-cyan-500
-
-                p-[3px]
-                "
-              >
-
-                <div
-                  className="
+                  }}
+                  className={`
                   w-full
-                  h-full
-
-                  rounded-full
-
-                  bg-[#050816]
 
                   flex
                   items-center
-                  justify-center
+                  justify-between
 
-                  text-7xl
-                  font-black
-                  "
+                  px-5
+                  py-5
+
+                  transition-all
+
+                  duration-300
+
+                  hover:bg-white/[0.04]
+
+                  ${
+                    index !==
+                    menuItems.length - 1
+                      ? "border-b border-white/5"
+                      : ""
+                  }
+                  `}
                 >
 
-                  G
+                  {/* LEFT */}
 
-                </div>
+                  <div
+                    className="
+                    flex
+                    items-center
 
-                {/* ORBIT */}
+                    gap-4
+                    "
+                  >
 
-                <div
+                    {/* ICON */}
+
+                    <div
+                      className={`
+                      w-14 h-14
+
+                      rounded-2xl
+
+                      flex
+                      items-center
+                      justify-center
+
+                      shadow-[0_0_25px_rgba(168,85,247,0.12)]
+
+                      ${
+                        item.danger
+                          ? "bg-red-500/10 text-red-400"
+                          : "bg-fuchsia-500/10 text-fuchsia-400"
+                      }
+                      `}
+                    >
+
+                      <Icon size={24} />
+
+                    </div>
+
+                    {/* TITLE */}
+
+                    <span
+                      className={`
+                      text-[1.05rem]
+                      font-medium
+
+                      ${
+                        item.danger
+                          ? "text-red-400"
+                          : "text-white"
+                      }
+                      `}
+                    >
+
+                      {item.title}
+
+                    </span>
+
+                  </div>
+
+                  <ChevronRight
+                    size={24}
+                    className={
+                      item.danger
+                        ? "text-red-400"
+                        : "text-zinc-500"
+                    }
+                  />
+
+                </button>
+
+              );
+
+            }
+          )}
+
+        </motion.section>
+
+        {/* THEMES */}
+
+        <AnimatePresence>
+
+          {showThemes && (
+
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              exit={{
+                opacity: 0,
+                y: 20,
+              }}
+              className="
+              mt-6
+
+              rounded-[34px]
+
+              border border-white/10
+
+              bg-white/[0.04]
+
+              backdrop-blur-2xl
+
+              p-6
+              "
+            >
+
+              <div
+                className="
+                flex
+                items-center
+
+                gap-3
+
+                mb-6
+                "
+              >
+
+                <Palette
                   className="
-                  absolute inset-[-18px]
-
-                  rounded-full
-
-                  border border-white/10
+                  text-fuchsia-400
                   "
                 />
 
+                <h2
+                  className="
+                  text-3xl
+
+                  font-black
+
+                  tracking-[-0.05em]
+                  "
+                >
+                  Themes
+                </h2>
+
               </div>
 
-            </div>
-
-            {/* CENTER */}
-
-            <div>
-
-              <p
+              <div
                 className="
-                uppercase
-
-                tracking-[0.45em]
-
-                text-fuchsia-400
-
-                text-xs
-
-                mb-5
+                flex
+                gap-5
                 "
               >
 
-                Future Identity System
+                {[
+                  {
+                    id: "purple",
+                    color:
+                      "from-fuchsia-500 to-purple-500",
+                  },
 
-              </p>
+                  {
+                    id: "cyan",
+                    color:
+                      "from-cyan-400 to-blue-500",
+                  },
 
-              <h1
+                  {
+                    id: "sunset",
+                    color:
+                      "from-orange-400 to-red-500",
+                  },
+
+                ].map(
+                  (theme) => (
+
+                    <button
+                      key={theme.id}
+                      onClick={() =>
+                        setSelectedTheme(
+                          theme.id
+                        )
+                      }
+                      className={`
+                      relative
+
+                      w-24
+                      h-24
+
+                      rounded-[28px]
+
+                      bg-gradient-to-br
+                      ${theme.color}
+
+                      shadow-[0_0_35px_rgba(255,255,255,0.12)]
+
+                      transition-all
+
+                      duration-300
+
+                      hover:scale-105
+                      `}
+                    >
+
+                      {selectedTheme ===
+                        theme.id && (
+
+                        <Check
+                          className="
+                          absolute
+
+                          top-3
+                          right-3
+
+                          text-white
+                          "
+                        />
+
+                      )}
+
+                    </button>
+
+                  )
+                )}
+
+              </div>
+
+            </motion.div>
+
+          )}
+
+        </AnimatePresence>
+
+        {/* SUPPORT */}
+
+        <AnimatePresence>
+
+          {showSupport && (
+
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              exit={{
+                opacity: 0,
+                y: 20,
+              }}
+              className="
+              mt-6
+
+              rounded-[34px]
+
+              border border-white/10
+
+              bg-white/[0.04]
+
+              backdrop-blur-2xl
+
+              overflow-hidden
+              "
+            >
+
+              {[
+                {
+                  title:
+                    "Contact Us",
+                  icon:
+                    MessageCircle,
+                },
+
+                {
+                  title:
+                    "Feedback",
+                  icon:
+                    Headphones,
+                },
+
+                {
+                  title:
+                    "About StudentPath",
+                  icon: Info,
+                },
+
+              ].map((item) => {
+
+                const Icon =
+                  item.icon;
+
+                return (
+
+                  <button
+                    key={item.title}
+                    className="
+                    w-full
+
+                    flex
+                    items-center
+                    justify-between
+
+                    px-5
+                    py-5
+
+                    border-b
+                    border-white/5
+
+                    hover:bg-white/[0.03]
+
+                    transition-all
+                    "
+                  >
+
+                    <div
+                      className="
+                      flex
+                      items-center
+
+                      gap-4
+                      "
+                    >
+
+                      <div
+                        className="
+                        w-14 h-14
+
+                        rounded-2xl
+
+                        bg-cyan-500/10
+
+                        flex
+                        items-center
+                        justify-center
+
+                        text-cyan-400
+                        "
+                      >
+
+                        <Icon
+                          size={24}
+                        />
+
+                      </div>
+
+                      <span
+                        className="
+                        text-white
+                        text-lg
+                        "
+                      >
+
+                        {item.title}
+
+                      </span>
+
+                    </div>
+
+                    <ChevronRight
+                      size={24}
+                      className="
+                      text-zinc-500
+                      "
+                    />
+
+                  </button>
+
+                );
+
+              })}
+
+            </motion.div>
+
+          )}
+
+        </AnimatePresence>
+
+      </section>
+
+      {/* LOGOUT MODAL */}
+
+      <AnimatePresence>
+
+        {showLogout && (
+
+          <motion.div
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            exit={{
+              opacity: 0,
+            }}
+            className="
+            fixed inset-0
+
+            bg-black/70
+
+            backdrop-blur-md
+
+            z-50
+
+            flex
+            items-center
+            justify-center
+
+            px-6
+            "
+          >
+
+            <motion.div
+              initial={{
+                scale: 0.9,
+                opacity: 0,
+              }}
+              animate={{
+                scale: 1,
+                opacity: 1,
+              }}
+              exit={{
+                scale: 0.9,
+                opacity: 0,
+              }}
+              className="
+              w-full
+              max-w-sm
+
+              rounded-[34px]
+
+              border border-white/10
+
+              bg-[#0b1020]
+
+              p-7
+
+              shadow-[0_0_70px_rgba(168,85,247,0.25)]
+              "
+            >
+
+              <div
                 className="
-                text-5xl
-                md:text-7xl
+                w-20
+                h-20
+
+                rounded-full
+
+                mx-auto
+
+                bg-red-500/10
+
+                flex
+                items-center
+                justify-center
+
+                text-red-400
+
+                mb-6
+                "
+              >
+
+                <Shield size={38} />
+
+              </div>
+
+              <h2
+                className="
+                text-3xl
 
                 font-black
 
-                leading-[0.9]
+                text-center
 
-                tracking-[-0.06em]
+                tracking-[-0.05em]
                 "
               >
 
-                GOVINDA
+                Logout?
 
-              </h1>
+              </h2>
 
               <p
                 className="
-                mt-5
+                text-zinc-400
 
-                text-xl
-                md:text-2xl
+                text-center
 
-                text-zinc-300
+                mt-3
+
+                leading-relaxed
                 "
               >
 
-                Future Systems Architect
+                Are you sure you want
+                to log out from your
+                StudentPath account?
 
               </p>
 
               <div
                 className="
                 flex
-                flex-wrap
-
                 gap-4
 
                 mt-8
                 "
               >
 
-                <div
+                <button
+                  onClick={() =>
+                    setShowLogout(
+                      false
+                    )
+                  }
                   className="
-                  px-5 py-3
+                  flex-1
 
-                  rounded-full
+                  h-14
 
-                  border border-fuchsia-500/20
-
-                  bg-fuchsia-500/10
-
-                  text-fuchsia-300
-
-                  text-sm
-                  "
-                >
-
-                  LEVEL 12
-
-                </div>
-
-                <div
-                  className="
-                  px-5 py-3
-
-                  rounded-full
-
-                  border border-cyan-500/20
-
-                  bg-cyan-500/10
-
-                  text-cyan-300
-
-                  text-sm
-                  "
-                >
-
-                  AI SYNC ACTIVE
-
-                </div>
-
-              </div>
-
-            </div>
-
-            {/* RIGHT */}
-
-            <div
-              className="
-              grid
-
-              grid-cols-2
-              xl:grid-cols-1
-
-              gap-5
-              "
-            >
-
-              {[
-                ["82%", "Future Readiness"],
-                ["14", "Active Missions"],
-                ["247", "Signals Processed"],
-                ["9", "Saved Futures"],
-              ].map(([value, label]) => (
-
-                <div
-                  key={label}
-                  className="
-                  rounded-[28px]
+                  rounded-2xl
 
                   border border-white/10
 
-                  bg-white/[0.03]
+                  bg-white/[0.04]
 
-                  p-5
+                  font-semibold
+
+                  hover:bg-white/[0.08]
+
+                  transition-all
                   "
                 >
 
-                  <h3
-                    className="
-                    text-3xl
+                  Cancel
 
-                    font-black
-                    "
-                  >
+                </button>
 
-                    {value}
+                <button
+                  onClick={
+                    handleLogout
+                  }
+                  className="
+                  flex-1
 
-                  </h3>
+                  h-14
 
-                  <p
-                    className="
-                    mt-2
+                  rounded-2xl
 
-                    text-sm
+                  bg-gradient-to-r
+                  from-red-500
+                  to-red-600
 
-                    text-zinc-400
-                    "
-                  >
+                  font-semibold
 
-                    {label}
+                  shadow-[0_0_30px_rgba(239,68,68,0.35)]
 
-                  </p>
+                  hover:scale-[1.02]
 
-                </div>
+                  transition-all
+                  "
+                >
 
-              ))}
+                  Logout
 
-            </div>
-
-          </div>
-
-        </section>
-
-        {/* MAIN GRID */}
-
-        <section
-          className="
-          grid
-
-          grid-cols-1
-          xl:grid-cols-[1.1fr_0.9fr]
-
-          gap-8
-
-          mt-8
-          "
-        >
-
-          {/* LEFT SIDE */}
-
-          <div className="space-y-8">
-
-            {/* AI CORE */}
-
-            <section
-              className="
-              rounded-[36px]
-
-              border border-white/10
-
-              bg-white/[0.04]
-
-              backdrop-blur-2xl
-
-              p-8
-              "
-            >
-
-              <p
-                className="
-                uppercase
-
-                tracking-[0.35em]
-
-                text-fuchsia-400
-
-                text-xs
-
-                mb-6
-                "
-              >
-
-                AI Core Analysis
-
-              </p>
-
-              <div className="space-y-5">
-
-                {[
-                  "Strongest alignment toward AI + Robotics",
-                  "Visual analytical learning behavior detected",
-                  "High future adaptability score",
-                ].map((item) => (
-
-                  <div
-                    key={item}
-                    className="
-                    rounded-2xl
-
-                    border border-white/10
-
-                    bg-white/[0.03]
-
-                    p-5
-
-                    text-zinc-300
-                    "
-                  >
-
-                    {item}
-
-                  </div>
-
-                ))}
+                </button>
 
               </div>
 
-            </section>
+            </motion.div>
 
-            {/* MISSION TRACKER */}
+          </motion.div>
 
-            <section
-              className="
-              rounded-[36px]
+        )}
 
-              border border-white/10
-
-              bg-white/[0.04]
-
-              backdrop-blur-2xl
-
-              p-8
-              "
-            >
-
-              <p
-                className="
-                uppercase
-
-                tracking-[0.35em]
-
-                text-cyan-400
-
-                text-xs
-
-                mb-6
-                "
-              >
-
-                Mission Tracker
-
-              </p>
-
-              <div className="space-y-5">
-
-                {[
-                  ["Advanced React System", "72%"],
-                  ["Machine Learning Core", "41%"],
-                  ["AI Portfolio Building", "18%"],
-                ].map(([title, progress]) => (
-
-                  <div
-                    key={title}
-                    className="
-                    rounded-2xl
-
-                    border border-white/10
-
-                    bg-white/[0.03]
-
-                    p-5
-                    "
-                  >
-
-                    <div className="flex justify-between">
-
-                      <h3 className="font-semibold">
-                        {title}
-                      </h3>
-
-                      <p className="text-zinc-400">
-                        {progress}
-                      </p>
-
-                    </div>
-
-                    <div
-                      className="
-                      h-2
-
-                      rounded-full
-
-                      bg-white/10
-
-                      overflow-hidden
-
-                      mt-4
-                      "
-                    >
-
-                      <div
-                        className="
-                        h-full
-
-                        rounded-full
-
-                        bg-gradient-to-r
-                        from-fuchsia-500
-                        to-cyan-500
-                        "
-                        style={{
-                          width: progress,
-                        }}
-                      />
-
-                    </div>
-
-                  </div>
-
-                ))}
-
-              </div>
-
-            </section>
-
-          </div>
-
-          {/* RIGHT SIDE */}
-
-          <div className="space-y-8">
-
-            {/* SAVED FUTURES */}
-
-            <section
-              className="
-              rounded-[36px]
-
-              border border-white/10
-
-              bg-white/[0.04]
-
-              backdrop-blur-2xl
-
-              p-8
-              "
-            >
-
-              <p
-                className="
-                uppercase
-
-                tracking-[0.35em]
-
-                text-fuchsia-400
-
-                text-xs
-
-                mb-6
-                "
-              >
-
-                Saved Futures
-
-              </p>
-
-              <div className="space-y-5">
-
-                {[
-                  "AI Engineer",
-                  "XR Developer",
-                  "Space Systems Engineer",
-                ].map((career) => (
-
-                  <div
-                    key={career}
-                    className="
-                    rounded-2xl
-
-                    border border-white/10
-
-                    bg-white/[0.03]
-
-                    p-5
-
-                    flex
-                    items-center
-                    justify-between
-                    "
-                  >
-
-                    <div>
-
-                      <h3 className="font-semibold">
-                        {career}
-                      </h3>
-
-                      <p
-                        className="
-                        text-zinc-400
-
-                        text-sm
-
-                        mt-1
-                        "
-                      >
-
-                        Future Career Path
-
-                      </p>
-
-                    </div>
-
-                    <div
-                      className="
-                      w-3 h-3
-
-                      rounded-full
-
-                      bg-fuchsia-400
-                      "
-                    />
-
-                  </div>
-
-                ))}
-
-              </div>
-
-            </section>
-
-            {/* RECENT SIGNALS */}
-
-            <section
-              className="
-              rounded-[36px]
-
-              border border-white/10
-
-              bg-white/[0.04]
-
-              backdrop-blur-2xl
-
-              p-8
-              "
-            >
-
-              <p
-                className="
-                uppercase
-
-                tracking-[0.35em]
-
-                text-cyan-400
-
-                text-xs
-
-                mb-6
-                "
-              >
-
-                Recent Signals
-
-              </p>
-
-              <div className="space-y-5">
-
-                {[
-                  "Viewed Neural Interface Designer",
-                  "AI Mentor suggested Cybersecurity",
-                  "Explored Robotics Engineering",
-                ].map((signal) => (
-
-                  <div
-                    key={signal}
-                    className="
-                    rounded-2xl
-
-                    border border-white/10
-
-                    bg-white/[0.03]
-
-                    p-5
-
-                    text-zinc-300
-                    "
-                  >
-
-                    {signal}
-
-                  </div>
-
-                ))}
-
-              </div>
-
-            </section>
-
-          </div>
-
-        </section>
-
-      </section>
+      </AnimatePresence>
 
     </main>
 

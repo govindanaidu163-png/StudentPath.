@@ -11,7 +11,12 @@ import {
   User,
   LogOut,
   LayoutDashboard,
+  Menu,
+  X,
 } from "lucide-react";
+
+import { motion, AnimatePresence }
+from "framer-motion";
 
 import { supabaseAuth }
 from "@/lib/auth";
@@ -27,12 +32,15 @@ export default function Navbar() {
   const [open, setOpen] =
     useState(false);
 
+  const [mobileMenu, setMobileMenu] =
+    useState(false);
+
   useEffect(() => {
 
     const handleScroll = () => {
 
       setScrolled(
-        window.scrollY > 50
+        window.scrollY > 40
       );
 
     };
@@ -85,320 +93,509 @@ export default function Navbar() {
 
   return (
 
-    <header
-      className={`
-      fixed
-      top-0
-      left-0
-      w-full
-      z-50
-      transition-all
-      duration-500
-      ease-out
+    <>
 
-      ${
-        scrolled
-          ? `
-          bg-white/[0.06]
-          backdrop-blur-2xl
-          border-b
-          border-white/[0.08]
-          shadow-[0_4px_60px_rgba(0,0,0,0.4)]
-          `
-          : `
-          bg-transparent
-          border-b
-          border-transparent
-          `
-      }
-      `}
-    >
+      {/* NAVBAR */}
 
-      <nav
-        className="
+      <header
+        className={`
+        fixed
+        top-0
+        left-0
         w-full
-        px-8
-        lg:px-12
-        py-5
-        flex
-        items-center
-        justify-between
-        "
+        z-50
+        transition-all
+        duration-500
+        ease-out
+
+        ${
+          scrolled
+            ? `
+            bg-black/40
+            backdrop-blur-lg
+            border-b
+            border-white/[0.06]
+            shadow-[0_4px_50px_rgba(0,0,0,0.35)]
+            `
+            : `
+            bg-transparent
+            border-b
+            border-transparent
+            `
+        }
+        `}
       >
 
-        {/* LEFT */}
+        <nav
+          className="
+          w-full
+          px-5
+          sm:px-6
+          md:px-10
+          lg:px-12
+          py-4
+          flex
+          items-center
+          justify-between
+          "
+        >
 
-        <div className="flex-1">
+          {/* LOGO */}
 
           <Link
             href="/"
             className="
-            text-3xl
+            text-[1.65rem]
+            sm:text-3xl
             font-black
             text-white
             tracking-tight
+            relative
+            z-50
             "
           >
 
             StudentPath
 
-            <span className="text-fuchsia-500 ml-1">
+            <span
+              className="
+              text-fuchsia-500
+              ml-1
+              "
+            >
               ✦
             </span>
 
           </Link>
 
-        </div>
+          {/* DESKTOP NAV */}
 
-        {/* CENTER */}
-
-        <div
-          className="
-          hidden
-          lg:flex
-          items-center
-          gap-10
-          "
-        >
-
-          <Link
-            href="/about"
+          <div
             className="
-            text-zinc-300
-            hover:text-white
-            transition
-            duration-300
+            hidden
+            lg:flex
+            items-center
+            gap-10
             "
           >
-            About
-          </Link>
-
-          <Link
-            href="/explore"
-            className="
-            text-zinc-300
-            hover:text-white
-            transition
-            duration-300
-            "
-          >
-            Careers
-          </Link>
-
-          <Link
-            href="/mentor"
-            className="
-            text-zinc-300
-            hover:text-white
-            transition
-            duration-300
-            "
-          >
-            AI Mentor
-          </Link>
-
-          <Link
-            href="/future"
-            className="
-            text-zinc-300
-            hover:text-white
-            transition
-            duration-300
-            "
-          >
-            Future
-          </Link>
-
-        </div>
-
-        {/* RIGHT */}
-
-        <div
-          className="
-          flex-1
-          flex
-          items-center
-          justify-end
-          gap-5
-          "
-        >
-
-          {/* LOGGED OUT */}
-
-          {!user && (
 
             <Link
-              href="/auth"
+              href="/about"
               className="
-              px-6
-              py-3
-              rounded-full
-              bg-gradient-to-r
-              from-fuchsia-600
-              to-purple-600
-              text-white
-              font-medium
-              hover:scale-105
+              text-zinc-300
+              hover:text-white
               transition
               duration-300
-              shadow-[0_0_30px_rgba(217,70,239,0.35)]
               "
             >
-              Get Started
+              About
             </Link>
 
-          )}
+            <Link
+              href="/explore"
+              className="
+              text-zinc-300
+              hover:text-white
+              transition
+              duration-300
+              "
+            >
+              Careers
+            </Link>
 
-          {/* LOGGED IN */}
+            <Link
+              href="/mentor"
+              className="
+              text-zinc-300
+              hover:text-white
+              transition
+              duration-300
+              "
+            >
+              AI Mentor
+            </Link>
 
-          {user && (
+            <Link
+              href="/future"
+              className="
+              text-zinc-300
+              hover:text-white
+              transition
+              duration-300
+              "
+            >
+              Future
+            </Link>
 
-            <div className="relative">
+          </div>
 
-              {/* AVATAR */}
+          {/* RIGHT SIDE */}
 
-              <button
-                onClick={() =>
-                  setOpen(!open)
-                }
+          <div
+            className="
+            flex
+            items-center
+            gap-3
+            "
+          >
+
+            {/* DESKTOP CTA */}
+
+            {!user && (
+
+              <Link
+                href="/auth"
                 className="
-                w-12
-                h-12
+                hidden
+                md:flex
+                px-6
+                py-3
                 rounded-full
-                border
-                border-white/10
-                bg-white/[0.06]
-                backdrop-blur-xl
-                flex
-                items-center
-                justify-center
-                hover:bg-white/[0.1]
+                bg-gradient-to-r
+                from-fuchsia-600
+                to-purple-600
+                text-white
+                font-medium
+                hover:scale-105
                 transition
+                duration-300
+                shadow-[0_0_30px_rgba(217,70,239,0.25)]
                 "
               >
+                Get Started
+              </Link>
 
-                <User size={20} />
+            )}
 
-              </button>
+            {/* USER */}
 
-              {/* DROPDOWN */}
+            {user && (
 
-              {open && (
+              <div className="relative">
 
-                <div
+                <button
+                  onClick={() =>
+                    setOpen(!open)
+                  }
                   className="
-                  absolute
-                  right-0
-                  mt-4
-                  w-[280px]
-                  overflow-hidden
-                  rounded-[28px]
+                  w-11
+                  h-11
+                  rounded-full
                   border
                   border-white/10
-                  bg-black/80
-                  backdrop-blur-2xl
-                  shadow-[0_0_60px_rgba(0,0,0,0.5)]
+                  bg-white/[0.05]
+                  backdrop-blur-lg
+                  flex
+                  items-center
+                  justify-center
+                  hover:bg-white/[0.08]
+                  transition
                   "
                 >
 
-                  {/* USER */}
+                  <User size={18} />
+
+                </button>
+
+                {/* USER DROPDOWN */}
+
+                {open && (
 
                   <div
                     className="
-                    p-5
-                    border-b
+                    absolute
+                    right-0
+                    mt-4
+                    w-[260px]
+                    overflow-hidden
+                    rounded-[26px]
+                    border
                     border-white/10
+                    bg-black/80
+                    backdrop-blur-2xl
+                    shadow-[0_0_60px_rgba(0,0,0,0.45)]
                     "
                   >
 
-                    <p
+                    <div
                       className="
-                      text-zinc-500
-                      text-sm
-                      mb-2
+                      p-5
+                      border-b
+                      border-white/10
                       "
                     >
-                      Signed in as
-                    </p>
 
-                    <p
-                      className="
-                      text-white
-                      break-all
-                      "
-                    >
-                      {user.email}
-                    </p>
+                      <p
+                        className="
+                        text-zinc-500
+                        text-sm
+                        mb-2
+                        "
+                      >
+                        Signed in as
+                      </p>
+
+                      <p
+                        className="
+                        text-white
+                        break-all
+                        "
+                      >
+                        {user.email}
+                      </p>
+
+                    </div>
+
+                    <div className="p-3">
+
+                      <Link
+                        href="/explore"
+                        className="
+                        flex
+                        items-center
+                        gap-3
+                        px-4
+                        py-4
+                        rounded-2xl
+                        hover:bg-white/[0.06]
+                        transition
+                        "
+                      >
+
+                        <LayoutDashboard
+                          size={18}
+                        />
+
+                        Explore
+
+                      </Link>
+
+                      <button
+                        onClick={
+                          handleLogout
+                        }
+                        className="
+                        w-full
+                        flex
+                        items-center
+                        gap-3
+                        px-4
+                        py-4
+                        rounded-2xl
+                        hover:bg-red-500/10
+                        text-red-400
+                        transition
+                        "
+                      >
+
+                        <LogOut
+                          size={18}
+                        />
+
+                        Logout
+
+                      </button>
+
+                    </div>
 
                   </div>
 
-                  {/* LINKS */}
+                )}
 
-                  <div className="p-3">
+              </div>
 
-                    <Link
-                      href="/explore"
-                      className="
-                      flex
-                      items-center
-                      gap-3
-                      px-4
-                      py-4
-                      rounded-2xl
-                      hover:bg-white/[0.06]
-                      transition
-                      "
-                    >
+            )}
 
-                      <LayoutDashboard
-                        size={18}
-                      />
+            {/* MOBILE MENU BUTTON */}
 
-                      Explore
+            <button
+              onClick={() =>
+                setMobileMenu(
+                  !mobileMenu
+                )
+              }
+              className="
+              lg:hidden
+              w-11
+              h-11
+              rounded-full
+              border
+              border-white/10
+              bg-white/[0.05]
+              backdrop-blur-lg
+              flex
+              items-center
+              justify-center
+              text-white
+              relative
+              z-50
+              "
+            >
 
-                    </Link>
+              {mobileMenu ? (
+                <X size={20} />
+              ) : (
+                <Menu size={20} />
+              )}
 
-                    <button
-                      onClick={
-                        handleLogout
-                      }
-                      className="
-                      w-full
-                      flex
-                      items-center
-                      gap-3
-                      px-4
-                      py-4
-                      rounded-2xl
-                      hover:bg-red-500/10
-                      text-red-400
-                      transition
-                      "
-                    >
+            </button>
 
-                      <LogOut
-                        size={18}
-                      />
+          </div>
 
-                      Logout
+        </nav>
 
-                    </button>
+      </header>
 
-                  </div>
+      {/* MOBILE MENU OVERLAY */}
 
-                </div>
+      <AnimatePresence>
+
+        {mobileMenu && (
+
+          <motion.div
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            exit={{
+              opacity: 0,
+            }}
+            transition={{
+              duration: 0.35,
+            }}
+            className="
+            fixed
+            inset-0
+            z-40
+            bg-black/90
+            backdrop-blur-xl
+            flex
+            flex-col
+            items-center
+            justify-center
+            px-8
+            "
+          >
+
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 50,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              exit={{
+                opacity: 0,
+                y: 40,
+              }}
+              transition={{
+                duration: 0.45,
+                ease: "easeOut",
+              }}
+              className="
+              flex
+              flex-col
+              items-center
+              gap-8
+              text-center
+              "
+            >
+
+              <Link
+                href="/about"
+                onClick={() =>
+                  setMobileMenu(false)
+                }
+                className="
+                text-3xl
+                font-bold
+                text-white
+                "
+              >
+                About
+              </Link>
+
+              <Link
+                href="/explore"
+                onClick={() =>
+                  setMobileMenu(false)
+                }
+                className="
+                text-3xl
+                font-bold
+                text-white
+                "
+              >
+                Careers
+              </Link>
+
+              <Link
+                href="/mentor"
+                onClick={() =>
+                  setMobileMenu(false)
+                }
+                className="
+                text-3xl
+                font-bold
+                text-white
+                "
+              >
+                AI Mentor
+              </Link>
+
+              <Link
+                href="/future"
+                onClick={() =>
+                  setMobileMenu(false)
+                }
+                className="
+                text-3xl
+                font-bold
+                text-white
+                "
+              >
+                Future
+              </Link>
+
+              {!user && (
+
+                <Link
+                  href="/auth"
+                  onClick={() =>
+                    setMobileMenu(false)
+                  }
+                  className="
+                  mt-6
+                  px-8
+                  py-4
+                  rounded-full
+                  bg-gradient-to-r
+                  from-fuchsia-600
+                  to-purple-600
+                  text-white
+                  font-semibold
+                  text-lg
+                  shadow-[0_0_40px_rgba(217,70,239,0.35)]
+                  "
+                >
+                  Get Started
+                </Link>
 
               )}
 
-            </div>
+            </motion.div>
 
-          )}
+          </motion.div>
 
-        </div>
+        )}
 
-      </nav>
+      </AnimatePresence>
 
-    </header>
+    </>
 
   );
 
