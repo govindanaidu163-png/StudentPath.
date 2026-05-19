@@ -8,8 +8,6 @@ import TrendingHero from "@/components/TrendingCareerCard";
 import {
   Briefcase,
   GraduationCap,
-  Compass,
-  Bot,
 } from "lucide-react";
 
 export default async function ExplorePage() {
@@ -147,441 +145,440 @@ export default async function ExplorePage() {
 
         {/* NAVBAR */}
 
-        <DashboardNavbar />
+        <header
+  className="
+  fixed
+  top-0
+  left-0
+  right-0
 
-        {/* HERO SECTION */}
+  z-[9999]
+
+  backdrop-blur-2xl
+
+  bg-[#030014]/75
+
+  border-b border-white/5
+  "
+>
+  <DashboardNavbar />
+</header>
+
+<div className="h-[160px] md:h-[90px]" />
+
+{/* TRENDING SECTION */}
+
+        {/* TRENDING HERO */}
 
         <section
           className="
           relative
           z-10
 
-          px-4
-          md:px-8
+          md:px-0
 
-          pt-4
-          md:pt-8
+          pt-0
 
-          pb-10
+          mb-14 md:mb-0
           "
         >
 
-          <div className="relative z-10">
+          {/* MOBILE */}
 
-            {/* MOBILE */}
+          <div className="md:hidden px-4 pt-4">
 
-            <div
-              className="
-              md:hidden
-              px-1
-              "
-            >
+            <TrendingHero
+              careers={careers}
+            />
 
-              {/* EXPLORE SECTION */}
+          </div>
 
-              <section
-                className="
-                rounded-[34px]
+          {/* DESKTOP */}
 
-                border border-white/10
+          <div className="hidden md:block">
 
-                bg-white/[0.03]
-
-                backdrop-blur-2xl
-
-                p-5
-
-                mb-7
-
-                shadow-[0_0_50px_rgba(168,85,247,0.06)]
-                "
-              >
-
-                {/* TITLE */}
-
-                <div
-                  className="
-                  flex
-                  items-center
-                  justify-between
-
-                  mb-5
-                  "
-                >
-
-                  <h2
-                    className="
-                    text-[1.5rem]
-
-                    font-bold
-
-                    tracking-[-0.04em]
-
-                    leading-none
-                    "
-                  >
-
-                    Explore
-
-                  </h2>
-
-                  <button
-                    className="
-                    text-fuchsia-400
-
-                    text-sm
-
-                    font-medium
-                    "
-                  >
-
-                    Show all
-
-                  </button>
-
-                </div>
-
-                {/* GRID */}
-
-                <div
-                  className="
-                  grid
-                  grid-cols-4
-
-                  gap-4
-                  "
-                >
-
-                  {/* CAREERS */}
-
-                  <Link
-                    href="/explore"
-                    className="
-                    text-center
-
-                    group
-                    "
-                  >
-
-                    <div
-                      className="
-                      aspect-square
-
-                      rounded-[24px]
-
-                      border border-white/10
-
-                      bg-[#0b1020]
-
-                      flex items-center justify-center
-
-                      mb-3
-
-                      transition-all
-                      duration-300
-
-                      group-hover:scale-105
-
-                      group-hover:border-fuchsia-500/30
-
-                      shadow-[0_0_30px_rgba(168,85,247,0.06)]
-                      "
-                    >
-
-                      <Briefcase
-                        size={28}
-                        className="
-                        text-fuchsia-400
-                        "
-                      />
-
-                    </div>
-
-                    <p className="text-sm">
-                      Careers
-                    </p>
-
-                  </Link>
-
-                  {/* EXAMS */}
-
-                  <Link
-                    href="/exams"
-                    className="
-                    text-center
-
-                    group
-                    "
-                  >
-
-                    <div
-                      className="
-                      aspect-square
-
-                      rounded-[24px]
-
-                      border border-white/10
-
-                      bg-[#0b1020]
-
-                      flex items-center justify-center
-
-                      mb-3
-
-                      transition-all
-                      duration-300
-
-                      group-hover:scale-105
-
-                      group-hover:border-cyan-500/30
-                      "
-                    >
-
-                      <GraduationCap
-                        size={28}
-                        className="
-                        text-cyan-400
-                        "
-                      />
-
-                    </div>
-
-                    <p className="text-sm">
-                      Exams
-                    </p>
-
-                  </Link>
-
-                  {/* GUIDE PATH */}
-
-                  <Link
-                    href="/guide-path"
-                    className="
-                    text-center
-
-                    group
-                    "
-                  >
-
-                    <div
-                      className="
-                      aspect-square
-
-                      rounded-[24px]
-
-                      border border-white/10
-
-                      bg-[#0b1020]
-
-                      flex items-center justify-center
-
-                      mb-3
-
-                      transition-all
-                      duration-300
-
-                      group-hover:scale-105
-
-                      group-hover:border-purple-500/30
-                      "
-                    >
-
-                      <Compass
-                        size={28}
-                        className="
-                        text-purple-400
-                        "
-                      />
-
-                    </div>
-
-                    <p className="text-sm">
-                      Guide
-                    </p>
-
-                  </Link>
-
-                  {/* AI */}
-
-                  <Link
-                    href="/mentor"
-                    className="
-                    text-center
-
-                    group
-                    "
-                  >
-
-                    <div
-                      className="
-                      aspect-square
-
-                      rounded-[24px]
-
-                      border border-white/10
-
-                      bg-[#0b1020]
-
-                      flex items-center justify-center
-
-                      mb-3
-
-                      transition-all
-                      duration-300
-
-                      group-hover:scale-105
-
-                      group-hover:border-fuchsia-500/30
-                      "
-                    >
-
-                      <Bot
-                        size={28}
-                        className="
-                        text-fuchsia-400
-                        "
-                      />
-
-                    </div>
-
-                    <p className="text-sm">
-                      AI Mentor
-                    </p>
-
-                  </Link>
-
-                </div>
-
-              </section>
-
-              {/* TRENDING */}
-
-              <div className="mb-8">
-
-                <TrendingHero
-                  careers={careers}
-                />
-
-              </div>
-
-            </div>
-
-            {/* DESKTOP */}
-
-            <div className="hidden md:block">
-
-              <TrendingHero
-                careers={careers}
-              />
-
-            </div>
+            <TrendingHero
+              careers={careers}
+            />
 
           </div>
 
         </section>
+
+        {/* MOBILE QUICK ACTIONS */}
+
+        <div
+          className="
+          md:hidden
+
+          px-4
+
+          -mt-8
+
+          relative
+          z-30
+
+          mb-8
+          "
+        >
+
+          <div
+            className="
+            flex
+            items-start
+
+            gap-5
+
+            overflow-x-auto
+
+            scrollbar-hide
+
+            pb-2
+            "
+          >
+
+            {/* CAREERS */}
+
+            <Link
+              href="/explore"
+              className="
+              flex-shrink-0
+
+              text-center
+
+              group
+              "
+            >
+
+              <div
+                className="
+                relative
+
+                w-20 h-20
+
+                rounded-full
+
+                p-[2px]
+
+                bg-gradient-to-r
+                from-fuchsia-500
+                to-purple-500
+
+                shadow-[0_0_25px_rgba(217,70,239,0.35)]
+
+                transition-all
+                duration-300
+
+                group-hover:scale-105
+                "
+              >
+
+                <div
+                  className="
+                  w-full h-full
+
+                  rounded-full
+
+                  bg-[#0b1020]
+
+                  flex items-center justify-center
+                  "
+                >
+
+                  <Briefcase
+                    size={30}
+                    className="text-fuchsia-400"
+                  />
+
+                </div>
+
+              </div>
+
+              <p
+                className="
+                mt-3
+
+                text-sm
+
+                font-medium
+                "
+              >
+
+                Careers
+
+              </p>
+
+            </Link>
+
+            {/* EXAMS */}
+
+            <Link
+              href="/explore/exams"
+              className="
+              flex-shrink-0
+
+              text-center
+
+              group
+              "
+            >
+
+              <div
+                className="
+                relative
+
+                w-20 h-20
+
+                rounded-full
+
+                p-[2px]
+
+                bg-gradient-to-r
+                from-cyan-500
+                to-blue-500
+
+                shadow-[0_0_25px_rgba(34,211,238,0.35)]
+
+                transition-all
+                duration-300
+
+                group-hover:scale-105
+                "
+              >
+
+                <div
+                  className="
+                  w-full h-full
+
+                  rounded-full
+
+                  bg-[#0b1020]
+
+                  flex items-center justify-center
+                  "
+                >
+
+                  <GraduationCap
+                    size={30}
+                    className="text-cyan-400"
+                  />
+
+                </div>
+
+              </div>
+
+              <p
+                className="
+                mt-3
+
+                text-sm
+
+                font-medium
+                "
+              >
+
+                Exams
+
+              </p>
+
+            </Link>
+
+            {/* COLLEGES */}
+
+            <Link
+              href="/explore/colleges"
+              className="
+              flex-shrink-0
+
+              text-center
+
+              group
+              "
+            >
+
+              <div
+                className="
+                relative
+
+                w-20 h-20
+
+                rounded-full
+
+                p-[2px]
+
+                bg-gradient-to-r
+                from-orange-500
+                to-pink-500
+
+                shadow-[0_0_25px_rgba(249,115,22,0.35)]
+
+                transition-all
+                duration-300
+
+                group-hover:scale-105
+                "
+              >
+
+                <div
+                  className="
+                  w-full h-full
+
+                  rounded-full
+
+                  bg-[#0b1020]
+
+                  flex items-center justify-center
+
+                  text-3xl
+                  "
+                >
+
+                  🏫
+
+                </div>
+
+              </div>
+
+              <p
+                className="
+                mt-3
+
+                text-sm
+
+                font-medium
+                "
+              >
+
+                Colleges
+
+              </p>
+
+            </Link>
+
+            {/* SKILLS */}
+
+            <Link
+              href="/explore/skills"
+              className="
+              flex-shrink-0
+
+              text-center
+
+              group
+              "
+            >
+
+              <div
+                className="
+                relative
+
+                w-20 h-20
+
+                rounded-full
+
+                p-[2px]
+
+                bg-gradient-to-r
+                from-yellow-400
+                to-fuchsia-500
+
+                shadow-[0_0_25px_rgba(234,179,8,0.35)]
+
+                transition-all
+                duration-300
+
+                group-hover:scale-105
+                "
+              >
+
+                <div
+                  className="
+                  w-full h-full
+
+                  rounded-full
+
+                  bg-[#0b1020]
+
+                  flex items-center justify-center
+
+                  text-3xl
+                  "
+                >
+
+                  💡
+
+                </div>
+
+              </div>
+
+              <p
+                className="
+                mt-3
+
+                text-sm
+
+                font-medium
+                "
+              >
+
+                Skills
+
+              </p>
+
+            </Link>
+
+          </div>
+
+        </div>
 
         {/* CAREER ROWS */}
 
         <section
           className="
           relative
-          z-10
+          z-20
 
           px-4
           md:px-8
 
+          md:-mt-[120px]
+
           pb-32
           md:pb-24
 
-          space-y-10
+          space-y-5
           "
         >
 
-          {/* NETFLIX EFFECT WRAPPER */}
+          <CareerRow
+            category="Technology & AI"
+            careers={technologyCareers}
+          />
 
-          <div
-            className="
-            transition-all
-            duration-500
-            "
-          >
+          <CareerRow
+            category="Engineering & Robotics"
+            careers={engineeringCareers}
+          />
 
-            <CareerRow
-              category="💻 Technology & AI"
-              careers={technologyCareers}
-            />
+          <CareerRow
+            category="Design & Creative"
+            careers={designCareers}
+          />
 
-          </div>
+          <CareerRow
+            category="Space & Research"
+            careers={spaceCareers}
+          />
 
-          <div
-            className="
-            transition-all
-            duration-500
-            "
-          >
+          <CareerRow
+            category="Business & Management"
+            careers={businessCareers}
+          />
 
-            <CareerRow
-              category="⚙️ Engineering & Robotics"
-              careers={engineeringCareers}
-            />
-
-          </div>
-
-          <div
-            className="
-            transition-all
-            duration-500
-            "
-          >
-
-            <CareerRow
-              category="🎨 Design & Creative"
-              careers={designCareers}
-            />
-
-          </div>
-
-          <div
-            className="
-            transition-all
-            duration-500
-            "
-          >
-
-            <CareerRow
-              category="🚀 Space & Research"
-              careers={spaceCareers}
-            />
-
-          </div>
-
-          <div
-            className="
-            transition-all
-            duration-500
-            "
-          >
-
-            <CareerRow
-              category="📈 Business & Management"
-              careers={businessCareers}
-            />
-
-          </div>
-
-          <div
-            className="
-            transition-all
-            duration-500
-            "
-          >
-
-            <CareerRow
-              category="🧬 Health & Biotech"
-              careers={biotechCareers}
-            />
-
-          </div>
+          <CareerRow
+            category="Health & Biotech"
+            careers={biotechCareers}
+          />
 
         </section>
 

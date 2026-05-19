@@ -1,4 +1,5 @@
 import DashboardNavbar from "@/components/DashboardNavbar";
+import MobileBottomNav from "@/components/MobileBottomNav";
 import { Sparkles } from "lucide-react";
 
 export default function MentorPage() {
@@ -179,6 +180,8 @@ export default function MentorPage() {
         </section>
 
       </div>
+
+      <MobileBottomNav />
 
     </main>
   );

@@ -320,7 +320,7 @@ export default function DashboardNavbar() {
                 mb-1
                 "
               >
-                Hi Govinda
+                Hi {user?.full_name || user?.email}
               </p>
 
               <h1
@@ -445,7 +445,7 @@ export default function DashboardNavbar() {
           <button
             className="
             w-[54px]
-            h-[54px]
+            h-[44px]
 
             rounded-[30px]
 

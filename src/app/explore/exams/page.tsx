@@ -1,6 +1,7 @@
 import DashboardNavbar from "@/components/DashboardNavbar";
 import TrendingExamHero from "@/components/TrendingExamHero";
 import ExamRow from "@/components/ExamRow";
+import MobileBottomNav from "@/components/MobileBottomNav";
 
 const engineeringExams = [
   {
@@ -190,6 +191,7 @@ export default function ExamsPage() {
         />
 
       </div>
+      <MobileBottomNav />
 
     </main>
   );

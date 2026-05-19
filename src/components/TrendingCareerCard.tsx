@@ -3,7 +3,6 @@
 import Link from "next/link";
 
 import {
-  Heart,
   TrendingUp,
 } from "lucide-react";
 
@@ -11,6 +10,10 @@ import {
   useEffect,
   useState,
 } from "react";
+
+import {
+  motion,
+} from "framer-motion";
 
 export default function TrendingCareerCard({
   careers,
@@ -20,8 +23,6 @@ export default function TrendingCareerCard({
     current,
     setCurrent,
   ] = useState(0);
-
-  /* TOP 5 TRENDING */
 
   const trendingCareers =
     careers?.slice(0, 5) || [];
@@ -44,14 +45,12 @@ export default function TrendingCareerCard({
             : prev + 1
         );
 
-      }, 4000);
+      }, 5000);
 
     return () =>
       clearInterval(interval);
 
   }, [trendingCareers.length]);
-
-  /* EMPTY */
 
   if (
     trendingCareers.length === 0
@@ -68,324 +67,597 @@ export default function TrendingCareerCard({
 
     <section className="w-full">
 
-      {/* HEADER */}
+      {/* MOBILE VERSION */}
 
-      <div
-        className="
-        flex
-        items-center
-        justify-between
+      <div className="md:hidden">
 
-        mb-5
-        md:mb-7
-        "
-      >
-
-        {/* <h2
+        <Link
+          href={`/career/${career.id}`}
           className="
-          text-[2rem]
-          md:text-[3.2rem]
+          block
 
-          font-black
+          relative
 
-          tracking-[-0.06em]
+          overflow-hidden
 
-          leading-none
-          "
-        >
-
-          Trending Careers
-
-        </h2>
-
-        <button
-          className="
-          text-fuchsia-400
-
-          text-sm
-          md:text-base
-
-          font-semibold
-
-          hover:text-fuchsia-300
-
-          transition-all
-          duration-300
-          "
-        >
-
-          Show all
-
-        </button> */}
-
-      </div>
-
-      {/* CARD */}
-
-      <Link
-        href={`/career/${career.id}`}
-        className="
-        block
-
-        relative
-
-        overflow-hidden
-
-        rounded-[34px]
-        md:rounded-[48px]
-
-        border border-white/10
-
-        bg-[#070b16]
-
-        h-[320px]
-        md:h-[520px]
-
-        transition-all
-        duration-700
-
-        shadow-[0_0_60px_rgba(168,85,247,0.08)]
-
-        hover:scale-[1.01]
-        "
-      >
-
-        {/* IMAGE */}
-
-        <img
-  src={
-    career.hero_image ||
-    "/images/trending-ai.jpg"
-  }
-  alt={
-    career.career_name ||
-    career.name ||
-    "Career"
-  }
-          className="
-          w-full
-          h-full
-          object-cover
-          "
-        />
-
-        {/* OVERLAY */}
-
-        <div
-          className="
-          absolute
-          inset-0
-
-          bg-gradient-to-t
-          from-black
-          via-black/40
-          to-transparent
-          "
-        />
-
-        {/* GLOW */}
-
-        {/* <div
-          className="
-          absolute
-
-          bottom-[-120px]
-          left-1/2
-          -translate-x-1/2
-
-          w-[320px]
-          md:w-[520px]
-
-          h-[320px]
-          md:h-[520px]
-
-          rounded-full
-
-          bg-fuchsia-500/20
-
-          blur-[120px]
-          "
-        /> */}
-
-        {/* SAVE */}
-
-        {/* <button
-          className="
-          absolute
-
-          top-5
-          right-5
-
-          md:top-7
-          md:right-7
-
-          w-14
-          h-14
-
-          md:w-16
-          md:h-16
-
-          rounded-2xl
-
-          bg-white/15
-
-          backdrop-blur-xl
+          rounded-[34px]
 
           border border-white/10
 
-          flex
-          items-center
-          justify-center
+          bg-[#070b16]
 
-          hover:scale-110
+          h-[220px]
 
-          transition-all
-          duration-300
-
-          shadow-[0_0_30px_rgba(255,255,255,0.08)]
+          shadow-[0_0_60px_rgba(168,85,247,0.08)]
           "
         >
 
-          <Heart size={28} />
+          {/* IMAGE */}
 
-        </button> */}
-
-        {/* CONTENT */}
-
-        <div
-          className="
-          absolute
-
-          bottom-0
-          left-0
-
-          w-full
-
-          p-6
-          md:p-10
-          "
-        >
-
-          {/* TITLE */}
-
-          <h3
+          <img
+            src={
+              career.hero_image ||
+              "/images/trending-ai.jpg"
+            }
+            alt={
+              career.title ||
+              "Career"
+            }
             className="
-            text-[2rem]
-            md:text-[4rem]
-
-            font-black
-
-            tracking-[-0.06em]
-
-            leading-none
+            w-full
+            h-full
+            object-cover
             "
-          >
+          />
 
-            {career.title ||
-              career.name}
-
-          </h3>
-
-          {/* DESCRIPTION */}
-
-          <p
-            className="
-            mt-4
-
-            text-zinc-300
-
-            text-base
-            md:text-xl
-
-            leading-relaxed
-            "
-          >
-
-            {career.description ||
-              career.short_description ||
-              "Explore one of the most future-ready careers."}
-
-          </p>
-
-          {/* TRENDING */}
+          {/* OVERLAY */}
 
           <div
             className="
-            mt-6
+            absolute
+            inset-0
 
-            flex
-            items-center
+            bg-gradient-to-t
+            from-black
+            via-black/40
+            to-transparent
+            "
+          />
 
-            gap-3
+          {/* CONTENT */}
 
-            text-fuchsia-400
+          <div
+            className="
+            absolute
+
+            bottom-0
+            left-0
+
+            w-full
+
+            p-5
             "
           >
 
-            <TrendingUp
-              size={22}
-            />
-
-            <span
+            <h3
               className="
-              text-sm
-              md:text-lg
+              text-[2rem]
+
+              font-black
+
+              tracking-[-0.06em]
+
+              leading-none
               "
             >
 
-              {career.students ||
-                "24.5K students interested"}
+              {career.title ||
+                career.name}
 
-            </span>
+            </h3>
+
+            <p
+              className="
+              mt-2
+
+              text-zinc-300
+
+              text-sm
+              leading-relaxed
+              "
+            >
+
+              {career.description ||
+                career.short_description}
+
+            </p>
+
+            <div
+              className="
+              mt-4
+
+              flex
+              items-center
+
+              gap-2
+
+              text-fuchsia-400
+              "
+            >
+
+              <TrendingUp
+                size={18}
+              />
+
+              <span className="text-sm">
+
+                {career.students ||
+                  "24.5K students interested"}
+
+              </span>
+
+            </div>
+
+            {/* DOTS */}
+
+            <div
+              className="
+              flex
+              items-center
+
+              gap-2
+
+              mt-5
+              "
+            >
+
+              {trendingCareers.map(
+                (
+                  _: any,
+                  index: number
+                ) => (
+
+                  <div
+                    key={index}
+                    className={`
+                    rounded-full
+
+                    transition-all
+                    duration-500
+
+                    ${
+                      current === index
+                        ? "w-8 h-2 bg-fuchsia-500"
+                        : "w-2 h-2 bg-white/30"
+                    }
+                    `}
+                  />
+
+                )
+
+              )}
+
+            </div>
 
           </div>
 
-          {/* SLIDER DOTS */}
+        </Link>
+
+      </div>
+
+      {/* DESKTOP VERSION */}
+
+<div className="hidden md:block">
+
+  <div className="relative h-[120vh]">
+
+  <div
+    className="
+    sticky
+    top-0
+
+    w-full
+    h-screen
+
+    overflow-hidden
+
+    bg-black
+    "
+  >
+
+    {/* BACKGROUND IMAGE */}
+
+    <img
+      src={
+        career.hero_image ||
+        "/images/trending-ai.jpg"
+      }
+      alt={
+        career.title ||
+        "Career"
+      }
+      className="
+      absolute
+      inset-0
+
+      w-full
+      h-full
+
+      object-cover
+
+      scale-[1.03]
+
+      transition-all
+      duration-700
+      "
+    />
+
+    {/* DARK OVERLAY */}
+
+    <div
+      className="
+      absolute
+      inset-0
+
+      bg-gradient-to-r
+      from-black
+      via-black/55
+      to-black/10
+      "
+    />
+
+    {/* EXTRA DEPTH */}
+
+    <div
+      className="
+      absolute
+      inset-0
+
+      bg-gradient-to-t
+      from-[#030014]
+      via-transparent
+      to-black/20
+      "
+    />
+
+    {/* CONTENT */}
+
+    <motion.div
+  key={career.id}
+  initial={{
+    opacity: 0,
+    y: 40,
+  }}
+  animate={{
+    opacity: 1,
+    y: 0,
+  }}
+  transition={{
+    duration: 0.7,
+    ease: "easeOut",
+  }}
+  className="
+  absolute
+
+  left-20
+  top-[10%]
+
+  -translate-y-1/2
+
+  z-20
+
+  max-w-[620px]
+  "
+>
+
+  <motion.p
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 0.1 }}
+    className="
+    text-fuchsia-400
+    text-lg
+    font-semibold
+    mb-4
+    "
+  >
+    Trending Career
+  </motion.p>
+
+  <motion.h1
+    initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 0.2 }}
+    className="
+    text-[5.5rem]
+
+    leading-[0.9]
+
+    font-black
+
+    tracking-[-0.08em]
+
+    text-white
+    "
+  >
+
+    {career.title ||
+      career.name}
+
+  </motion.h1>
+
+  <motion.p
+    initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 0.3 }}
+    className="
+    mt-7
+
+    text-zinc-300
+
+    text-[1.2rem]
+
+    leading-relaxed
+    "
+  >
+
+    {career.description ||
+      career.short_description ||
+      "Explore futuristic opportunities."}
+
+  </motion.p>
+
+  {/* TAGS */}
+
+  <motion.div
+    initial={{ opacity: 0, y: 25 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 0.4 }}
+    className="flex gap-4 flex-wrap mt-8"
+  >
+
+    {[
+      "Future Ready",
+      "High Demand",
+      "Remote Friendly",
+    ].map((tag) => (
+
+      <div
+        key={tag}
+        className="
+        px-5 py-3
+
+        rounded-full
+
+        bg-white/10
+
+        border border-white/10
+
+        backdrop-blur-xl
+
+        text-white
+
+        text-sm
+        "
+      >
+
+        {tag}
+
+      </div>
+
+    ))}
+
+  </motion.div>
+
+  {/* TRENDING */}
+
+  <motion.div
+    initial={{ opacity: 0, y: 25 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 0.5 }}
+    className="
+    mt-8
+
+    flex
+    items-center
+
+    gap-3
+
+    text-fuchsia-400
+    "
+  >
+
+    <TrendingUp size={24} />
+
+    <span className="text-lg">
+
+      {career.students ||
+        "24.5K students interested"}
+
+    </span>
+
+  </motion.div>
+
+  {/* BUTTONS */}
+
+  <motion.div
+    initial={{ opacity: 0, y: 25 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 0.6 }}
+    className="
+    flex
+    items-center
+
+    gap-5
+
+    mt-10
+    "
+  >
+
+    <Link
+      href={`/career/${career.id}`}
+      className="
+      px-10
+      py-4
+
+      rounded-2xl
+
+      bg-gradient-to-r
+      from-fuchsia-500
+      to-purple-600
+
+      text-white
+
+      font-bold
+
+      text-lg
+
+      hover:scale-105
+
+      transition-all
+      duration-300
+      "
+    >
+
+      Explore Career →
+
+    </Link>
+
+    <button
+      className="
+      w-16
+      h-16
+
+      rounded-2xl
+
+      bg-white/10
+
+      backdrop-blur-xl
+
+      border border-white/10
+
+      text-2xl
+
+      hover:bg-white/20
+      hover:scale-105
+
+      transition-all
+      duration-300
+      "
+    >
+
+      ♡
+
+    </button>
+
+  </motion.div>
+
+</motion.div>
+
+    {/* PREVIEW STRIP */}
+
+    <div
+      className="
+      absolute
+
+      right-14
+      bottom-24
+
+      flex
+      items-center
+
+      gap-4
+
+      z-30
+      "
+    >
+
+      {trendingCareers.map(
+        (
+          item: any,
+          index: number
+        ) => (
 
           <div
-            className="
-            flex
-            items-center
+            key={index}
+            onClick={() =>
+              setCurrent(index)
+            }
+            className={`
+            relative
 
-            gap-3
+            overflow-hidden
 
-            mt-7
-            "
+            cursor-pointer
+
+            rounded-2xl
+
+            transition-all
+            duration-500
+
+            ${
+              current === index
+                ? "w-[150px] h-[85px] scale-110 border-2 border-white shadow-[0_0_40px_rgba(255,255,255,0.35)]"
+                : "w-[115px] h-[68px] opacity-60 hover:opacity-100"
+            }
+            `}
           >
 
-            {trendingCareers.map(
-              (
-                _: any,
-                index: number
-              ) => (
+            <img
+              src={
+                item.hero_image ||
+                "/images/default.jpg"
+              }
+              alt={
+                item.title
+              }
+              className="
+              w-full
+              h-full
 
-                <div
-                  key={index}
-                  className={`
-                  rounded-full
+              object-cover
+              "
+            />
 
-                  transition-all
-                  duration-500
+            <div
+              className="
+              absolute
+              inset-0
 
-                  ${
-                    current ===
-                    index
-                      ? "w-10 h-2.5 bg-fuchsia-500"
-                      : "w-2.5 h-2.5 bg-white/30"
-                  }
-                  `}
-                />
+              bg-black/30
+              "
+            />
 
-              )
+            <p
+              className="
+              absolute
 
-            )}
-            
+              bottom-2
+              left-2
+
+              text-xs
+
+              font-semibold
+
+              text-white
+              "
+            >
+
+              {item.title}
+
+            </p>
 
           </div>
 
-        </div>
+        )
 
-      </Link>
+      )}
+
+    </div>
+
+  </div>
+</div>
+</div>
 
     </section>
 

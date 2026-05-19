@@ -77,7 +77,7 @@ export default function MobileBottomNav() {
   const navItems = [
 
     {
-      name: "Explore",
+      name: "Home",
       icon: Search,
       href: "/explore",
     },

@@ -1,5 +1,5 @@
 import DashboardNavbar from "@/components/DashboardNavbar";
-
+import MobileBottomNav from "@/components/MobileBottomNav";
 export default function GuidePathPage() {
   return (
     <main className="min-h-screen bg-black text-white">
@@ -267,6 +267,8 @@ export default function GuidePathPage() {
         </section>
 
       </div>
+
+      <MobileBottomNav />
 
     </main>
   );
