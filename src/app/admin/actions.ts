@@ -47,8 +47,31 @@ export async function updateCareer(
     formData.get("secondary_color") as string;
 
   const insights = JSON.parse(
-  formData.get("insights") as string
-);
+    (formData.get("insights") as string) || "[]"
+  );
+
+  const whyExists = JSON.parse(
+    (formData.get("whyExists") as string) || "[]"
+  );
+
+  const scenes = JSON.parse(
+    (formData.get("scenes") as string) || "[]"
+  );
+
+  const pathSteps = JSON.parse(
+    (formData.get("pathSteps") as string) || "[]"
+  );
+  
+  const futureRoles = JSON.parse(
+    (formData.get("future_roles") as string) || "[]"
+  );
+
+  console.log("FUTURE ROLES DATA");
+console.log(JSON.stringify(futureRoles,null,2));
+
+console.log("WHY EXISTS DATA");
+console.log(whyExists);
+  /* UPDATE CAREER */
 
   const { error } = await supabase
     .from("careers")
@@ -79,51 +102,255 @@ export async function updateCareer(
 
   /* DELETE OLD INSIGHTS */
 
+  await supabase
+    .from("career_insights")
+    .delete()
+    .eq("career_slug", slug);
+
+    /* DELETE OLD ROADMAP STEPS */
+
 await supabase
-  .from("career_insights")
+  .from("career_path_steps")
   .delete()
   .eq("career_slug", slug);
 
-/* INSERT NEW INSIGHTS */
+  if (pathSteps.length > 0) {
 
-if (insights.length > 0) {
-
-  const formattedInsights =
-    insights.map(
+  const formattedSteps =
+    pathSteps.map(
       (
-        insight: any,
+        step: any,
         index: number
       ) => ({
         career_slug: slug,
 
-        small_heading:
-          insight.small_heading,
+        heading:
+          step.heading,
 
-        title: insight.title,
+        percentage:
+          step.percentage,
 
         short_description:
-          insight.short_description,
+          step.short_description,
 
-        deep_details:
-          insight.deep_details,
+        display_order:
+          index + 1,
+      })
+    );
 
-        card_order: index + 1,
+  const { error } =
+    await supabase
+
+      .from("career_path_steps")
+
+      .insert(
+        formattedSteps
+      );
+
+  if (error) {
+
+    console.log(
+      "ROADMAP ERROR"
+    );
+
+    console.log(error);
+
+  }
+
+}
+
+  /* INSERT NEW INSIGHTS */
+
+  if (insights.length > 0) {
+
+    const formattedInsights =
+      insights.map(
+        (
+          insight: any,
+          index: number
+        ) => ({
+          career_slug: slug,
+
+          small_heading:
+            insight.small_heading,
+
+          title:
+            insight.title,
+
+          short_description:
+            insight.short_description,
+
+          deep_details:
+            insight.deep_details,
+
+          card_order:
+            index + 1,
+        })
+      );
+
+    const {
+      error: insightsError,
+    } = await supabase
+
+      .from("career_insights")
+
+      .insert(formattedInsights);
+
+    if (insightsError) {
+
+      console.log(
+        insightsError
+      );
+
+    }
+
+  }
+
+  /* DELETE OLD WHY EXISTS */
+
+  await supabase
+    .from("career_why_exists")
+    .delete()
+    .eq("career_slug", slug);
+
+  /* INSERT NEW WHY EXISTS */
+
+  if (whyExists.length > 0) {
+
+    const formattedWhyExists =
+      whyExists.map(
+        (
+          block: any,
+          index: number
+        ) => ({
+          career_slug: slug,
+
+          heading:
+            block.heading,
+
+          content:
+            block.content,
+
+          display_order:
+            index + 1,
+        })
+      );
+
+    const {
+      error: whyExistsError,
+    } = await supabase
+
+      .from("career_why_exists")
+
+      .insert(
+        formattedWhyExists
+      );
+
+    if (whyExistsError) {
+
+     console.log("INSERT ERROR");
+console.log(whyExistsError);
+
+    }
+
+  }
+
+  /* DELETE OLD SCENES */
+
+await supabase
+  .from("career_scenes")
+  .delete()
+  .eq("career_slug", slug);
+
+/* INSERT NEW SCENES */
+
+if (scenes.length > 0) {
+
+  const formattedScenes =
+    scenes.map(
+      (
+        scene: any,
+        index: number
+      ) => ({
+        career_slug: slug,
+
+        title: scene.title,
+
+        description:
+          scene.description,
+
+        image_url:
+          scene.image_url,
+
+        display_order:
+          index + 1,
       })
     );
 
   const {
-    error: insightsError,
+    error: scenesError,
   } = await supabase
 
-    .from("career_insights")
+    .from("career_scenes")
 
-    .insert(formattedInsights);
+    .insert(formattedScenes);
 
-  if (insightsError) {
+  if (scenesError) {
 
-    console.log(insightsError);
+    console.log(
+      scenesError
+    );
 
   }
+
+  /* DELETE OLD FUTURE ROLES */
+
+await supabase
+  .from("career_future_roles")
+  .delete()
+  .eq("career_slug", slug);
+
+/* INSERT NEW FUTURE ROLES */
+
+if (futureRoles.length > 0) {
+
+  const formattedRoles =
+  futureRoles.map(
+    (role: any) => ({
+      career_slug: slug,
+
+      role_name:
+        role.role_name,
+
+      short_description:
+        role.short_description,
+
+      image_url:
+        role.image_url,
+    })
+  );
+
+  const {
+    error: rolesError,
+  } = await supabase
+
+    .from("career_future_roles")
+
+    .insert(formattedRoles);
+
+  if (rolesError) {
+
+    console.log(
+      "FUTURE ROLES ERROR"
+    );
+
+    console.log(
+      rolesError
+    );
+
+  }
+
+}
 
 }
 
@@ -131,11 +358,17 @@ if (insights.length > 0) {
 
   revalidatePath("/explore");
 
-  revalidatePath(`/career/${slug}`);
+  revalidatePath(
+    `/career/${slug}`
+  );
 
-  revalidatePath("/admin/careers");
+  revalidatePath(
+    "/admin/careers"
+  );
 
-  redirect("/admin/careers");
+  redirect(
+    "/admin/careers"
+  );
 
 }
 

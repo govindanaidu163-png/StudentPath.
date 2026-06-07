@@ -129,17 +129,7 @@ export default function DashboardNavbar() {
               transition
               "
             >
-              CAREERS
-            </Link>
-
-            <Link
-              href="/explore/exams"
-              className="
-              hover:text-white
-              transition
-              "
-            >
-              EXAMS
+              HOME
             </Link>
 
             <Link

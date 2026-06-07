@@ -48,6 +48,14 @@ export default function AdminCareerForm({
       insights:
         career.career_insights || [],
 
+      whyExists:career.career_why_exists || [],
+
+      scenes: career.career_scenes || [],
+
+      pathSteps: career.career_path_steps || [],
+
+      future_roles: career.career_future_roles || [],
+      
       
 
     });
@@ -120,6 +128,62 @@ function removeInsight(index: number) {
   });
 
 }
+
+function addWhyBlock() {
+
+  setFormData({
+    ...formData,
+
+    whyExists: [
+      ...formData.whyExists,
+
+      {
+        heading: "",
+        content: "",
+        display_order:
+          formData.whyExists.length + 1,
+      },
+    ],
+  });
+
+}
+
+function removeWhyBlock(index: number) {
+
+  const updatedBlocks =
+    formData.whyExists.filter(
+      (_: any, i: number) =>
+        i !== index
+    );
+
+  setFormData({
+    ...formData,
+    whyExists: updatedBlocks,
+  });
+
+}
+function updateWhyBlock(
+  index: number,
+  key: string,
+  value: string
+) {
+
+  const updatedBlocks =
+    [...formData.whyExists];
+
+  updatedBlocks[index] = {
+    ...updatedBlocks[index],
+    [key]: value,
+  };
+
+  setFormData({
+    ...formData,
+    whyExists: updatedBlocks,
+  });
+
+}
+
+
 
   function SectionTitle({
     title,
@@ -206,6 +270,238 @@ function removeInsight(index: number) {
 
   }
 
+  function addScene() {
+
+  setFormData({
+
+    ...formData,
+
+    scenes: [
+
+      ...formData.scenes,
+
+      {
+
+        title: "",
+
+        description: "",
+
+        image_url: "",
+
+        display_order:
+          formData.scenes.length + 1,
+
+      },
+
+    ],
+
+  });
+
+}
+
+function removeScene(
+  index: number
+) {
+
+  const updatedScenes =
+    formData.scenes.filter(
+      (_: any, i: number) =>
+        i !== index
+    );
+
+  setFormData({
+
+    ...formData,
+
+    scenes: updatedScenes,
+
+  });
+
+}
+
+function updateScene(
+  index: number,
+
+  key: string,
+
+  value: string
+) {
+
+  const updatedScenes = [
+    ...formData.scenes,
+  ];
+
+  updatedScenes[index] = {
+
+    ...updatedScenes[index],
+
+    [key]: value,
+
+  };
+
+  setFormData({
+
+    ...formData,
+
+    scenes: updatedScenes,
+
+  });
+
+}
+
+function addPathStep() {
+
+  setFormData({
+
+    ...formData,
+
+    pathSteps: [
+
+      ...formData.pathSteps,
+
+      {
+
+        heading: "",
+
+        percentage: 0,
+
+        short_description: "",
+
+        display_order:
+          formData.pathSteps.length + 1,
+
+      },
+
+    ],
+
+  });
+
+}
+
+function removePathStep(
+  index: number
+) {
+
+  const updatedSteps =
+    formData.pathSteps.filter(
+      (_: any, i: number) =>
+        i !== index
+    );
+
+  setFormData({
+
+    ...formData,
+
+    pathSteps: updatedSteps,
+
+  });
+
+}
+
+function updatePathStep(
+  index: number,
+  key: string,
+  value: any
+) {
+
+  const updatedSteps = [
+    ...formData.pathSteps,
+  ];
+
+  updatedSteps[index] = {
+
+    ...updatedSteps[index],
+
+    [key]: value,
+
+  };
+
+  setFormData({
+
+    ...formData,
+
+    pathSteps: updatedSteps,
+
+  });
+
+}
+
+function addFutureRole() {
+
+  setFormData({
+
+    ...formData,
+
+    future_roles: [
+
+      ...formData.future_roles,
+
+      {
+
+        role_name: "",
+
+        short_description: "",
+
+        image_url: "",
+
+      },
+
+    ],
+
+  });
+
+}
+
+function removeFutureRole(
+  index: number
+) {
+
+  const updatedRoles =
+    formData.future_roles.filter(
+      (_: any, i: number) =>
+        i !== index
+    );
+
+  setFormData({
+
+    ...formData,
+
+    future_roles: updatedRoles,
+
+  });
+
+}
+
+function updateFutureRole(
+  index: number,
+
+  key: string,
+
+  value: string
+) {
+
+  const updatedRoles = [
+    ...formData.future_roles,
+  ];
+
+  updatedRoles[index] = {
+
+    ...updatedRoles[index],
+
+    [key]: value,
+
+  };
+
+  setFormData({
+
+    ...formData,
+
+    future_roles: updatedRoles,
+
+  });
+
+}
+
   return (
 
     <div
@@ -239,6 +535,32 @@ function removeInsight(index: number) {
   name="insights"
   value={JSON.stringify(formData.insights)}
 />
+
+<input
+  type="hidden"
+  name="whyExists"
+  value={JSON.stringify(formData.whyExists)}
+/>
+
+<input
+  type="hidden"
+  name="scenes"
+  value={JSON.stringify(formData.scenes)}
+/>
+
+
+<input
+  type="hidden"
+  name="pathSteps"
+  value={JSON.stringify(formData.pathSteps)}
+/>
+
+<input
+  type="hidden"
+  name="future_roles"
+  value={JSON.stringify(formData.future_roles)}
+/>
+
 
         {/* HERO */}
 
@@ -770,6 +1092,344 @@ function removeInsight(index: number) {
 
 </section>
 
+{/* WHY THIS CAREER EXISTS */}
+
+<section
+  className="
+  relative
+  overflow-hidden
+  rounded-[36px]
+  border
+  border-white/10
+  bg-white/[0.04]
+  backdrop-blur-2xl
+  p-8
+  lg:p-10
+  "
+>
+
+  <div className="relative z-10">
+
+    <SectionTitle
+      title="Why This Career Exists"
+      desc="Manage the educational content explaining the origin and purpose of this career."
+    />
+
+    <div className="space-y-8">
+
+      {formData.whyExists?.map(
+        (block: any, index: number) => (
+
+          <div
+            key={index}
+            className="
+            rounded-[28px]
+            border
+            border-white/10
+            bg-black/30
+            p-6
+            "
+          >
+
+            <div
+              className="
+              flex
+              items-center
+              justify-between
+              mb-6
+              "
+            >
+
+              <h3
+                className="
+                text-2xl
+                font-black
+                "
+              >
+                Section {index + 1}
+              </h3>
+
+              <button
+                type="button"
+                onClick={() =>
+                  removeWhyBlock(index)
+                }
+                className="
+                px-4
+                py-2
+                rounded-xl
+                bg-red-500/20
+                text-red-300
+                "
+              >
+                Delete
+              </button>
+
+            </div>
+
+            <div>
+
+              <label
+                className="
+                block
+                mb-3
+                text-zinc-400
+                "
+              >
+                Heading
+              </label>
+
+              <input
+                value={block.heading || ""}
+                onChange={(e) =>
+                  updateWhyBlock(
+                    index,
+                    "heading",
+                    e.target.value
+                  )
+                }
+                className="
+                w-full
+                rounded-2xl
+                bg-white/[0.04]
+                border
+                border-white/10
+                px-5
+                py-4
+                outline-none
+                "
+              />
+
+            </div>
+
+            <div className="mt-6">
+
+              <label
+                className="
+                block
+                mb-3
+                text-zinc-400
+                "
+              >
+                Content
+              </label>
+
+              <textarea
+                value={block.content || ""}
+                onChange={(e) =>
+                  updateWhyBlock(
+                    index,
+                    "content",
+                    e.target.value
+                  )
+                }
+                rows={6}
+                className="
+                w-full
+                rounded-2xl
+                bg-white/[0.04]
+                border
+                border-white/10
+                px-5
+                py-4
+                outline-none
+                "
+              />
+
+            </div>
+
+          </div>
+
+        )
+      )}
+
+      <button
+        type="button"
+        onClick={addWhyBlock}
+        className="
+        w-full
+        py-5
+        rounded-[28px]
+        border
+        border-dashed
+        border-fuchsia-500/40
+        bg-fuchsia-500/10
+        "
+      >
+        + Add Section
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+{/* CAREER SCENES */}
+
+<p className="text-red-500">
+  Total Scenes: {formData.scenes.length}
+</p>
+
+<section
+  className="
+  relative
+  overflow-hidden
+  rounded-[36px]
+  border
+  border-white/10
+  bg-white/[0.04]
+  backdrop-blur-2xl
+  p-8
+  lg:p-10
+  "
+>
+
+  <div className="relative z-10">
+
+    <SectionTitle
+      title="Career Scenes"
+      desc="Manage the real-world moments students experience inside this career."
+    />
+
+    <div className="space-y-8">
+
+      {formData.scenes?.map(
+        (scene: any, index: number) => (
+
+          <div
+            key={index}
+            className="
+            rounded-[28px]
+            border
+            border-white/10
+            bg-black/30
+            p-6
+            "
+          >
+
+            <div
+              className="
+              flex
+              justify-between
+              items-center
+              mb-6
+              "
+            >
+
+              <h3 className="text-2xl font-black">
+                Scene {index + 1}
+              </h3>
+
+              <button
+                type="button"
+                onClick={() =>
+                  removeScene(index)
+                }
+                className="
+                px-4
+                py-2
+                rounded-xl
+                bg-red-500/20
+                text-red-300
+                "
+              >
+                Delete
+              </button>
+
+            </div>
+
+            <div className="space-y-6">
+
+              <input
+                value={scene.title || ""}
+                onChange={(e) =>
+                  updateScene(
+                    index,
+                    "title",
+                    e.target.value
+                  )
+                }
+                placeholder="Scene Title"
+                className="
+                w-full
+                rounded-2xl
+                bg-white/[0.04]
+                border
+                border-white/10
+                px-5
+                py-4
+                "
+              />
+
+              <textarea
+                value={scene.description || ""}
+                onChange={(e) =>
+                  updateScene(
+                    index,
+                    "description",
+                    e.target.value
+                  )
+                }
+                placeholder="Scene Description"
+                rows={4}
+                className="
+                w-full
+                rounded-2xl
+                bg-white/[0.04]
+                border
+                border-white/10
+                px-5
+                py-4
+                "
+              />
+
+             <input
+  type="hidden"
+  value={scene.image_url || ""}
+/>
+
+<ImageUpload
+  value={scene.image_url || ""}
+  type="image"
+  onUpload={(url) =>
+    updateScene(
+      index,
+      "image_url",
+      url
+    )
+  }
+/>
+
+            </div>
+
+          </div>
+
+        )
+      )}
+
+      <button
+        type="button"
+        onClick={addScene}
+        className="
+        w-full
+        py-5
+        rounded-[28px]
+        border
+        border-dashed
+        border-fuchsia-500/40
+        bg-fuchsia-500/10
+        "
+      >
+        + Add Scene
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
         {/* ACTION BAR */}
 
         <div
@@ -820,11 +1480,311 @@ function removeInsight(index: number) {
 
       </form>
 
+      {/* career journey roadmap */}
+
+      <section
+className="
+relative
+overflow-hidden
+rounded-[36px]
+border
+border-white/10
+bg-white/[0.04]
+backdrop-blur-2xl
+p-8
+lg:p-10
+"
+>
+
+<SectionTitle
+title="Career Journey Roadmap"
+desc="Define the journey students follow to become this professional."
+/>
+
+<div className="space-y-6">
+
+{formData.pathSteps?.map(
+(step:any,index:number)=>(
+
+<div
+key={index}
+className="
+rounded-[24px]
+border
+border-white/10
+bg-black/30
+p-6
+"
+>
+
+<div className="
+flex
+justify-between
+items-center
+mb-6
+">
+
+<h3 className="text-2xl font-black">
+Step {index + 1}
+</h3>
+
+<button
+type="button"
+onClick={() =>
+removePathStep(index)
+}
+className="
+px-4
+py-2
+rounded-xl
+bg-red-500/20
+text-red-300
+"
+>
+Delete
+</button>
+
+</div>
+
+<div className="space-y-4">
+
+<input
+placeholder="Heading"
+value={step.heading || ""}
+onChange={(e)=>
+updatePathStep(
+index,
+"heading",
+e.target.value
+)
+}
+className="
+w-full
+rounded-2xl
+bg-white/[0.04]
+border
+border-white/10
+px-5
+py-4
+"
+/>
+
+<input
+type="number"
+placeholder="Percentage"
+value={step.percentage || 0}
+onChange={(e)=>
+updatePathStep(
+index,
+"percentage",
+Number(e.target.value)
+)
+}
+className="
+w-full
+rounded-2xl
+bg-white/[0.04]
+border
+border-white/10
+px-5
+py-4
+"
+/>
+
+<textarea
+placeholder="Short Description"
+value={
+step.short_description || ""
+}
+onChange={(e)=>
+updatePathStep(
+index,
+"short_description",
+e.target.value
+)
+}
+rows={4}
+className="
+w-full
+rounded-2xl
+bg-white/[0.04]
+border
+border-white/10
+px-5
+py-4
+"
+/>
+
+</div>
+
+</div>
+
+))
+}
+
+<button
+type="button"
+onClick={addPathStep}
+className="
+w-full
+py-5
+rounded-[28px]
+border
+border-dashed
+border-fuchsia-500/40
+bg-fuchsia-500/10
+"
+>
++ Add Step
+</button>
+
+</div>
+
+</section>
+
+<section>
+
+<SectionTitle
+title="Future Career Opportunities"
+desc="Show students where this career can take them in the future."
+/>
+
+<div className="space-y-6">
+
+{formData.future_roles?.map(
+(role:any,index:number)=>(
+
+<div
+key={index}
+className="
+rounded-[24px]
+border
+border-white/10
+bg-black/30
+p-6
+"
+>
+
+<div className="
+flex
+justify-between
+items-center
+mb-6
+">
+
+<h3 className="text-2xl font-black">
+Role {index + 1}
+</h3>
+
+<button
+type="button"
+onClick={() =>
+removeFutureRole(index)
+}
+className="
+px-4
+py-2
+rounded-xl
+bg-red-500/20
+text-red-300
+"
+>
+Delete
+</button>
+
+</div>
+
+<div className="space-y-4">
+
+<input
+placeholder="Job Name"
+value={role.role_name || ""}
+onChange={(e)=>
+updateFutureRole(
+index,
+"role_name",
+e.target.value
+)
+}
+className="
+w-full
+rounded-2xl
+bg-white/[0.04]
+border
+border-white/10
+px-5
+py-4
+"
+/>
+
+<ImageUpload
+  value={role.image_url || ""}
+  type="image"
+  onUpload={(url) =>
+    updateFutureRole(
+      index,
+      "image_url",
+      url
+    )
+  }
+/>
+
+<textarea
+placeholder="Short Description"
+value={
+role.short_description || ""
+}
+onChange={(e)=>
+updateFutureRole(
+index,
+"short_description",
+e.target.value
+)
+}
+rows={4}
+className="
+w-full
+rounded-2xl
+bg-white/[0.04]
+border
+border-white/10
+px-5
+py-4
+"
+/>
+
+</div>
+
+</div>
+
+))
+}
+
+<button
+type="button"
+onClick={addFutureRole}
+className="
+w-full
+py-5
+rounded-[28px]
+border
+border-dashed
+border-fuchsia-500/40
+bg-fuchsia-500/10
+"
+>
++ Add Future Role
+</button>
+
+</div>
+
+</section>
+
       {/* LIVE PREVIEW */}
 
-      <LivePreviewPanel
+      {/* <LivePreviewPanel
         data={formData}
-      />
+      /> */}
 
     </div>
 

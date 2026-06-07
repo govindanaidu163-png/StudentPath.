@@ -2,34 +2,12 @@
 
 import { motion } from "framer-motion";
 
-const scenes = [
-  {
-    title: "Team Collaboration",
-    desc: "Work with talented people building impactful systems.",
-    image:
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
-  },
-  {
-    title: "Deep Work",
-    desc: "Spend hours solving meaningful technical problems.",
-    image:
-      "https://images.unsplash.com/photo-1515879218367-8466d910aaa4",
-  },
-  {
-    title: "Building Products",
-    desc: "Turn ideas into real-world applications.",
-    image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-  },
-  {
-    title: "Research & Learning",
-    desc: "Continuously evolve with new technologies.",
-    image:
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d",
-  },
-];
 
-export default function CareerScenes() {
+export default function CareerScenes({
+  scenes
+}: {
+  scenes: any[];
+}) {
   return (
     <section className="
     relative
@@ -87,13 +65,25 @@ export default function CareerScenes() {
         </div>
 
         {/* Cards */}
-        <div className="
-        grid
-        grid-cols-1
-        md:grid-cols-2
-        xl:grid-cols-4
-        gap-8
-        ">
+        <div
+  className="
+  flex
+  gap-6
+
+  overflow-x-auto
+  [scrollbar-width:none]
+[-ms-overflow-style:none]
+  snap-x
+  snap-mandatory
+
+  pb-4
+
+  md:grid
+  md:grid-cols-2
+
+  xl:grid-cols-4
+  "
+>
 
           {scenes.map((scene, index) => (
 
@@ -115,14 +105,25 @@ export default function CareerScenes() {
                 y: -10,
               }}
               className="
-              group
-              relative
-              h-[500px]
-              rounded-[32px]
-              overflow-hidden
-              border
-              border-white/10
-              "
+group
+relative
+
+w-[85vw]
+flex-shrink-0
+
+md:w-auto
+
+h-[500px]
+
+rounded-[32px]
+
+overflow-hidden
+
+border
+border-white/10
+
+snap-center
+"
             >
 
               {/* Background Image */}
@@ -133,7 +134,7 @@ export default function CareerScenes() {
                 transition={{
                   duration: 0.6,
                 }}
-                src={scene.image}
+                src={scene.image_url || "/images/default-scene.jpg"}
                 alt={scene.title}
                 className="
                 absolute
@@ -184,7 +185,7 @@ export default function CareerScenes() {
                 text-zinc-300
                 leading-relaxed
                 ">
-                  {scene.desc}
+                  {scene.description}
                 </p>
 
               </div>

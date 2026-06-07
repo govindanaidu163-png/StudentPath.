@@ -55,7 +55,7 @@ useEffect(() => {
     <section
       className="
       relative
-      py-40
+      py-24 md:py-40
       px-6
       lg:px-12
       bg-black
@@ -103,7 +103,8 @@ useEffect(() => {
 
           <h2
             className="
-            text-5xl
+            text-4xl
+            sm:text-5xl
             md:text-7xl
             font-black
             leading-[0.95]
@@ -147,14 +148,23 @@ useEffect(() => {
         {/* GRID */}
 
         <div
-          className="
-          grid
-          md:grid-cols-2
-          xl:grid-cols-3
-          gap-8
-          overflow-visible
-          "
-        >
+  className="
+  flex
+  md:grid
+  md:grid-cols-2
+  xl:grid-cols-3
+
+  gap-6
+
+  overflow-x-auto
+  snap-x
+  snap-mandatory
+
+  md:overflow-visible
+
+  pb-4
+  "
+>
 
           {safeInsights.map((item, index) => (
 
@@ -185,6 +195,9 @@ useEffect(() => {
               group
               relative
               z-0
+              min-w-[85vw]
+md:min-w-0
+snap-center
               hover:z-50
               overflow-visible
               rounded-[32px]
@@ -234,7 +247,7 @@ useEffect(() => {
 
                 <h3
                   className="
-                  text-4xl
+                  text-3xl md:text-4xl
                   font-black
                   mt-8
                   leading-tight
@@ -260,6 +273,7 @@ useEffect(() => {
 
               <div
                 className={`
+                hidden lg:block
                 absolute
                 opacity-0
                 pointer-events-none

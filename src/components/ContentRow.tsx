@@ -18,12 +18,14 @@ interface Career {
 
 interface Props {
   category: string;
-  careers: Career[];
+  items: any[];
+  type?: "career" | "exam";
 }
 
-export default function CareerRow({
+export default function ContentRow({
   category,
-  careers,
+  items,
+  type = "career",
 }: Props) {
 
   return (
@@ -32,7 +34,7 @@ export default function CareerRow({
 
       {/* HEADER */}
 
-      <div className="flex items-center justify-between mb-5 md:mb-8">
+      <div className="flex items-center justify-between mb-0 md:mb-0">
 
         <div>
 
@@ -95,11 +97,11 @@ export default function CareerRow({
         overflow-x-auto
         overflow-y-hidden
 
-        pt-6
-        md:pt-20
+        pt-5
+        md:pt-7
 
-        pb-4
-        md:pb-14
+        pb-7
+        md:pb-12
 
         snap-x snap-mandatory
 
@@ -107,11 +109,11 @@ export default function CareerRow({
         "
       >
 
-        {careers.map((career, index) => (
+        {items.map((item, index) => (
 
           <Link
             key={index}
-            href={`/career/${career.slug}`}
+            href={type === "career" ? `/career/${item.slug}` : `/exam/${item.slug}`}
             className="block snap-center"
           >
 
@@ -140,10 +142,10 @@ export default function CareerRow({
 
               <img
                 src={
-                  career.hero_image ||
+                  item.hero_image ||
                   "/images/default.jpg"
                 }
-                alt={career.title}
+                alt={item.title}
                 className="
                 absolute inset-0
 
@@ -223,7 +225,7 @@ export default function CareerRow({
                   text-white
                   "
                 >
-                  {career.title}
+                  {item.title}
                 </h3>
 
                 <p
@@ -235,7 +237,7 @@ export default function CareerRow({
                   mt-2
                   "
                 >
-                  {career.demand}
+                  {item.demand}
                 </p>
 
               </div>
@@ -248,12 +250,15 @@ export default function CareerRow({
 
   whileHover={{
     scale: 1.12,
-    y: -18,
   }}
 
   transition={{
     duration: 0.28,
     ease: "easeOut",
+  }}
+
+  style={{
+    transformOrigin: "center center",
   }}
 
   className="
@@ -264,10 +269,7 @@ export default function CareerRow({
   w-[260px]
   h-[360px]
 
-  hover:w-[380px]
-  hover:h-[390px]
-
-  rounded-[28px]
+  rounded-[30px]
 
   overflow-visible
 
@@ -297,11 +299,17 @@ export default function CareerRow({
 
     overflow-hidden
 
-    border border-white/10
+    border border-white/5
+    group-hover:border-white/10
 
     bg-[#070b16]
 
-    shadow-[0_0_50px_rgba(0,0,0,0.5)]
+    group-hover:border-white/80
+
+    group-hover:shadow-[0_0_8px_rgba(255,255,255,0.75),0_0_18px_rgba(255,255,255,0.18)]
+
+transition-all
+duration-300
     "
   >
 
@@ -309,10 +317,10 @@ export default function CareerRow({
 
     <img
       src={
-        career.hero_image ||
+        item.hero_image ||
         "/images/default.jpg"
       }
-      alt={career.title}
+      alt={item.title}
       className="
       absolute inset-0
 
@@ -372,7 +380,7 @@ export default function CareerRow({
         text-white
         "
       >
-        {career.title}
+        {item.title}
       </h3>
 
     </div>
@@ -421,7 +429,7 @@ export default function CareerRow({
 
         <h3
           className="
-          text-[2.2rem]
+          text-[1.8rem]
 
           font-black
 
@@ -432,7 +440,7 @@ export default function CareerRow({
           text-white
           "
         >
-          {career.title}
+          {item.title}
         </h3>
 
         {/* META */}
@@ -457,13 +465,13 @@ export default function CareerRow({
           <span>•</span>
 
           <span>
-            {career.category}
+            {item.category}
           </span>
 
           <span>•</span>
 
           <span>
-            High Demand
+            {item.demand}
           </span>
 
         </div>
@@ -476,7 +484,7 @@ export default function CareerRow({
 
           text-zinc-200
 
-          text-[15px]
+          text-[12px]
 
           leading-relaxed
 
@@ -486,7 +494,7 @@ export default function CareerRow({
           "
         >
 
-          {career.description}
+          {item.description}
 
         </p>
 
@@ -509,9 +517,9 @@ export default function CareerRow({
             className="
             flex-1
 
-            h-[58px]
+            h-[38px]
 
-            rounded-2xl
+            rounded-lg
 
             bg-white
 
@@ -536,10 +544,10 @@ export default function CareerRow({
 
           <button
             className="
-            w-[58px]
-            h-[58px]
+            w-[38px]
+            h-[38px]
 
-            rounded-2xl
+            rounded-lg
 
             bg-zinc-900/95
 

@@ -57,12 +57,63 @@ export default async function EditCareerPage({
         ascending: true,
       });
 
+      /* FETCH WHY EXISTS */
+
+const { data: whyExists } =
+  await supabase
+    .from("career_why_exists")
+    .select("*")
+    .eq("career_slug", career.slug)
+    .order("display_order", {
+      ascending: true,
+    });
+
+/* FETCH CAREER SCENES */
+    const { data: scenes } =
+  await supabase
+    .from("career_scenes")
+    .select("*")
+    .eq("career_slug", career.slug)
+    .order("display_order", {
+      ascending: true,
+    });
+
+    const { data: pathSteps } =
+  await supabase
+    .from("career_path_steps")
+    .select("*")
+    .eq("career_slug", career.slug)
+    .order(
+      "display_order",
+      {
+        ascending: true,
+      }
+    );
+const { data: futureRoles } =
+  await supabase
+    .from("career_future_roles")
+    .select("*")
+    .eq("career_slug", career.slug);
+
+    console.log("FUTURE ROLES DATA");
+    console.log(futureRoles);
   /* MERGE DATA */
 
   const careerWithInsights = {
     ...career,
     career_insights:
       insights || [],
+
+      career_why_exists:
+      whyExists || [],
+      career_scenes:
+      scenes || [],
+
+      career_path_steps:
+      pathSteps || [],
+      
+      future_roles:
+      futureRoles || [],
   };
 
   return (

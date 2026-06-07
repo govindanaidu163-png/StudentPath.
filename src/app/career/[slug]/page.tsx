@@ -1,9 +1,9 @@
 import { supabase } from "@/lib/supabase";
 
-import CareerUniverse from "@/components/CareerUniverse";
+import CareerUniverse from "@/components/WhyCareerExists";
 
 import CareerHero from "@/components/CareerHero";
-
+// import CareerJourneyRoad from "@/components/CareerJourneyRoad";
 import CareerInsights from "@/components/CareerInsights";
 
 import CareerPaths from "@/components/CareerPaths";
@@ -13,6 +13,7 @@ import CareerFuture from "@/components/CareerFuture";
 import CareerCTA from "@/components/CareerCTA";
 
 import CareerScenes from "@/components/CareerScenes";
+import WhyCareerExists from "@/components/WhyCareerExists";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -29,6 +30,32 @@ export default async function CareerDetailsPage({
     .select("*")
     .eq("slug", slug)
     .single();
+
+  const { data: whyExists } = await supabase
+  .from("career_why_exists")
+  .select("*")
+  .eq("career_slug", slug)
+  .order("display_order");
+
+  const { data: scenes } = await supabase
+  .from("career_scenes")
+  .select("*")
+  .eq("career_slug", slug)
+  .order("display_order");
+
+  const { data: pathSteps } =
+  await supabase
+    .from("career_path_steps")
+    .select("*")
+    .eq("career_slug", slug)
+    .order("display_order", {
+      ascending: true,
+    });
+const { data: futureRoles } =
+await supabase
+  .from("career_future_roles")
+  .select("*")
+  .eq("career_slug", slug);
 
   if (error || !career) {
 
@@ -97,19 +124,16 @@ export default async function CareerDetailsPage({
         }
       />
 
+      <WhyCareerExists
+      blocks={whyExists || []} />
+
       {/* SCENES */}
 
-      <CareerScenes />
+      <CareerScenes
+      scenes={scenes || []} />
 
-      {/* UNIVERSE */}
+      
 
-      <CareerUniverse
-        nodes={career.universe_nodes || []}
-
-        title={
-          career.title || "Future Career"
-        }
-      />
 
       {/* INSIGHTS */}
 
@@ -119,13 +143,14 @@ export default async function CareerDetailsPage({
 
       {/* PATHS */}
 
-      <CareerPaths
-        paths={career.paths || []}
-      />
+      {/* <CareerJourneyRoad
+        steps={pathSteps || []}
+      /> */}
 
       {/* FUTURE */}
 
-      <CareerFuture />
+      <CareerFuture 
+      roles={futureRoles || []} />
 
       {/* CTA */}
 
