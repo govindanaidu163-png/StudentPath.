@@ -1,7 +1,7 @@
 import DashboardNavbar from "@/components/DashboardNavbar";
 import TrendingExamHero from "@/components/TrendingExamHero";
-import ExamRow from "@/components/ExamRow";
 import MobileBottomNav from "@/components/MobileBottomNav";
+import ContentRow from "@/components/ContentRow";
 
 const engineeringExams = [
   {
@@ -165,29 +165,29 @@ export default function ExamsPage() {
         <TrendingExamHero />
 
         {/* Exam Rows */}
-        <ExamRow
+        <ContentRow
           category="🚀 Engineering Exams"
-          exams={engineeringExams}
+          items={engineeringExams}
         />
 
-        <ExamRow
+        <ContentRow 
           category="🏥 Medical Exams"
-          exams={medicalExams}
+          items={medicalExams}
         />
 
-        <ExamRow
+        <ContentRow
           category="⚖ Government & Civil Services"
-          exams={governmentExams}
+          items={governmentExams}
         />
 
-        <ExamRow
+        <ContentRow 
           category="💼 Management & Commerce"
-          exams={managementExams}
+          items={managementExams}
         />
 
-        <ExamRow
+        <ContentRow
           category="🌍 Study Abroad Exams"
-          exams={abroadExams}
+          items={abroadExams}
         />
 
       </div>
