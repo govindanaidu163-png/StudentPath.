@@ -1,4 +1,4 @@
-import DashboardNavbar from "@/components/DashboardNavbar";
+
 import MobileBottomNav from "@/components/MobileBottomNav";
 import { Sparkles } from "lucide-react";
 
@@ -6,8 +6,6 @@ export default function MentorPage() {
   return (
     <main className="min-h-screen bg-black text-white">
 
-      {/* Navbar */}
-      <DashboardNavbar />
 
       <div className="px-8 py-8">
 

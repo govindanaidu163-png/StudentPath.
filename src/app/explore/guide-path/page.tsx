@@ -1,11 +1,10 @@
-import DashboardNavbar from "@/components/DashboardNavbar";
+
 import MobileBottomNav from "@/components/MobileBottomNav";
 export default function GuidePathPage() {
   return (
     <main className="min-h-screen bg-black text-white">
 
-      {/* Navbar */}
-      <DashboardNavbar />
+
 
       <div className="px-8 py-8">
 
