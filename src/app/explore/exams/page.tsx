@@ -1,5 +1,5 @@
 import DashboardNavbar from "@/components/DashboardNavbar";
-import TrendingExamHero from "@/components/TrendingExamHero";
+
 import MobileBottomNav from "@/components/MobileBottomNav";
 import ContentRow from "@/components/ContentRow";
 
@@ -160,9 +160,7 @@ export default function ExamsPage() {
       <DashboardNavbar />
 
       <div className="px-8 pb-20">
-
-        {/* Hero */}
-        <TrendingExamHero />
+        {/* EXAMS */}
 
         {/* Exam Rows */}
         <ContentRow
