@@ -177,7 +177,9 @@ export default async function ExplorePage() {
           "
         >
 
-          <DashboardNavbar />
+          <DashboardNavbar
+          careers={careers} 
+          exams={exams}/>
 
         </header>
 

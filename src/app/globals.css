@@ -16,3 +16,30 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+@keyframes rainbowBorder {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.rainbow-border {
+  background: linear-gradient(
+    90deg,
+    #ff0055,
+    #ff8800,
+    #ffee00,
+    #00ff88,
+    #00d4ff,
+    #7c3aed,
+    #ff0055
+  );
+
+  background-size: 300% 300%;
+
+  animation: rainbowBorder 6s linear infinite;
+}

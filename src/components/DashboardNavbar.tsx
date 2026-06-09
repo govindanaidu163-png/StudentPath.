@@ -17,7 +17,28 @@ import {
 
 import { supabaseAuth } from "@/lib/auth";
 
-export default function DashboardNavbar() {
+export default function DashboardNavbar({
+  careers,
+  exams,
+}: any) {
+
+  const searchItems = [
+
+  ...careers.map((career: any) => ({
+    id: career.id,
+    title: career.title,
+    type: "career",
+    slug: career.slug,
+  })),
+
+  ...exams.map((exam: any) => ({
+    id: exam.id,
+    title: exam.title,
+    type: "exam",
+    slug: exam.slug,
+  })),
+
+];
 
   const [scrolled, setScrolled] =
   useState(false);
@@ -51,8 +72,7 @@ export default function DashboardNavbar() {
 
   const [user, setUser] =
     useState<any>(null);
-
-  useEffect(() => {
+      useEffect(() => {
 
     async function getUser() {
 
@@ -69,6 +89,23 @@ export default function DashboardNavbar() {
     getUser();
 
   }, []);
+
+
+    const [search, setSearch] =
+  useState("");
+
+const [openSearch, setOpenSearch] =
+  useState(false);
+
+  const filteredResults =
+  searchItems.filter((item: any) =>
+    item.title
+      ?.toLowerCase()
+      .includes(
+        search.toLowerCase()
+      )
+  );
+
 
   return (
 
@@ -216,44 +253,199 @@ export default function DashboardNavbar() {
           "
         >
 
-          {/* SEARCH */}
+
+{/* SEARCH */}
+
+<div className="relative">
+
+  <div
+    className="
+    flex
+    items-center
+    gap-3
+
+    w-[420px]
+    xl:w-[650px]
+
+    px-5
+    py-3
+
+    rounded-full
+
+   border
+border-fuchsia-500/50
+
+shadow-[0_0_20px_rgba(217,70,239,0.35)]
+
+
+
+    bg-white/[0.01]
+
+    backdrop-blur-xl
+    "
+  >
+
+    <Search
+      size={18}
+      className="text-zinc-400"
+    />
+
+    <input
+      type="text"
+      placeholder="Search careers, exams..."
+
+      value={search}
+
+      onFocus={() =>
+        setOpenSearch(true)
+      }
+
+      onChange={(e) =>
+        setSearch(e.target.value)
+      }
+
+      className="
+      w-full
+
+      bg-transparent
+
+      outline-none
+
+      text-white
+
+      text-sm
+
+      placeholder:text-zinc-500
+      "
+    />
+
+  </div>
+
+  {openSearch &&
+    search.length > 0 && (
+
+      <div
+        className="
+        absolute
+
+        top-[70px]
+        left-0
+
+        w-[650px]
+        max-w-[90vw]
+
+        max-h-[350px]
+
+        overflow-y-auto
+
+        rounded-3xl
+
+        border border-white/10
+
+        bg-[#0b1020]/95
+
+        backdrop-blur-2xl
+
+        shadow-[0_0_40px_rgba(0,0,0,0.5)]
+
+        z-[9999]
+        "
+      >
+
+        {filteredResults.length > 0 ? (
+
+          filteredResults
+            .slice(0, 6)
+            .map((item: any) => (
+
+              <Link
+                key={`${item.type}-${item.id}`}
+                href={
+                  item.type === "career"
+                    ? `/career/${item.slug}`
+                    : `/exam/${item.slug}`
+                }
+                onClick={() => {
+                  setSearch("");
+                  setOpenSearch(false);
+                }}
+                className="
+                block
+
+                px-5
+                py-4
+
+                border-b
+                border-white/5
+
+                hover:bg-fuchsia-500/10
+
+                transition-all
+                duration-300
+                "
+              >
+
+                <p
+                  className="
+                  text-white
+                  font-semibold
+                  text-lg
+                  "
+                >
+                  {item.type === "career"
+                    ? "💼 "
+                    : "🎓 "}
+
+                  {item.title}
+                </p>
+
+                <p
+                  className="
+                  text-xs
+
+                  text-fuchsia-400
+
+                  uppercase
+
+                  tracking-widest
+
+                  mt-1
+                  "
+                >
+                  {item.type}
+                </p>
+
+              </Link>
+
+            ))
+
+        ) : (
 
           <div
             className="
-            flex
-            items-center
-            gap-3
+            py-10
 
-            px-5
-            py-3
+            text-center
 
-            rounded-full
-
-            border
-            border-white/10
-
-            bg-white/[0.04]
+            text-zinc-500
             "
           >
 
-            <Search
-              size={18}
-              className="text-zinc-400"
-            />
+            <div className="text-3xl mb-2">
+              🔍
+            </div>
 
-            <input
-              type="text"
-              placeholder="Search careers..."
-              className="
-              bg-transparent
-              outline-none
-              text-sm
-              placeholder:text-zinc-500
-              "
-            />
+            No careers or exams found
 
           </div>
 
+        )}
+
+      </div>
+
+    )}
+
+</div>
           {/* PROFILE */}
 
           <Link
@@ -341,34 +533,182 @@ export default function DashboardNavbar() {
 
     {/* SEARCH */}
 
-    <div
+{/* MOBILE SEARCH */}
+
+<div className="relative flex-1">
+
+ <div
+  className="
+  flex-1
+  h-[56px]
+
+  rounded-full
+
+  border
+  border-fuchsia-500/50
+
+  bg-[#0d1324]
+
+  shadow-[0_0_20px_rgba(217,70,239,0.35)]
+
+  px-5
+
+  flex
+  items-center
+
+  text-zinc-400
+
+  transition-all
+  duration-300
+  "
+>
+
+    <Search
+      size={22}
+      className="text-zinc-400"
+    />
+
+    <input
+      type="text"
+
+      placeholder="Search..."
+
+      value={search}
+
+      onFocus={() =>
+        setOpenSearch(true)
+      }
+
+      onChange={(e) =>
+        setSearch(e.target.value)
+      }
+
       className="
-      flex-1
-      h-[56px]
-      rounded-full
-      border
-      border-white/10
-      bg-[#0d1324]
-      px-5
-      flex
-      items-center
-      text-zinc-500
+      w-full
+
+      bg-transparent
+
+      outline-none
+
+      text-white
+
+      text-sm
+
+      placeholder:text-zinc-500
       "
-    >
+    />
 
-      <Search
-        size={22}
+  </div>
+
+  {openSearch &&
+    search.length > 0 && (
+
+      <div
         className="
-        mr-3
-        shrink-0
+        absolute
+
+        top-[65px]
+        left-0
+        right-0
+
+        max-h-[350px]
+
+        overflow-y-auto
+
+        rounded-3xl
+
+        border
+        border-white/10
+
+        bg-[#0b1020]/95
+
+        backdrop-blur-xl
+
+        z-[9999]
         "
-      />
+      >
 
-      <span className="text-base">
-        Discover a career
-      </span>
+        {filteredResults.length > 0 ? (
 
-    </div>
+          filteredResults
+            .slice(0, 8)
+            .map((item: any) => (
+
+              <Link
+                key={`${item.type}-${item.id}`}
+                href={
+                  item.type === "career"
+                    ? `/career/${item.slug}`
+                    : `/exam/${item.slug}`
+                }
+                onClick={() => {
+                  setSearch("");
+                  setOpenSearch(false);
+                }}
+                className="
+                block
+
+                px-5
+                py-4
+
+                border-b
+                border-white/5
+
+                hover:bg-fuchsia-500/10
+                "
+              >
+
+                <p className="font-medium">
+
+                  {item.type === "career"
+                    ? "💼 "
+                    : "🎓 "}
+
+                  {item.title}
+
+                </p>
+
+                <p
+                  className="
+                  text-xs
+
+                  text-fuchsia-400
+
+                  uppercase
+
+                  mt-1
+                  "
+                >
+
+                  {item.type}
+
+                </p>
+
+              </Link>
+
+            ))
+
+        ) : (
+
+          <div
+            className="
+            py-6
+
+            text-center
+
+            text-zinc-500
+            "
+          >
+            No results found
+          </div>
+
+        )}
+
+      </div>
+
+    )}
+
+</div>
 
     {/* SAVE */}
 
