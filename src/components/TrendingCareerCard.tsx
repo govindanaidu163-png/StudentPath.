@@ -80,13 +80,13 @@ export default function TrendingCareerCard({
 
           overflow-hidden
 
-          rounded-[34px]
+          rounded-[24px]
 
           border border-white/10
 
           bg-[#070b16]
 
-          h-[220px]
+          h-[240px]
 
           shadow-[0_0_60px_rgba(168,85,247,0.08)]
           "
@@ -119,7 +119,7 @@ export default function TrendingCareerCard({
 
             bg-gradient-to-t
             from-black
-            via-black/40
+            via-black/30
             to-transparent
             "
           />
@@ -340,9 +340,9 @@ export default function TrendingCareerCard({
   absolute
 
   left-20
-  top-[10%]
+  top-[20%]
 
-  -translate-y-1/2
+  // -translate-y-1/2
 
   z-20
 

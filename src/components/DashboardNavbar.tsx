@@ -19,6 +19,31 @@ import { supabaseAuth } from "@/lib/auth";
 
 export default function DashboardNavbar() {
 
+  const [scrolled, setScrolled] =
+  useState(false);
+  useEffect(() => {
+
+  const handleScroll = () => {
+
+    setScrolled(
+      window.scrollY > 500
+    );
+
+  };
+
+  window.addEventListener(
+    "scroll",
+    handleScroll
+  );
+
+  return () =>
+    window.removeEventListener(
+      "scroll",
+      handleScroll
+    );
+
+}, []);
+
   const [
     openProfile,
     setOpenProfile,
@@ -47,18 +72,35 @@ export default function DashboardNavbar() {
 
   return (
 
-    <header
-      className="
-      sticky
-      top-0
-      z-50
-      w-full
+  <header
+  className={`
+  fixed
+  top-0
+  left-0
+  right-0
 
-      bg-[#050816]/95
+  z-[9999]
 
-      backdrop-blur-2xl
-      "
-    >
+  transition-all
+  duration-500
+
+  bg-transparent
+
+  ${
+    scrolled
+      ? `
+        md:bg-[#030014]/85
+        md:backdrop-blur-xl
+        md:border-b
+        md:border-white/10
+      `
+      : `
+        md:bg-transparent
+        md:border-transparent
+      `
+  }
+  `}
+>
 
       {/* DESKTOP NAVBAR */}
 
@@ -74,7 +116,7 @@ export default function DashboardNavbar() {
         py-5
 
         border-b
-        border-white/10
+        border-white/0
         "
       >
 
@@ -102,7 +144,7 @@ export default function DashboardNavbar() {
             StudentPath
 
             <span className="text-fuchsia-500">
-              ✦
+              
             </span>
 
           </Link>
@@ -252,212 +294,108 @@ export default function DashboardNavbar() {
 
       {/* MOBILE NAVBAR */}
 
-      <div
-        className="
-        md:hidden
-
-        px-4
-        pt-3
-        pb-3
-        "
-      >
-
-        {/* TOP SECTION */}
-
-        <div
-          className="
-          flex
-          items-start
-          justify-between
-
-          mb-4
-          "
-        >
-
-          {/* LEFT */}
-
-          <div
-            className="
-            flex
-            items-center
-            gap-3
-            "
-          >
-
-            {/* PROFILE IMAGE */}
-
-            <Link
-  href="/profile"
+<div
   className="
-  w-14 h-14
-  rounded-full
-  overflow-hidden
-  border
-  border-fuchsia-500/30
-  block
+  md:hidden
+  px-4
+  pt-4
+  pb-4
   "
 >
-  </Link>
 
-            {/* TEXT */}
+  <div
+    className="
+    flex
+    items-center
+    gap-3
+    "
+  >
 
-            <div className="pt-1">
+    {/* PROFILE */}
 
-              <p
-                className="
-                text-zinc-400
-                text-[16px]
-                mb-1
-                "
-              >
-                Hi {user?.full_name || user?.email}
-              </p>
+    <Link
+      href="/profile"
+      className="
+      w-14
+      h-14
+      rounded-full
+      border
+      border-fuchsia-500/30
+      bg-[#0d1324]
+      flex
+      items-center
+      justify-center
+      shrink-0
+      "
+    >
 
-              <h1
-                className="
-                text-[1.5rem]
+      <span className="font-bold text-lg">
 
-                leading-[0.8]
+        {user?.email
+          ?.charAt(0)
+          ?.toUpperCase() || "G"}
 
-                font-bold
+      </span>
 
-                tracking-[-0.09em]
-                "
-              >
-                Good Morning
-              </h1>
+    </Link>
 
-            </div>
+    {/* SEARCH */}
 
-          </div>
+    <div
+      className="
+      flex-1
+      h-[56px]
+      rounded-full
+      border
+      border-white/10
+      bg-[#0d1324]
+      px-5
+      flex
+      items-center
+      text-zinc-500
+      "
+    >
 
-          {/* SAVE */}
+      <Search
+        size={22}
+        className="
+        mr-3
+        shrink-0
+        "
+      />
 
-          <div
-            className="
-            flex
-            flex-col
-            items-center
+      <span className="text-base">
+        Discover a career
+      </span>
 
-            pt-1
-            "
-          >
+    </div>
 
-            <button
-              className="
-              w-10
-              h-10
+    {/* SAVE */}
 
-              rounded-2xl
+    <button
+      className="
+      w-14
+      h-14
+      rounded-full
+      border
+      border-white/10
+      bg-[#0d1324]
+      flex
+      items-center
+      justify-center
+      shrink-0
+      "
+    >
 
-              border
-              border-white/10
+      <Bookmark
+        size={22}
+        className="text-white"
+      />
 
-              bg-[#0d1324]
+    </button>
 
-              flex
-              items-center
-              justify-center
+  </div>
 
-              mb-2
-              "
-            >
-
-              <Bookmark
-                size={22}
-                className="text-white"
-              />
-
-            </button>
-
-            <span
-              className="
-              text-[13px]
-              text-zinc-400
-              "
-            >
-              Save
-            </span>
-
-          </div>
-
-        </div>
-
-        {/* SEARCH ROW */}
-
-        <div
-          className="
-          flex
-          gap-2
-          "
-        >
-
-          {/* SEARCH */}
-
-          <div
-            className="
-            flex-1
-
-            h-[54px]
-
-            rounded-[25px]
-            mx-1
-
-            border
-            border-white/10
-
-            bg-[#0d1324]
-            px-4
-
-            flex
-            items-center
-
-            text-zinc-500
-            "
-          >
-
-            <Search
-              size={30}
-              className="
-              mr-4
-              shrink-0
-              "
-            />
-
-            <span className="text-[1.15rem]">
-              Discover a career
-            </span>
-
-          </div>
-
-          {/* FILTER */}
-
-          <button
-            className="
-            w-[54px]
-            h-[44px]
-
-            rounded-[30px]
-
-            bg-gradient-to-br
-            from-fuchsia-600
-            to-purple-600
-
-            flex
-            items-center
-            justify-center
-
-            shadow-[0_0_45px_rgba(217,70,239,0.35)]
-            "
-          >
-
-            <SlidersHorizontal
-              size={30}
-            />
-
-          </button>
-
-        </div>
 
       </div>
 

@@ -1,6 +1,6 @@
 import DashboardNavbar from "@/components/DashboardNavbar";
 import MobileBottomNav from "@/components/MobileBottomNav";
-
+import ExploreFooter from "@/components/ExploreFooter";
 import TrendingHero from "@/components/TrendingCareerCard";
 
 import ExploreClient from "@/components/ExploreClient";
@@ -183,7 +183,7 @@ export default async function ExplorePage() {
 
         {/* NAVBAR SPACER */}
 
-        <div className="h-[160px] md:h-[90px]" />
+        <div className="h-[70px] md:h-[0px]" />
 
         {/* TRENDING HERO */}
 
@@ -211,17 +211,19 @@ export default async function ExplorePage() {
 
           {/* DESKTOP */}
 
-          <div className="hidden md:block">
+<div className="hidden md:block pl-[60px]">
 
-            <TrendingHero
-              careers={careers}
-            />
+  <TrendingHero
+    careers={careers}
+  />
 
-          </div>
+</div>
+
 
         </section>
 
         {/* EXPLORE CONTENT */}
+        <div className="md:pl-[110px]" />
 
         <ExploreClient
           technologyCareers={technologyCareers}
@@ -233,7 +235,8 @@ export default async function ExplorePage() {
 
           exams={exams}
         />
-
+        
+<ExploreFooter />
       </main>
 
       {/* MOBILE NAV */}

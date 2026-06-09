@@ -43,6 +43,7 @@ export default function ExploreClient({
         relative
 
         z-10
+        md:ml-[60px]
 
         animate-in
         fade-in
