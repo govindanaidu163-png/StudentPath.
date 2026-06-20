@@ -6,6 +6,10 @@ useRef,
 useEffect,
 } from "react";
 
+import MentorLanding from "@/components/mentor/MentorLanding";
+import MentorChat from "@/components/mentor/MentorChat";
+import MentorInput from "@/components/mentor/MentorInput";
+
 export default function MentorPage() {
 
 const [message, setMessage] =
@@ -21,17 +25,12 @@ const bottomRef =
 useRef<HTMLDivElement>(null);
 
 useEffect(() => {
-bottomRef.current?.scrollIntoView({
-behavior: "smooth",
-});
-}, [messages, loading]);
 
-const suggestions = [
-"I am in Class 11 and like coding. Suggest careers.",
-"Best exams after 12th science?",
-"Future scope of AI Engineering?",
-"Top colleges for Computer Science?",
-];
+bottomRef.current?.scrollIntoView({
+  behavior: "smooth",
+});
+
+}, [messages, loading]);
 
 async function askMentor() {
 
@@ -101,13 +100,21 @@ setLoading(false);
 
 }
 
+function handlePromptClick(
+prompt: string
+) {
+
+setMessage(prompt);
+
+}
+
 return (
 
 <main
   className="
   min-h-screen
 
-  bg-[#030014]
+  bg-[#020617]
 
   text-white
 
@@ -120,406 +127,128 @@ return (
   "
 >
 
-  {/* BACKGROUND GLOWS */}
+  {/* Background Glow */}
 
+ {/* ULTRA SPECTRAL BACKGROUND */}
+
+<div className="absolute inset-0 -z-10 overflow-hidden">
+
+  {/* Pink */}
   <div
     className="
-    fixed
+    absolute
+    top-[-100px]
+    left-[-150px]
 
-    top-[-200px]
-    right-[-200px]
-
-    w-[450px]
-    h-[450px]
+    w-[500px]
+    h-[500px]
 
     rounded-full
 
-    bg-fuchsia-500/10
+    bg-fuchsia-500/50
 
-    blur-[140px]
-
-    pointer-events-none
+    blur-[120px]
     "
   />
 
+  {/* Cyan */}
   <div
     className="
-    fixed
+    absolute
+    bottom-[-100px]
+    right-[-150px]
 
-    bottom-[-200px]
-    left-[-200px]
-
-    w-[450px]
-    h-[450px]
+    w-[500px]
+    h-[500px]
 
     rounded-full
 
-    bg-cyan-500/10
+    bg-cyan-500/40
 
-    blur-[140px]
-
-    pointer-events-none
+    blur-[120px]
     "
   />
 
-  {/* HEADER */}
-
+  {/* Purple Center */}
   <div
     className="
-    max-w-5xl
+    absolute
+
+    top-[30%]
+    left-1/2
+
+    -translate-x-1/2
+
+    w-[300px]
+    h-[300px]
+
+    rounded-full
+
+    bg-violet-500/40
+
+    blur-[100px]
+    "
+  />
+
+  {/* Orange Accent */}
+  <div
+    className="
+    absolute
+
+    top-[15%]
+    right-[10%]
+
+    w-[220px]
+    h-[220px]
+
+    rounded-full
+
+    bg-orange-400/30
+
+    blur-[80px]
+    "
+  />
+
+</div>
+  <div
+    className="
+    max-w-6xl
 
     mx-auto
-
-    mb-10
     "
   >
 
-    <div
-      className="
-      inline-flex
+    {messages.length === 0 ? (
 
-      items-center
+      <MentorLanding
+        onPromptClick={
+          handlePromptClick
+        }
+      />
 
-      gap-2
-
-      px-4
-      py-2
-
-      rounded-full
-
-      border
-      border-fuchsia-500/20
-
-      bg-white/5
-
-      text-sm
-      "
-    >
-
-      🤖 StudentPath AI Mentor
-
-    </div>
-
-    <h1
-      className="
-      mt-5
-
-      text-4xl
-      md:text-6xl
-
-      font-black
-      "
-    >
-
-      Ask Anything
-
-    </h1>
-
-    <p
-      className="
-      mt-3
-
-      text-zinc-400
-
-      max-w-2xl
-      "
-    >
-
-      Careers, exams, colleges,
-      roadmaps, skills and future
-      planning.
-
-    </p>
-
-  </div>
-
-  {/* CHAT */}
-
-  <div
-    className="
-    max-w-5xl
-
-    mx-auto
-
-    min-h-[55vh]
-
-    flex
-    flex-col
-
-    gap-4
-    "
-  >
-
-    {messages.length === 0 && (
+    ) : (
 
       <>
 
-        <div
-          className="
-          text-center
+        <MentorChat
+          messages={messages}
+          loading={loading}
+        />
 
-          py-10
-          "
-        >
-
-          <div className="text-6xl">
-            🤖
-          </div>
-
-          <h2
-            className="
-            mt-4
-
-            text-2xl
-
-            font-bold
-            "
-          >
-
-            Your Personal AI Mentor
-
-          </h2>
-
-          <p
-            className="
-            mt-2
-
-            text-zinc-500
-            "
-          >
-
-            Start with one of these:
-
-          </p>
-
-        </div>
-
-        <div
-          className="
-          grid
-
-          gap-3
-          "
-        >
-
-          {suggestions.map(
-            (item) => (
-
-              <button
-                key={item}
-
-                onClick={() =>
-                  setMessage(item)
-                }
-
-                className="
-                p-4
-
-                rounded-2xl
-
-                bg-white/5
-
-                border
-                border-white/10
-
-                text-left
-
-                hover:border-fuchsia-500/50
-
-                transition-all
-                "
-              >
-
-                {item}
-
-              </button>
-
-            )
-          )}
-
-        </div>
+        <div ref={bottomRef} />
 
       </>
 
     )}
 
-    {messages.map(
-      (msg, index) => (
+    <div className="mt-8">
 
-        <div
-          key={index}
-
-          className={`
-          max-w-[92%]
-          sm:max-w-[85%]
-          md:max-w-[70%]
-
-          p-5
-
-          rounded-3xl
-
-          whitespace-pre-wrap
-
-          ${
-            msg.role === "user"
-              ? `
-              ml-auto
-
-              bg-gradient-to-r
-              from-fuchsia-600
-              to-purple-600
-              `
-              : `
-              bg-white/5
-
-              border
-              border-white/10
-              `
-          }
-          `}
-        >
-
-          {msg.content}
-
-        </div>
-
-      )
-    )}
-
-    {loading && (
-
-      <div
-        className="
-        w-fit
-
-        bg-white/5
-
-        border
-        border-white/10
-
-        rounded-3xl
-
-        p-5
-        "
-      >
-
-        🤖 Thinking...
-
-      </div>
-
-    )}
-
-    <div ref={bottomRef} />
-
-  </div>
-
-  {/* INPUT */}
-
-  <div
-    className="
-    max-w-5xl
-
-    mx-auto
-
-    mt-8
-
-    sticky
-    bottom-4
-    "
-  >
-
-    <div
-      className="
-      bg-white/5
-
-      border
-      border-fuchsia-500/30
-
-      backdrop-blur-xl
-
-      rounded-3xl
-
-      p-4
-      "
-    >
-
-      <textarea
-        value={message}
-
-        onChange={(e) =>
-          setMessage(
-            e.target.value
-          )
-        }
-
-        onKeyDown={(e) => {
-
-          if (
-            e.key === "Enter" &&
-            !e.shiftKey
-          ) {
-
-            e.preventDefault();
-
-            askMentor();
-
-          }
-
-        }}
-
-        placeholder="Ask about careers, exams, colleges, roadmap..."
-
-        className="
-        w-full
-
-        h-24
-
-        resize-none
-
-        bg-transparent
-
-        outline-none
-
-        text-white
-
-        placeholder:text-zinc-500
-        "
+      <MentorInput
+        message={message}
+        setMessage={setMessage}
+        askMentor={askMentor}
+        loading={loading}
       />
-
-      <div
-        className="
-        flex
-
-        justify-end
-        "
-      >
-
-        <button
-          onClick={askMentor}
-
-          disabled={loading}
-
-          className="
-          px-6
-          py-3
-
-          rounded-2xl
-
-          bg-gradient-to-r
-          from-fuchsia-600
-          to-purple-600
-
-          font-semibold
-
-          disabled:opacity-50
-          "
-        >
-
-          Send 🚀
-
-        </button>
-
-      </div>
 
     </div>
 

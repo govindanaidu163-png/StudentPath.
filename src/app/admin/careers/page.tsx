@@ -7,6 +7,7 @@ import { createCareer } from "../actions";
 import { supabase } from "@/lib/supabase";
 
 export default async function AdminCareersPage() {
+  
 
   const { data: careers, error } =
     await supabase
@@ -17,6 +18,8 @@ export default async function AdminCareersPage() {
   if (error || !careers) {
 
     return (
+
+      
 
       <div
         className="
@@ -58,23 +61,31 @@ export default async function AdminCareersPage() {
       {/* CONTENT */}
 
       <div
-        className="
-        p-8
-        lg:p-12
-        "
-      >
+  className="
+  p-4
+  md:p-8
+  lg:p-12
+  "
+>
 
         {/* ACTION ROW */}
 
         <div
           className="
-          flex
-          items-center
-          justify-between
-          gap-6
-          mb-10
-          flex-wrap
-          "
+flex
+flex-col
+md:flex-row
+
+items-start
+md:items-center
+
+justify-between
+
+gap-4
+
+mb-6
+md:mb-10
+"
         >
 
           {/* STATS */}
@@ -89,14 +100,21 @@ export default async function AdminCareersPage() {
 
             <div
               className="
-              px-6
-              py-5
-              rounded-[28px]
-              border
-              border-white/10
-              bg-white/[0.04]
-              backdrop-blur-2xl
-              "
+w-full
+md:w-auto
+
+px-5
+py-4
+
+rounded-[24px]
+
+border
+border-white/10
+
+bg-white/[0.04]
+
+backdrop-blur-2xl
+"
             >
 
               <p
@@ -128,11 +146,17 @@ export default async function AdminCareersPage() {
 
         <div
           className="
-          grid
-          md:grid-cols-2
-          2xl:grid-cols-3
-          gap-8
-          "
+grid
+
+grid-cols-1
+
+lg:grid-cols-2
+
+2xl:grid-cols-3
+
+gap-5
+md:gap-8
+"
         >
 
           {careers.map((career) => (
@@ -143,7 +167,8 @@ export default async function AdminCareersPage() {
               group
               relative
               overflow-hidden
-              rounded-[36px]
+              rounded-[24px]
+              md:rounded-[36px]
               border
               border-white/10
               bg-white/[0.04]
@@ -176,7 +201,8 @@ export default async function AdminCareersPage() {
               <div
                 className="
                 relative
-                h-[160px]
+                h-[100px]
+                md:h-[160px]
                 overflow-hidden
                 "
               >
@@ -215,8 +241,8 @@ export default async function AdminCareersPage() {
                 <div
                   className="
                   absolute
-                  top-6
-                  left-6
+                  top-4
+                  left-4
                   px-4
                   py-2
                   rounded-full
@@ -239,11 +265,12 @@ export default async function AdminCareersPage() {
 
               {/* CONTENT */}
 
-              <div className="relative z-10 p-8">
+              <div className="relative z-10 p-8 md:p-8">
 
                 <h2
                   className="
-                  text-4xl
+                  text-2xl
+                  md:text-4xl
                   font-black
                   leading-tight
                   mb-5
@@ -253,25 +280,32 @@ export default async function AdminCareersPage() {
                 </h2>
 
                 <p
-                  className="
-                  text-zinc-400
-                  leading-relaxed
-                  line-clamp-3
-                  mb-8
-                  "
-                >
+  className="
+  hidden md:block
+
+  text-zinc-400
+
+  leading-relaxed
+
+  line-clamp-3
+
+  mb-8
+  "
+>
                   {career.description}
                 </p>
 
                 {/* META */}
 
                 <div
-                  className="
-                  flex
-                  items-center
-                  justify-between
-                  mb-8
-                  "
+                 className="
+flex
+
+justify-between
+
+mb-5
+md:mb-8
+"
                 >
 
                   <div>
@@ -317,10 +351,14 @@ export default async function AdminCareersPage() {
                 {/* ACTIONS */}
 
                 <div
-                  className="
-                  flex
-                  gap-4
-                  "
+                 className="
+flex
+
+flex-col
+md:flex-row
+
+gap-3
+"
                 >
 
                   <Link

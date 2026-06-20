@@ -2,315 +2,225 @@ import Link from "next/link";
 
 export default function AdminPage() {
 
-  const stats = [
+const stats = [
+{
+title: "Careers",
+value: "101",
+},
+{
+title: "Media",
+value: "284",
+},
+{
+title: "Categories",
+value: "12",
+},
+{
+title: "AI",
+value: "08",
+},
+];
 
-    {
-      title: "Total Careers",
-      value: "101",
-    },
+const sections = [
+{
+title: "Careers",
+href: "/admin/careers",
+icon: "🚀",
+},
+{
+title: "Exams",
+href: "/admin/exams",
+icon: "📝",
+},
+{
+title: "Media Studio",
+href: "/admin/media",
+icon: "🎬",
+},
+{
+title: "AI Engine",
+href: "/admin/ai",
+icon: "🤖",
+},
+];
 
-    {
-      title: "Media Assets",
-      value: "284",
-    },
+return (
+<section
+className="
+max-w-7xl
+mx-auto
 
-    {
-      title: "Career Categories",
-      value: "12",
-    },
+  p-4
+  md:p-8
+  lg:p-12
+  "
+>
 
-    {
-      title: "AI Systems",
-      value: "08",
-    },
+  {/* HEADER */}
 
-  ];
+  <div className="mb-8">
 
-  const sections = [
-
-    {
-      title: "Careers",
-      desc:
-        "Manage futuristic career content and experiences.",
-
-      href: "/admin/careers",
-
-      icon: "✦",
-    },
-
-    {
-      title: "Exams",
-      desc:
-        "Control competitive exam systems and pathways.",
-
-      href: "/admin/exams",
-
-      icon: "⬢",
-    },
-
-    {
-      title: "Media Studio",
-      desc:
-        "Upload cinematic images and videos.",
-
-      href: "/admin/media",
-
-      icon: "◎",
-    },
-
-    {
-      title: "AI Engine",
-      desc:
-        "Future recommendation and AI systems.",
-
-      href: "/admin/ai",
-
-      icon: "◉",
-    },
-
-  ];
-
-  return (
-
-    <section
+    <p
       className="
-      relative
-      p-8
-      lg:p-12
+      text-fuchsia-400
+      uppercase
+      tracking-[0.3em]
+      text-xs
+      mb-3
       "
     >
+      StudentPath
+    </p>
 
-      {/* HERO */}
+    <h1
+      className="
+      text-3xl
+      md:text-5xl
+      font-black
+      "
+    >
+      Admin Dashboard
+    </h1>
 
-      <div className="mb-20">
+  </div>
 
-        <p
-          className="
-          uppercase
-          tracking-[0.4em]
-          text-fuchsia-400
-          text-xs
-          mb-5
-          "
-        >
-          StudentPath Intelligence System
-        </p>
+  {/* STATS */}
 
-        <h1
-          className="
-          text-5xl
-          md:text-7xl
-          font-black
-          leading-[0.95]
-          tracking-[-0.05em]
-          "
-        >
-          Welcome Back,
-          <br />
-          Govinda
-        </h1>
+  <div
+    className="
+    grid
+    grid-cols-2
+    lg:grid-cols-4
+    gap-4
+    mb-8
+    "
+  >
 
-        <p
-          className="
-          mt-8
-          text-zinc-400
-          text-xl
-          max-w-3xl
-          leading-relaxed
-          "
-        >
-          Build the future of career discovery,
-          AI-powered guidance, cinematic learning,
-          and intelligent exploration systems.
-        </p>
-
-      </div>
-
-      {/* STATS */}
+    {stats.map((item) => (
 
       <div
+        key={item.title}
         className="
-        grid
-        md:grid-cols-2
-        xl:grid-cols-4
-        gap-6
-        mb-20
+        rounded-3xl
+
+        border
+        border-white/10
+
+        bg-white/[0.04]
+
+        p-5
         "
       >
 
-        {stats.map((item) => (
+        <p
+          className="
+          text-zinc-500
+          text-sm
+          "
+        >
+          {item.title}
+        </p>
 
-          <div
-            key={item.title}
-            className="
-            relative
-            overflow-hidden
-            rounded-[32px]
-            border
-            border-white/10
-            bg-white/[0.04]
-            backdrop-blur-2xl
-            p-8
-            "
-          >
+        <h2
+          className="
+          mt-2
 
-            {/* GLOW */}
+          text-3xl
+          md:text-5xl
 
-            <div
-              className="
-              absolute
-              inset-0
-              bg-gradient-to-br
-              from-fuchsia-500/10
-              via-transparent
-              to-cyan-500/10
-              "
-            />
+          font-black
+          "
+        >
+          {item.value}
+        </h2>
 
-            <div className="relative z-10">
+      </div>
 
-              <p
-                className="
-                text-zinc-400
-                uppercase
-                tracking-[0.25em]
-                text-xs
-                mb-5
-                "
-              >
-                {item.title}
-              </p>
+    ))}
 
-              <h2
-                className="
-                text-6xl
-                font-black
-                tracking-[-0.05em]
-                "
-              >
-                {item.value}
-              </h2>
+  </div>
 
+  {/* SYSTEMS */}
+
+  <div
+    className="
+    grid
+    gap-4
+    md:grid-cols-2
+    "
+  >
+
+    {sections.map((item) => (
+
+      <Link
+        key={item.title}
+        href={item.href}
+        className="
+        group
+
+        rounded-3xl
+
+        border
+        border-white/10
+
+        bg-white/[0.04]
+
+        p-6
+
+        hover:border-fuchsia-500/40
+
+        transition-all
+        "
+      >
+
+        <div
+          className="
+          flex
+          items-center
+          justify-between
+          "
+        >
+
+          <div>
+
+            <div className="text-3xl mb-3">
+              {item.icon}
             </div>
+
+            <h3
+              className="
+              text-xl
+              md:text-2xl
+
+              font-bold
+              "
+            >
+              {item.title}
+            </h3>
 
           </div>
 
-        ))}
-
-      </div>
-
-      {/* SYSTEMS */}
-
-      <div
-        className="
-        grid
-        md:grid-cols-2
-        gap-8
-        "
-      >
-
-        {sections.map((item) => (
-
-          <Link
-            key={item.title}
-            href={item.href}
+          <div
             className="
-            group
-            relative
-            overflow-hidden
-            rounded-[36px]
-            border
-            border-white/10
-            bg-white/[0.04]
-            backdrop-blur-2xl
-            p-10
-            hover:-translate-y-2
-            transition-all
-            duration-500
+            text-fuchsia-400
+
+            group-hover:translate-x-1
+
+            transition
             "
           >
+            →
+          </div>
 
-            {/* HOVER */}
+        </div>
 
-            <div
-              className="
-              absolute
-              inset-0
-              opacity-0
-              group-hover:opacity-100
-              transition
-              duration-500
-              bg-gradient-to-br
-              from-fuchsia-500/10
-              via-transparent
-              to-cyan-500/10
-              "
-            />
+      </Link>
 
-            <div className="relative z-10">
+    ))}
 
-              <div
-                className="
-                w-16
-                h-16
-                rounded-2xl
-                bg-white/10
-                border
-                border-white/10
-                flex
-                items-center
-                justify-center
-                text-2xl
-                mb-8
-                "
-              >
-                {item.icon}
-              </div>
+  </div>
 
-              <h3
-                className="
-                text-4xl
-                font-black
-                mb-5
-                "
-              >
-                {item.title}
-              </h3>
+</section>
 
-              <p
-                className="
-                text-zinc-400
-                text-lg
-                leading-relaxed
-                max-w-md
-                "
-              >
-                {item.desc}
-              </p>
-
-              <div
-                className="
-                mt-10
-                inline-flex
-                items-center
-                gap-3
-                text-fuchsia-400
-                font-semibold
-                "
-              >
-                Open System →
-              </div>
-
-            </div>
-
-          </Link>
-
-        ))}
-
-      </div>
-
-    </section>
-
-  );
-
+);
 }

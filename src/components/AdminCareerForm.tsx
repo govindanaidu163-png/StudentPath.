@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 
-import LivePreviewPanel from "@/components/LivePreviewPanel";
 import ImageUpload from "@/components/ImageUpload";
 
 import { updateCareer } from "@/app/admin/actions";
@@ -1780,11 +1779,7 @@ bg-fuchsia-500/10
 
 </section>
 
-      {/* LIVE PREVIEW */}
-
-      {/* <LivePreviewPanel
-        data={formData}
-      /> */}
+      
 
     </div>
 
